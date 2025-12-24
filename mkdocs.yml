@@ -1,0 +1,5 @@
+site_name: Quinn's Website
+site_url: https://quinn-dj.github.io/
+site_author: Quinn
+theme:
+  name: material
