@@ -1,17 +1,11 @@
-# Welcome to MkDocs
+# Welcome Quinn's Blog
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Welcome to my Blog. Hope you enjoy reading!
 
-## Commands
+<div class="grid cards" markdown>
+-   :material-notebook-edit-outline:{ .lg .middle } __参考资料__
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+    ---
+    
+    - 在构建本网站的过程中参考了[Wcowin同学的Mkdocs教程](https://wcowin.work/Mkdocs-Wcowin/)
+</div>

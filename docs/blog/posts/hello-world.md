@@ -1,10 +1,10 @@
 ---
-title: First Blog
+title: Hello World
 authors: [Quinn]
 comments: true
 date: 2025-12-24
 tags:
-  - blog
+  - 说说
 ---
 
 # Welcome

@@ -57,9 +57,32 @@ theme:
     repo: fontawesome/brands/github #右上角图标
     logo: logo
 
+
 nav: 
+  - 首页:
+    - index: index.md
+  - Mathematics:
+    - index: mathematics/index.md
+    - 常微分方程: mathematics/ODE.md
+  - Computing & Coding:
+    - index: cc/index.md
+    - 三体问题: cc/3body.md
+    - Verlet 算法: cc/verletalgorithm.md
+  - Data Structure & Analysis:
+    - index: DSA/index.md
+    - DS-1: DSA/DS-1.md
+    - DS-2: DSA/DS-2.md
+    - DS-3: DSA/DS-3.md
+    - DS-4: DSA/DS-4.md
+    - DS-5: DSA/DS-5.md
+    - DS-6: DSA/DS-6.md
+    - DS-7: DSA/DS-7.md
+    - DS-8: DSA/DS-8.md
+    - DS-9: DSA/DS-9.md
+    - DS-10: DSA/DS-10.md
   - 博客:
-    - index: blog/index.md  #.md文件的相对路径
+    - index: blog/index.md
+  - 标签: tags.md
   - 友情连接:
     - Links: links/index.md
 
@@ -138,11 +161,14 @@ markdown_extensions:
 
 extra_javascript:
   - javascripts/extra.js
-  - javascripts/mathjax.js
+  - javascripts/katex.js
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
 
 extra_css:
   - stylesheets/extra.css
   - stylesheets/link.css
   - stylesheets/customize.css
+  - https://unpkg.com/katex@0/dist/katex.min.css
   - https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css #字体
 
