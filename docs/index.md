@@ -1,5 +1,12 @@
 # Welcome Quinn's Blog
 
+!!! quote
+    这些漂亮的数学问题带给我很多思考的乐趣
+
+    这些乐趣让我感觉在一生之中稍有所得
+    
+    比那些在思想真空中挣扎一世的人幸福
+
 Welcome to my Blog. Hope you enjoy reading!
 
 <div class="grid cards" markdown>
