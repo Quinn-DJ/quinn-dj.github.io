@@ -65,21 +65,21 @@ nav:
     - index: mathematics/index.md
     - 常微分方程: mathematics/ODE.md
   - Computing & Coding:
-    - index: cc/index.md
-    - 三体问题: cc/3body.md
-    - Verlet 算法: cc/verletalgorithm.md
+    - index: coding/index.md
+    - 三体问题: coding/3body.md
+    - Verlet 算法: coding/verletalgorithm.md
   - Data Structure & Analysis:
-    - index: DSA/index.md
-    - DS-1: DSA/DS-1.md
-    - DS-2: DSA/DS-2.md
-    - DS-3: DSA/DS-3.md
-    - DS-4: DSA/DS-4.md
-    - DS-5: DSA/DS-5.md
-    - DS-6: DSA/DS-6.md
-    - DS-7: DSA/DS-7.md
-    - DS-8: DSA/DS-8.md
-    - DS-9: DSA/DS-9.md
-    - DS-10: DSA/DS-10.md
+    - index: dsa/index.md
+    - DS-1: dsa/DS-1.md
+    - DS-2: dsa/DS-2.md
+    - DS-3: dsa/DS-3.md
+    - DS-4: dsa/DS-4.md
+    - DS-5: dsa/DS-5.md
+    - DS-6: dsa/DS-6.md
+    - DS-7: dsa/DS-7.md
+    - DS-8: dsa/DS-8.md
+    - DS-9: dsa/DS-9.md
+    - DS-10: dsa/DS-10.md
   - 博客:
     - index: blog/index.md
   - 标签: tags.md
