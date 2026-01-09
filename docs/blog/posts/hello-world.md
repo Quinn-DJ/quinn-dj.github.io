@@ -3,8 +3,6 @@ title: Hello World
 authors: [Quinn]
 comments: true
 date: 2025-12-24
-tags:
-  - 说说
 ---
 
 # Welcome
