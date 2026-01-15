@@ -70,16 +70,18 @@ nav:
     - Verlet 算法: coding/verletalgorithm.md
   - Data Structure & Analysis:
     - index: dsa/index.md
-    - DS-1: dsa/DS-1.md
-    - DS-2: dsa/DS-2.md
-    - DS-3: dsa/DS-3.md
-    - DS-4: dsa/DS-4.md
-    - DS-5: dsa/DS-5.md
-    - DS-6: dsa/DS-6.md
-    - DS-7: dsa/DS-7.md
-    - DS-8: dsa/DS-8.md
-    - DS-9: dsa/DS-9.md
-    - DS-10: dsa/DS-10.md
+    - 复习笔记: dsa/Review/Review.md
+    - 课后作业解题报告:
+      - DS-1: dsa/DS-1.md
+      - DS-2: dsa/DS-2.md
+      - DS-3: dsa/DS-3.md
+      - DS-4: dsa/DS-4.md
+      - DS-5: dsa/DS-5.md
+      - DS-6: dsa/DS-6.md
+      - DS-7: dsa/DS-7.md
+      - DS-8: dsa/DS-8.md
+      - DS-9: dsa/DS-9.md
+      - DS-10: dsa/DS-10.md
   - 博客:
     - index: blog/index.md
   - 标签: tags.md

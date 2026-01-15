@@ -80,15 +80,6 @@
 <div class="links-content">
 <div class="link-navigation">
     <div class="card">
-        <img class="ava" src="https://avatars.githubusercontent.com/jaywhj" />
-        <div class="card-header">
-            <div>
-                <a href="https://jaywhj.netlify.app/" target="_blank">极简主义</a>
-            </div>
-            <div class="info">文档即产品</div>
-        </div>
-    </div>
-    <div class="card">
         <img class="ava" src="https://i.stardots.io/wcowin/1750089315509.png" />
         <div class="card-header">
         <div>
@@ -98,30 +89,30 @@
         </div>
     </div>
     <div class="card">
-        <img class="ava" src="https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png" />
+        <img class="ava" src="https://myth.cx/img/avatar_hu_a008ef868a8cf25a.png" />
         <div class="card-header">
         <div>
-            <a href="https://twitter.com/" target="_blank">Twitter</a>
+            <a href="https://myth.cx/" target="_blank">Myth's Blog</a>
         </div>
-        <div class="info">社交分享平台</div>
+        <div class="info">Myth 的小站</div>
         </div>
     </div>
     <div class="card">
-        <img class="ava" src="https://i.stardots.io/wcowin/1750220860750.jpg" />
+        <img class="ava" src="https://note.philfan.cn/logo.ico" />
         <div class="card-header">
         <div>
-            <a href="https://macapp.org.cn" target="_blank">Macapp</a>
+            <a href="https://note.philfan.cn/" target="_blank">PhilFan's Notebook</a>
         </div>
-        <div class="info">一个专注于分享Mac资源的频道</div>
+        <div class="info">Learn, Build, Share</div>
         </div>
     </div>
     <div class="card">
-        <img class="ava" src="https://i.stardots.io/wcowin/1750221795613.jpeg" />
+        <img class="ava" src="https://wiki.akashic.cc/icons/akashic.ico" />
         <div class="card-header">
         <div>
-            <a href="{link}" target="_blank">{name}</a>
+            <a href="https://mc.akashic.cc/" target="_blank">Akashic MC</a>
         </div>
-        <div class="info">{description}</div>
+        <div class="info">摸鱼系超小型 Minecraft 服务器</div>
         </div>
     </div>
 
