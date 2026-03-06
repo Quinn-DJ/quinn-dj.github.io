@@ -3,8 +3,6 @@ title: DS-2 完善 Array List
 authors: [Quinn]
 comments: true
 date: 2025-09-24
-tags:
-  - 数据结构与算法
 ---
 
 ### **题目描述**

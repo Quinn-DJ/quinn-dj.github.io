@@ -3,8 +3,6 @@ title: DS-1 斐波那契数列
 authors: [Quinn]
 comments: true
 date: 2025-09-17
-tags:
-  - 数据结构与算法
 ---
 
 ### 题目描述

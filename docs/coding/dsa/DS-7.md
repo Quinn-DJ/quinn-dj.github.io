@@ -3,8 +3,6 @@ title: DS-7 二叉搜索树的哈希
 authors: [Quinn]
 comments: true
 date: 2025-12-04
-tags:
-  - 数据结构与算法
 ---
 
 ### **题目描述**

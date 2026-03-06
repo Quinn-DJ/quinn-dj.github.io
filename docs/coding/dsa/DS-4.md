@@ -3,8 +3,6 @@ title: DS-4 二叉搜索树的功能扩展
 authors: [Quinn]
 comments: true
 date: 2025-10-23
-tags:
-  - 数据结构与算法
 ---
 
 ### **题目描述**

@@ -85,7 +85,7 @@
         <div>
             <a href="https://wcowin.work/" target="_blank">Wcowin’s blog</a>
         </div>
-        <div class="info">这是一个分享技术的小站。</div>
+        <div class="info">这是一个分享技术的小站<br>感谢前辈的建站指南！</div>
         </div>
     </div>
     <div class="card">
@@ -112,7 +112,7 @@
         <div>
             <a href="https://mc.akashic.cc/" target="_blank">Akashic MC</a>
         </div>
-        <div class="info">摸鱼系超小型 Minecraft 服务器</div>
+        <div class="info">摸鱼系超小型 Minecraft 服务器<br>欢迎来摸鱼</div>
         </div>
     </div>
 

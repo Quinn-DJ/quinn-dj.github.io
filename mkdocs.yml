@@ -62,18 +62,19 @@ nav:
   - 首页:
     - index: index.md
   - Mathematics:
-    - index: mathematics/index.md
-    - 常微分方程: mathematics/ODE.md
+    - index: math/index.md
+    - 常微分方程: math/ode.md
   - Computing & Coding:
     - index: coding/index.md
-    - 三体问题: coding/3body.md
-    - Verlet 算法: coding/verletalgorithm.md
-  - Data Structure & Analysis:
-    - index: dsa/index.md
-    - 课后作业解题报告: dsa/report.md
-  - 面向对象编程:
-    - index: oop/index.md
-    - 什么是 C++: oop/note-01.md
+    - 数据结构与算法:
+      - index: coding/dsa/index.md
+      - 课后作业解题报告: coding/dsa/report.md
+    - 面向对象编程:
+      - index: coding/oop/index.md
+      - 什么是 C++: coding/oop/note-01.md
+    - 自己研究的小东西:
+      - 三体问题: coding/3body.md
+      - Verlet 算法: coding/verletalgorithm.md
   - 博客:
     - index: blog/index.md
   - 标签: tags.md

@@ -4,8 +4,7 @@ authors: CrazyFish
 comments: true
 date: 2025-08-26
 tags:
-  - Verlet算法
-  - 三体问题
+  - Coding
 description: 三体问题（Three-body problem）是经典力学中的一个著名问题，指的是在牛顿引力作用下，研究三个质量有限的物体在彼此之间相互作用时的运动规律。该问题是天体力学中的一个重要课题，涉及行星、恒星、卫星等天体系统的运动。
 ---
 

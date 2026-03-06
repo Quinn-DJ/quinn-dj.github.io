@@ -4,8 +4,7 @@ authors: [Quinn]
 comments: true
 date: 2025-08-29
 tags:
-  - Verlet算法
-  - 数值计算
+  - Coding
 description: Verlet算法是一种用于数值模拟粒子动力学的积分方法，广泛应用于分子动力学（Molecular Dynamics）模拟中。它由法国物理学家Louise Jean Claude Verlet在1967年提出，因其高精度和良好的能量守恒特性而备受青睐。
 ---
 
