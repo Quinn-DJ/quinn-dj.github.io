@@ -3,8 +3,6 @@ title: 数据结构和算法复习笔记
 authors: [Quinn]
 comments: true
 date: 2025-01-14
-tags:
-  - 数据结构与算法
 ---
 
 # 数据结构和算法复习笔记
