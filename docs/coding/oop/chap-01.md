@@ -22,7 +22,7 @@ int main() {
    return 0; // indicate that program ended successfully
 } // end function main
 ```
-``` bash
+``` output
 Welcome to C++!
 ```
 
@@ -132,7 +132,7 @@ int main() {
    std::cout << "Sum is " << sum << "\n"; // display sum
 } // end function main
 ```
-``` bash
+``` output
 Enter first integer: 45
 Enter second integer: 72
 Sum is 117
@@ -164,7 +164,8 @@ int sum{0}; // sum of number1 and number2 (initialized to 0)
 当然，我们也可以在一行中声明多个变量：
 
 ```cpp
-int number1{0}, number2{0}, sum{0}; // declare and initialize three int variables
+int number1{0}, number2{0}, sum{0};
+// declare and initialize three int variables
 ```
 
 ### 基本类型
@@ -233,7 +234,7 @@ std::cout << "Sum is " << number1 + number2 << "\n";
 
 当分子和分母都是整数时，整数除法得到一个整数商。整数除法产生的任何分数部分都会被截断，不会进行四舍五入。
 
-```bash
+```output
 5 / 3 = 1
 17 / 3 = 5
 ```
@@ -306,7 +307,7 @@ int main() {
    }
 } // end function main
 ```
-```bash
+```output
 Enter two integers to compare: 5 7
 5 != 7
 5 < 7
@@ -359,7 +360,7 @@ int main() {
    cout << "s2 ends with \"ay\": " << s2.ends_with("ay") << "\n";
 }
 ```
-```bash
+```output
 s1: "happy"; length: 5
 s2: " birthday"; length: 9
 s3: ""; length: 0
