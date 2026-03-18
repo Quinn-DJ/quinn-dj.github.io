@@ -66,12 +66,12 @@ nav:
     - 常微分方程: math/ode.md
   - Computing & Coding:
     - index: coding/index.md
+    - 面向对象编程:
+      - index: coding/oop/index.md
+      - C++20 介绍: coding/oop/chap-01.md
     - 数据结构与算法:
       - index: coding/dsa/index.md
       - 课后作业解题报告: coding/dsa/report.md
-    - 面向对象编程:
-      - index: coding/oop/index.md
-      - 什么是 C++: coding/oop/note-01.md
     - 自己研究的小东西:
       - 三体问题: coding/3body.md
       - Verlet 算法: coding/verletalgorithm.md

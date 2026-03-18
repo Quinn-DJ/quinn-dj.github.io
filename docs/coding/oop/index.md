@@ -1,12 +1,14 @@
-# 面向对象编程
+# C++ How to Program 笔记
 
-这是 2025-2026 学年春夏学期的《面向对象编程》课程笔记，课程代码 CS2020F。
+## 写在前面
 
-教材使用的是 Paul Deitel 和 Harvey Deitel 编写的 *C++ How to Program: An Objects Natural Approach, 11e*。同时我使用了微软的 [C++ 教程](https://learn.microsoft.com/zh-cn/cpp/cpp/) 作为辅助资料。
+!!! quote
+    Good programmers write code that humans can understand.
+    —Martin Fowler
 
-我自己的开发环境是: MacOS + Visual Studio Code + Clang。但是还是习惯用 gcc 指令来编译 C++ 代码。
+此笔记为 Paul Deitel 和 Harvey Deitel 编写的 *C++ How to Program: An Objects Natural Approach, 11e* 的学习笔记，也适用于学校的《面向对象程序设计》课程。
 
-欢迎在页面下方留言交流。
+程序示例来源于官方 [Github 仓库](https://github.com/pdeitel/CPlusPlusHowToProgram11e)。
 
 !!! tip "课程信息"
     - 课程名称：面向对象编程
@@ -15,6 +17,3 @@
     - 开课院系：计算机科学与技术学院
     - 开课学期：2025-2026 学年春夏学期
     - 学分：2.5 学分
-
-!!! abstract "To-do List"
-    逐步更新笔记……
