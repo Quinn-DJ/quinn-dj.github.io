@@ -75,6 +75,7 @@ nav:
     - 自己研究的小东西:
       - 三体问题: coding/3body.md
       - Verlet 算法: coding/verletalgorithm.md
+      - Cholesky 分解在不同平台上的性能异常: coding/cholesky_performance_anomaly.md
   - 博客:
     - index: blog/index.md
   - 标签: tags.md
