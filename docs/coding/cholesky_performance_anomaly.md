@@ -18,7 +18,7 @@ description: Gauss 消元法、列主元Gauss 消元法和 Cholesky 分解在不
 
 教材图 1.1 的基准测试显示，Cholesky 的耗时远低于 Gauss 消元法和列主元 Gauss 消元法的，n 越大差距越明显。理论复杂度也支持这一点：Cholesky 的时间复杂度大约是 $O(\frac{n^3}{3})$，Gauss 是 $O(\frac{2n^3}{3})$，浮点运算量少了一半。
 
-![教材图 1.1](../output/textbook.png)
+![教材图 1.1](./pics/textbook.png)
 
 ## 测试方式
 
@@ -55,7 +55,7 @@ double time_SOLVE = static_cast<double>(end - start) / CLOCKS_PER_SEC;
 
 **测试环境**: MacBook Air M3，Apple Clang 17.0.0
 
-![Mac 上的结果](../output/time_consuming(mac).png)
+![Mac 上的结果](./pics/time_consuming(mac).png)
 
 从图上能够看出，Gauss（蓝线） 和 Pgauss（橙线） 的耗时非常接近，而 Cholesky（绿线） 的耗时竟然比 Gauss 还高。
 
@@ -66,7 +66,7 @@ double time_SOLVE = static_cast<double>(end - start) / CLOCKS_PER_SEC;
 **测试环境**： Debian GNU/Linux 13 (trixie) aarch64，GCC 14.2.0 \
 其中硬件为 Raspberry Pi 5 Model B Rev 1.1
 
-![Debian 上的结果](../output/time_consuming(debian).png)
+![Debian 上的结果](./pics/time_consuming(debian).png)
 
 这个结果完全符合教材的结论，Cholesky 的耗时明显低于 Gauss。
 
