@@ -425,7 +425,7 @@ Welcome to my blog! 👋
 
     ---
     
-    - 在构建本网站的过程中参考了[Wcowin同学的Mkdocs教程](https://wcowin.work/Mkdocs-Wcowin/)
+    - 在构建本网站的过程中参考了[Wcowin 同学的 Zensical 中文教程](https://wcowin.work/Zensical-Chinese-Tutorial/)
 </div>
 
 <script>

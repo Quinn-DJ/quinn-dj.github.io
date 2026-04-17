@@ -102,6 +102,7 @@ $$
 $$
 
 其中：
+
 - $r(t)$ 是当前时刻的位置，
 - $r(t − \Delta t)$ 是前一时刻的位置，
 - $a(t)$ 是当前时刻的加速度（由力 $F(t)$ 计算得到，$a(t) = \frac{F(t)}{m}$），
@@ -140,7 +141,8 @@ DoublePendulum
 类似于三体问题中的设计思路，我们将双摆问题抽象为几个核心概念：
 
 ### **配置结构体（Config）**
-**作用：**  
+**作用：**
+
 - 存储系统的 **物理参数**（摆长、质量、重力加速度）。
 - 存储 **初始条件**（初始角度、初始角速度）。
 - 存储 **数值计算参数**（时间步长、总时间）。
@@ -166,6 +168,7 @@ struct Config {
 
 ### **位置结构体（Point）**
 **作用：**  
+
 - 表示 **二维坐标点**，用于存储摆球在直角坐标系中的位置。
 - 简化位置计算和数据输出。
 
@@ -182,6 +185,7 @@ struct Point {
 
 ### **双摆类（DoublePendulum）**
 **作用：**  
+
 - 封装双摆系统的 **状态变量**（当前角度、角速度、历史角度）。
 - 实现 **运动方程**（计算角加速度）。
 - 实现 **Verlet算法** 进行数值积分。
@@ -292,7 +296,6 @@ public:
 
 1. **初始化问题**  
    Verlet算法需要当前时刻和前一时刻的位置信息，但初始条件只给出当前状态。解决方案是使用向后Euler法计算第一个"旧"状态：
-
 ```cpp
 // 第一步使用Euler方法初始化历史状态
 // 数学公式: θ(t-Δt) = θ(t) - ω(t)Δt + 1/2 α(t)(Δt)²
@@ -301,10 +304,8 @@ calculateAcceleration(alpha1, alpha2);
 theta1_old = theta1 - omega1 * config.dt + 0.5 * alpha1 * config.dt * config.dt;
 theta2_old = theta2 - omega2 * config.dt + 0.5 * alpha2 * config.dt * config.dt;
 ```
-
 2. **Verlet积分步骤**  
    使用标准Verlet公式更新角度，然后通过中心差分计算角速度：
-
 ```cpp
 void DoublePendulum::verletStep() {
     double alpha1, alpha2;
@@ -327,7 +328,6 @@ void DoublePendulum::verletStep() {
     theta2 = normalizeAngle(theta2_new);
 }
 ```
-
 3. **数值稳定性考虑**  
    双摆系统可能出现数值不稳定，特别是在两摆接近共线时。代码中加入了数值保护：
 
