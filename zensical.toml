@@ -1,7 +1,7 @@
 [project]
 site_name = "Quinn's Website"
 site_url = "https://quinn-dj.github.io/"
-site_description = "努力成为更好的自己"
+site_description = "Quinn 的小站"
 site_author = "Quinn"
 docs_dir = "docs"
 site_dir = "site"
@@ -29,7 +29,7 @@ nav = [
 ]
 
 [project.theme]
-name = "material"
+variant = "modern"
 custom_dir = "docs/overrides"
 language = "zh"
 features = [
@@ -44,6 +44,8 @@ features = [
   "search.share",
   "navigation.expand",
   "navigation.indexes",
+  "navigation.instant",           # 即时导航
+  "navigation.instant.prefetch",  # 预加载链接
   "content.tabs.link",
   "content.tooltips",
   "content.code.copy",
@@ -55,32 +57,26 @@ features = [
 [project.theme.icon]
 repo = "fontawesome/brands/github"
 
+# 自动模式（跟随系统）
 [[project.theme.palette]]
 media = "(prefers-color-scheme)"
+toggle = { icon = "material/link", name = "关闭自动模式" }
 
-[project.theme.palette.toggle]
-icon = "material/link"
-name = "Close automatic color mode switching"
-
+# 日间模式
 [[project.theme.palette]]
 media = "(prefers-color-scheme: light)"
-scheme = "default"
-primary = "indigo"
-accent = "blue"
+scheme = "default"                # 日间模式配色
+primary = "indigo"                # 主色调
+accent = "indigo"                 # 强调色
+toggle = { icon = "material/toggle-switch", name = "切换至夜间模式" }
 
-[project.theme.palette.toggle]
-icon = "material/weather-sunny"
-name = "Switch to dark mode"
-
+# 夜间模式
 [[project.theme.palette]]
 media = "(prefers-color-scheme: dark)"
-scheme = "slate"
-primary = "black"
-accent = "indigo"
-
-[project.theme.palette.toggle]
-icon = "material/weather-night"
-name = "Switch to light mode"
+scheme = "slate"                  # 夜间模式配色
+primary = "black"                # 主色调
+accent = "indigo"                 # 强调色
+toggle = { icon = "material/toggle-switch-off-outline", name = "切换至日间模式" }
 
 [project.extra]
 generator = true
@@ -94,6 +90,8 @@ icon = "fontawesome/regular/envelope"
 link = "mailto:<yv40403@gmail.com>"
 
 [project.plugins.search]
+lang = ["zh", "en"]
+separator = '[\s\-\.]+'  # 中文优化：'[\s\u200b\-]'
 
 [project.plugins.tags]
 
