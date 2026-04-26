@@ -633,6 +633,11 @@ preserveAspectRatio="xMidYMid meet"
 ></svg>
 </div>
 
+<h2 class="github-heatmap-title">AI 使用活跃度</h2>
+
+<div style="width: 100%; margin: 0 auto;">
+<img src="https://token.poco-ai.com/zh/u/pinksak/activity.svg" alt="Pinksak AI Activity" style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></img></div>
+
 </div>
 
 <!-- Popover 提示框（带箭头） -->
