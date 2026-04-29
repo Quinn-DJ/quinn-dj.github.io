@@ -20,12 +20,37 @@ extra_css = [
   "https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css",
 ]
 nav = [
-  { "首页" = [ { "index" = "index.md" } ] },
-  { "Mathematics" = [ { "index" = "math/index.md" }, { "常微分方程" = "math/ode.md" } ] },
-  { "Computing & Coding" = [ { "index" = "coding/index.md" }, { "面向对象编程" = [ { "index" = "coding/oop/index.md" }, { "C++20 介绍" = "coding/oop/chap-01.md" } ] }, { "数据结构与算法" = [ { "index" = "coding/dsa/index.md" }, { "课后作业解题报告" = "coding/dsa/report.md" } ] }, { "自己研究的小东西" = [ { "三体问题" = "coding/3body.md" }, { "Verlet 算法" = "coding/verletalgorithm.md" }, { "Cholesky 分解在不同平台上的性能异常" = "coding/cholesky_performance_anomaly.md" } ] } ] },
-  { "博客" = [ { "index" = "blog/index.md" } ] },
+  { "首页" = [
+    { "index" = "index.md" }
+    ] },
+  { "Mathematics" = [
+    { "index" = "math/index.md" },
+    { "常微分方程" = "math/ode/index.md" },
+    { "初等函数与 EML 算子" = "math/eml.md" }
+    ] },
+  { "Computing & Coding" = [
+    { "index" = "coding/index.md" },
+    { "面向对象编程" = [
+      { "index" = "coding/oop/index.md" },
+      { "C++20 介绍" = "coding/oop/chap-01.md" }
+      ] },
+    { "数据结构与算法" = [
+      { "index" = "coding/dsa/index.md" },
+      { "课后作业解题报告" = "coding/dsa/report.md" }
+      ] },
+    { "自己研究的小东西" = [
+      { "三体问题" = "coding/3body.md" },
+      { "Verlet 算法" = "coding/verletalgorithm.md" },
+      { "Cholesky 分解在不同平台上的性能异常" = "coding/cholesky_performance_anomaly.md" }
+      ] }
+    ] },
+  { "博客" = [
+    { "index" = "blog/index.md" }
+    ] },
   { "标签" = "tags.md" },
-  { "友情连接" = [ { "Links" = "links/index.md" } ] },
+  { "友情连接" = [
+    { "Links" = "links/index.md" }
+    ] },
 ]
 
 [project.theme]
@@ -103,7 +128,7 @@ post_readtime = true
 post_readtime_words_per_minute = 265
 post_url_format = "{date}/{slug}"
 pagination_url_format = "page/{page}"
-authors_file = "{blog}/.authors.yml"
+authors_file = "blog/.authors.yml"
 
 [project.markdown_extensions]
 abbr = {}

@@ -1,11 +1,13 @@
 ---
 title: 常微分方程（ODE）
-authors: [Quinn]
+authors:
+  - Quinn
 comments: true
-date: 2025-12-25
-tags:
-  - 数学专业课
+date: 2026-01-14
+description: 常微分方程课程笔记
 ---
+
+# 常微分方程（ODE）
 
 ## 笔记
 
