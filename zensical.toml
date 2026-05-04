@@ -8,9 +8,8 @@ site_dir = "site"
 use_directory_urls = true
 extra_javascript = [
   "javascripts/extra.js",
-  "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
   "javascripts/mathjax.js",
-  "https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"
+  "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"
 ]
 extra_css = [
   "stylesheets/extra.css",
@@ -32,7 +31,9 @@ nav = [
     { "index" = "coding/index.md" },
     { "面向对象编程" = [
       { "index" = "coding/oop/index.md" },
-      { "C++20 介绍" = "coding/oop/chap-01.md" }
+      { "C++20 介绍" = "coding/oop/chap-01.md" },
+      { "算法开发与控制语句（上）" = "coding/oop/chap-02.md" },
+      { "控制语句（下）" = "coding/oop/chap-03.md" }
       ] },
     { "数据结构与算法" = [
       { "index" = "coding/dsa/index.md" },

@@ -602,50 +602,11 @@ Welcome to my blog! 👋
     
     比那些在思想真空中挣扎一世的人幸福
 
-<!-- GitHub Contribution Heatmap Card -->
-<div class="github-heatmap-glass-container">
-<div class="github-heatmap-glass-card">
-<div class="github-heatmap-header">
-<h2 class="github-heatmap-title">GitHub
-<span id="contribution-stats" class="github-heatmap-stats">
-Quinn-DJ 过去一年 <strong id="stats-count">--</strong> 次贡献
-</span></h2>
-
-<div class="github-heatmap-footer">
-<div class="github-heatmap-legend">
-<span class="legend-label">少</span>
-<div class="legend-cell" style="--opacity: 0.05;"></div>
-<div class="legend-cell" style="--opacity: 0.25;"></div>
-<div class="legend-cell" style="--opacity: 0.5;"></div>
-<div class="legend-cell" style="--opacity: 0.75;"></div>
-<div class="legend-cell" style="--opacity: 1;"></div>
-<span class="legend-label">多</span>
-</div>
-</div>
-
-</div>
-
-<div class="github-heatmap-content">
-<svg
-id="heatmapSvg"
-class="github-heatmap-svg"
-preserveAspectRatio="xMidYMid meet"
-></svg>
-</div>
-
 <h2 class="github-heatmap-title">AI 使用活跃度</h2>
-
 <div style="width: 100%; margin: 0 auto;">
-<img src="https://token.poco-ai.com/zh/u/pinksak/activity.svg" alt="Pinksak AI Activity" style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></img></div>
-
+    <img src="https://token.poco-ai.com/zh/u/pinksak/activity.svg" alt="Pinksak AI Activity" style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></img>
 </div>
 
-<!-- Popover 提示框（带箭头） -->
-<div id="heatmapTooltip" class="github-heatmap-tooltip">
-<div class="github-heatmap-tooltip__arrow"></div>
-<div class="github-heatmap-tooltip__content"></div>
-</div>
-</div>
 
 <div class="grid cards" markdown>
 -   :material-notebook-edit-outline:{ .lg .middle } __参考资料__
