@@ -2,3 +2,4 @@
 site/
 .venv
 .pilotdeck
+*.pptx

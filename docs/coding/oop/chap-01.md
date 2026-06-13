@@ -1,414 +1,411 @@
+# Chapter 1: C++ 基础入门
+
+## C++ 简介
+
+### 什么是 C++？
+
+C++ 由 Bjarne Stroustrup 于 1979 年在贝尔实验室开发，最初名为 "C with Classes"，1983 年更名为 C++。它是一种静态类型、编译式、通用的编程语言。
+
+!!! note "C++ 名字的由来"
+    C++ 中的 `++` 是 C 语言的自增运算符，寓意着"C 语言的进化版"。
+
+### 核心特点
+
+- **极致高效** — 性能接近汇编语言，是高性能应用的首选
+- **面向对象** — 支持封装、继承、多态三大特性
+- **广泛通用** — 操作系统、游戏引擎、嵌入式、数据库等
+- **持续进化** — C++11/14/17/20 不断引入现代特性
+
+### C++ 的应用领域
+
+| 领域 | 典型应用 |
+|------|----------|
+| 操作系统 | Windows、Linux 内核部分 |
+| 游戏开发 | Unreal Engine、Unity 底层 |
+| 嵌入式 | 物联网设备、自动驾驶 |
+| 金融系统 | 高频交易引擎 |
+| 图形处理 | OpenCV、CAD 软件 |
+
+### C++ 与 C 语言的关系
+
+C++ 是 C 语言的超集——几乎所有 C 代码无需修改即可在 C++ 编译器中编译运行。
+
+!!! important "C++ 对 C 的增强"
+    - 面向对象机制（类与对象）
+    - 更严格的类型检查（`const` 关键字）
+    - I/O 流（`cout`/`cin`）替代 `printf`/`scanf`
+    - 命名空间（`namespace`）解决命名冲突
+    - `bool` 布尔类型
+
+### 从结构化编程到面向对象编程
+
+| 维度 | 结构化编程（C） | 面向对象编程（C++） |
+|------|----------------|-------------------|
+| 核心 | 以过程为中心 | 以对象为中心 |
+| 数据 | 与函数分离，全局共享 | 封装在对象内部 |
+| 组织 | 按功能切分代码 | 按实体映射 |
+| 扩展性 | 规模大时维护困难 | 高内聚低耦合 |
+
 ---
-title: Chapter 1：C++20 介绍
-authors: [Quinn]
-comments: true
-date: 2026-03-04
-tags:
-  - 面向对象编程
----
-# Chapter 1: C++20 介绍
 
-## 第一个程序: Hello, World!
+## 第一个 C++ 程序
 
 ```cpp
-// fig02_01.cpp
-// Text-printing program.
-#include <iostream> // enables program to output data to the screen
-
-// function main begins program execution
-int main() {
-   std::cout << "Welcome to C++!\n"; // display message
-
-   return 0; // indicate that program ended successfully
-} // end function main
-```
-``` output
-Welcome to C++!
-```
-
-### 注释
-
-这两行都以 `//` 开头，表示它们是**注释行**，一般用于对代码进行解释说明，编译器会忽略注释。
-
-`//` 只会注释掉在它之后的同一行内容，如果需要注释多行，可以使用 `/*` 和 `*/` 来包裹注释内容。
-
-```cpp
-/* fig02_01.cpp
-   Text-printing program. */
-```
-
-### 预处理指令
-
-第三行 `#include <iostream>` 是一个**预处理指令**，告诉编译器在编译之前要包含 `<iostream>` 头文件，这个头文件包含了**输入输出流**的定义。
-
-### 学会空行
-
-第四行是一个空行，提高代码的可读性，使代码看起来更清晰。编译器会忽略空行。
-
-### 主函数
-
-第六行 `int main()` 是每一个 C++ 程序的入口点，程序从这里开始执行。`main` 后的括号表明它是一个函数，关键字 `int` 表示main函数执行完毕后，它会**返回**一个整数值。像 `return` 这样的关键字是C++保留使用的。
-
-左花括号 `{`（第6行末尾）必须开始每个函数的函数体，函数体包含函数执行的指令。相应的右花括号 `}`（第10行）必须结束每个函数的函数体。
-
-### 输出语句
-
-第七行 `std::cout << "Welcome to C++!\n";` 表示将双引号中的文本输出到屏幕上。
-
-双引号及其之间的字符被称为字符串、字符型字符串或字符串字面量。我们将双引号之间的字符简称为字符串。编译器不会忽略字符串中的空格。
-
-第7行整行——包括`std::cout`、`<<`运算符、字符串`“Welcome to C++!\n”`以及分号（`;`）——被称作一个语句。大多数C++语句以分号结尾。预处理指令（如 `#include`）不是C++语句，因此不以分号结尾。
-
-在 C++ 中，输出和输入通常是通过数据流来完成的。当执行上述语句时，它会将字符流 `“Welcome to C++!\n”` 发送到标准输出流对象（`std::cout`），该对象通常“连接”到屏幕上。
-
-### 缩进
-
-在函数体的大括号内，一般将每个函数体缩进一级，让程序的功能结构更加清晰，更易于阅读。一般使用Tab键来创建缩进，一般为 4 个空格的宽度。
-
-!!! note
-    教材中使用的是 3 个空格的缩进。
-
-### 命名空间
-
-当我们使用从标准库头文件（如 `<iostream>`）引入程序中的名称时，需要在 `cout` 前加上 `std::`。符号 `std::cout` 表明我们正在使用属于 `std` 命名空间的 `cout` 名称。
-
-实际使用中，我们可以使用 `using` 声明来避免每次使用标准库名称时都要加上 `std::` 前缀。
-
-### 流插入操作符和转义序列
-
-当与 `cout` 一起使用时，`<<` 运算符是流插入运算符。运算符右边的值（右操作数）会被插入到输出流中。请注意，`<<` 指向数据流向的位置。字符串中的字符通常与引号之间的输入完全一致地显示。然而，在这个程序的输出中并未显示字符 `\n`。反斜杠(`\`)是一个转义符。当 C++ 在字符串中遇到反斜杠时，它会将下一个字符与反斜杠组合起来形成一个转义序列。转义序列 `\n` 表示换行符。它会使光标（即当前屏幕位置指示器）移动到屏幕下一行的开头。
-
-下表列出了一些常见的转义序列：
-
-| Escape sequence | Description |
-|-----------------|-------------|
-| `\n` | Newline. Positions the screen cursor to the beginning of the next line. |
-| `\t` | Horizontal tab. Moves the screen cursor right to the next tab stop. |
-| `\r` | Carriage return. Positions the screen cursor to the beginning of the current line; does not advance to the next line. |
-| `\a` | Alert. Sounds the system bell. |
-| `\\` | Backslash. Includes a backslash character in a string. |
-| `\'` | Single quote. Includes a single-quote character in a string. |
-| `\"` | Double quote. Includes a double-quote character in a string. |
-
-### 返回值
-
-第九行 `return 0;` 是我们用来退出函数的几种方式之一。在`main`函数末尾的这条`return`语句中，值 0 表示程序成功终止。如果程序执行到达右花括号而未遇到`return`语句，则`main`函数会隐式返回 0。
-
-!!! note
-    在 C++20 中，以下代码也是合法的：
-
-    ```cpp
-    int main() {
-        std::cout << "Welcome to C++!\n";
-    }
-    ```
-
-    但是并不建议这样做。
-
-## A + B Problem
-
-我们的下一个程序会获取用户通过键盘输入的两个整数，计算它们的和，并使用`std::cout`输出结果。
-
-``` cpp
-// fig02_04.cpp
-// Addition program that displays the sum of two integers.
-#include <iostream> // enables program to perform input and output
-
-// function main begins program execution
-int main() {
-   // declaring and initializing variables
-   int number1{0}; // first integer to add (initialized to 0)  
-   int number2{0}; // second integer to add (initialized to 0) 
-   int sum{0}; // sum of number1 and number2 (initialized to 0)
-
-   std::cout << "Enter first integer: "; // prompt user for data
-   std::cin >> number1; // read first integer from user into number1
-
-   std::cout << "Enter second integer: "; // prompt user for data
-   std::cin >> number2; // read second integer from user into number2
-
-   sum = number1 + number2; // add the numbers; store result in sum
-
-   std::cout << "Sum is " << sum << "\n"; // display sum
-} // end function main
-```
-``` output
-Enter first integer: 45
-Enter second integer: 72
-Sum is 117
-```
-
-### 变量声明和初始化
-
-第八到十行
-```cpp
-int number1{0}; // first integer to add (initialized to 0)  
-int number2{0}; // second integer to add (initialized to 0) 
-int sum{0}; // sum of number1 and number2 (initialized to 0)
-```
-表示声明了三个变量 `number1`、`number2` 和 `sum`，它们都是 `int` **整型**，并且都被初始化为 0。
-
-这被称为大括号初始化，是 C++11 中引入的特性。尽管并非总是需要显式初始化每个变量，但这样做有助于避免多种问题。
-
-!!! note
-    这三行代码也可以写成以下形式：
-
-    ```cpp
-    int number1 = 0; // first integer to add (initialized to 0)
-    int number2 = 0; // second integer to add (initialized to 0)
-    int sum = 0; // sum of number1 and number2 (initialized to 0)
-    ```
-
-    在后续章节中，我们将讨论花括号初始化器的各种好处。
-
-当然，我们也可以在一行中声明多个变量：
-
-```cpp
-int number1{0}, number2{0}, sum{0};
-// declare and initialize three int variables
-```
-
-### 基本类型
-
-我们很快就会讨论用于指定实数的`double`类型和用于字符数据的`char`类型。实数是有小数点的数字，如 3.4、0.0 和 -11.19。`char`变量可以保存一个小写字母、大写字母、数字或特殊字符（例如`$`或`*`）。`int`、`double`、`char`和`long`等类型被称为基本类型，它们是 C++ 内置的类型。基本类型名称通常由一个或多个关键字组成，并且必须全部以小写字母出现。有关 C++ 基本类型及其范围的完整列表，请参阅 [https://en.cppreference.com/w/cpp/language/types](https://en.cppreference.com/w/cpp/language/types)。
-
-### 标识符与命名
-
-变量名（如`number1`）可以是任何有效的标识符。标识符是由字母、数字和下划线（`_`）组成的一系列字符，它不能以数字开头，且不能是关键字。C++ 区分大小写，所以`a1`和`A1`是不同的标识符。
-
-C++允许标识符具有任意长度。
-
-按照惯例，变量名标识符以小写字母开头，名称中除第一个单词外的每个单词都以大写字母开头。例如，`firstNumber`的第二个单词`Number`以大写字母 N 开头。这种命名约定被称为驼峰式大小写，因为大写字母像骆驼的驼峰一样突出。选择有意义的标识符有助于使程序具有自文档性，而无需参考程序注释或外部文档。避免在标识符中使用缩写，以提高程序的可读性。
-
-!!! note
-    不要以一个下划线和大写字母或两个下划线开头作为标识符，因为C++编译器会在内部将这些名称用于其特定目的！
-
-### 变量声明的位置
-
-变量声明几乎可以放在程序的任何位置，但必须在使用变量之前声明。
-
-### 输入语句
-
-第十三行 `std::cin >> number1;` 是一个输入语句，当执行该语句时，程序会等待你为变量`number1`输入一个值。您通过键入一个整数（以字符形式），然后按下回车键将字符发送给程序来做出响应。`std::cin`对象将数字的字符表示转换为整数值，并将该值赋给变量`number1`。按下回车键还会使光标移动到屏幕上下一行的开头。
-
-当你的程序期望用户输入一个整数时，用户可能会输入字母字符、特殊符号（如#或@）或带有小数点的数字（如73.5）。在这些早期程序中，我们假设用户输入的是有效数据。稍后我们将介绍处理数据输入问题的各种技巧。
-
-### 算术表达式
-
-第十八行 `sum = number1 + number2;` 是一个赋值语句，将 `number1` 和 `number2` 的值相加，并使用赋值运算符 `=` 将结果赋值给 `sum`。大多数计算都是在赋值语句中完成的。`=` 运算符和 `+` 运算符都是二元运算符——每个运算符都有两个操作数。对于 `+` 运算符，两个操作数是 `number1` 和 `number2`。对于前面的 `=` 运算符，两个操作数是 `sum` 和表达式 `number1 + number2` 的值。在二元运算符的两侧加上空格，可以使运算符更加突出，并提高程序的可读性。
-
-### 复杂的输出语句
-
-第二十行 `std::cout << "Sum is " << sum << "\n";` 是一个更复杂的输出语句。它使用了两个流插入运算符 `<<` 来将三个值（字符串字面量`"Sum is "`、变量`sum`的值和换行符`\n`）插入到输出流中。在单个语句中使用多个流插入运算符（`<<`）被称为连接、链式操作或级联流插入操作。
-计算也可以在输出语句中执行。我们本可以通过将第18行和第20行的语句合并为一个语句来消除变量`sum`。
-
-```cpp
-std::cout << "Sum is " << number1 + number2 << "\n";
-```
-
-!!! note
-    C++的一个标志性特性是，你可以创建自己的数据类型，称为类，我们将在第9章及后续章节中深入讨论。然后，你可以分别使用`>>`和`<<`运算符来“教” C++ 如何输入和输出这些新数据类型的值。这被称为运算符重载，我们将在第11章中探讨。
-
-## 内存概念
-
-当你声明一个变量的时候，计算机会为这个变量分配内存。每一个变量都包含
-
-- 名称（如`number1`）
-- 数据类型（如`int`）
-- 大小（由数据类型决定）
-- 值（如45）
-
-## 算术运算符
-
-以下是 C++ 中的算术运算符：
-
-| Operator | Arithmetic operator | Algebraic expression | C++ expression |
-|----------|---------------------|----------------------|----------------|
-| `+` | Addition | $a + b$ | `a + b` |
-| `-` | Subtraction | $a - b$ | `a - b` |
-| `*` | Multiplication | $a \times b$ | `a * b` |
-| `/` | Division | $a \div b$ | `a / b` |
-| `%` | Modulus (remainder) | $a \bmod b$ | `a % b` |
-
-### 整除
-
-当分子和分母都是整数时，整数除法得到一个整数商。整数除法产生的任何分数部分都会被截断，不会进行四舍五入。
-
-```output
-5 / 3 = 1
-17 / 3 = 5
-```
-
-### 求余
-
-也被称为取模，用于计算整数除法后的余数。
-
-### 圆括号
-
-与数学表达式一样，圆括号 `()` 且仅有圆括号能用来提高表达式的优先级。
-
-## 比较运算符
-
-| Operator | C++ Operator | Sample C++ condition |
-|----------|--------------|----------------------|
-| $>$ | `>` | `a > b` |
-| $<$ | `<` | `a < b` |
-| $\geq$ | `>=` | `a >= b` |
-| $\leq$ | `<=` | `a <= b` |
-| $=$ | `==` | `a == b` | 
-| $\neq$ | `!=` | `a != b` |
-
-!!! note
-    颠倒运算符中的符号顺序通常会导致语法错误以及逻辑错误。
-
-## if 语句
-
-C++ 中的 `if` 语句允许程序根据条件的真假来执行不同的代码块。如果给定的if语句的条件为真，则执行该if语句体中的输出语句；否则，程序将跳过该if语句体中的输出语句。
-
-```cpp
-// fig02_05.cpp
-// Comparing integers using if statements, relational operators
-// and equality operators.
-#include <iostream> // enables program to perform input and output
-
-using std::cout; // program uses cout
-using std::cin; // program uses cin
-
-// function main begins program execution
-int main() {
-   int number1{0}; // first integer to compare (initialized to 0)
-   int number2{0}; // second integer to compare (initialized to 0)
-   
-   cout << "Enter two integers to compare: "; // prompt user for data
-   cin >> number1 >> number2; // read two integers from user
-
-   if (number1 == number2) {
-      cout << number1 << " == " << number2 << "\n";
-   }
-
-   if (number1 != number2) {
-      cout << number1 << " != " << number2 << "\n";
-   }
-
-   if (number1 < number2) {
-      cout << number1 << " < " << number2 << "\n";
-   }
-
-   if (number1 > number2) {
-      cout << number1 << " > " << number2 << "\n";
-   }
-
-   if (number1 <= number2) {
-      cout << number1 << " <= " << number2 << "\n";
-   }
-
-   if (number1 >= number2) {
-      cout << number1 << " >= " << number2 << "\n";
-   }
-} // end function main
-```
-```output
-Enter two integers to compare: 5 7
-5 != 7
-5 < 7
-5 <= 7
-```
-
-### using 声明
-
-我们使用了 `using` 声明来避免每次使用 `std::cout` 和 `std::cin` 时都要加上 `std::` 前缀。小型程序中，我们也可以使用 `using namespace std;` 来避免每次使用标准库名称时都要加上 `std::` 前缀，但这会引入命名冲突的风险，特别是在大型项目中，因此不建议使用。
-
-## string 类的使用
-
-类不能自行执行。一个人可以通过“告诉”车该做什么（加速、减速、左转、右转等）来驾驶它，而无需了解汽车的内部机制是如何运作的。同样，`main` 函数可以通过调用其成员函数来“驾驶”一个字符串对象，而无需了解类的具体实现方式。从这个意义上说，以下程序中的`main`被称为驱动程序。
-
-```cpp
-// fig02_06.cpp
-// Standard library string class test program. 
 #include <iostream>
-#include <string> 
 using namespace std;
 
 int main() {
-   string s1{"happy"};    
-   string s2{" birthday"};
-   string s3; // creates an empty string
-              
-   // display the strings and show their lengths (length is C++20)
-   cout << "s1: \"" << s1 << "\"; length: " << s1.length()
-      << "\ns2: \"" << s2 << "\"; length: " << s2.length()
-      << "\ns3: \"" << s3 << "\"; length: " << s3.length();
-
-   // compare strings with == and !=
-   cout << "\n\nThe results of comparing s2 and s1:" << boolalpha
-      << "\ns2 == s1: " << (s2 == s1)
-      << "\ns2 != s1: " << (s2 != s1);
-   
-   // test string member function empty 
-   cout << "\n\nTesting s3.empty():\n";
-
-   if (s3.empty()) {
-      cout << "s3 is empty; assigning to s3;\n";
-      s3 = s1 + s2; // assign s3 the result of concatenating s1 and s2
-      cout << "s3: \"" << s3 << "\"";
-   } 
-
-   // testing new C++20 string member functions 
-   cout << "\n\ns1 starts with \"ha\": " << s1.starts_with("ha") << "\n";
-   cout << "s2 starts with \"ha\": " << s2.starts_with("ha") << "\n";
-   cout << "s1 ends with \"ay\": " << s1.ends_with("ay") << "\n";
-   cout << "s2 ends with \"ay\": " << s2.ends_with("ay") << "\n";
+    cout << "Hello, World!" << endl;
+    cout << "Welcome to C++!" << endl;
+    return 0;
 }
 ```
-```output
-s1: "happy"; length: 5
-s2: " birthday"; length: 9
-s3: ""; length: 0
 
-The results of comparing s2 and s1:
-s2 == s1: false
-s2 != s1: true
+### 代码结构解析
 
-Testing s3.empty():
-s3 is empty; assigning to s3;
-s3: "happy birthday"
+1. **`#include <iostream>`** — 预处理指令，引入输入输出流库
+2. **`using namespace std;`** — 使用标准命名空间，简化代码
+3. **`int main() { ... }`** — 程序入口函数，所有 C++ 程序从这里开始
+4. **`cout << ... << endl;`** — 输出语句，`endl` 换行并刷新缓冲区
+5. **`return 0;`** — 向操作系统返回执行成功状态
 
-s1 starts with "ha": true
-s2 starts with "ha": false
-s1 ends with "ay": false
-s2 ends with "ay": true
+!!! warning "cout 与 printf 的区别"
+    `cout` 是类型安全的 I/O 流，编译器自动推导类型；`printf` 依赖格式化字符串，类型不匹配时可能产生未定义行为。
+
+### 注释 (Comments)
+
+```cpp
+// 这是单行注释
+
+/*
+  这是多行注释
+  可以跨越多行
+*/
 ```
 
-### 初始化变量
+!!! tip
+    注释用于解释代码功能，提升可读性。编译器会完全忽略注释内容。
 
-我们声明了三个 `string` 变量
+---
 
-- `s1` 被初始化为字符串字面量 `"happy"`
-- `s2` 被初始化为字符串字面量 `" birthday"`
-- `s3` 没有被显式初始化，因此它默认是一个空字符串
+## 变量与数据类型
 
-当我们像之前那样声明整型变量时，编译器知道int是什么——它是C++内置的一种基本类型。但是当我们声明一个 `string` 变量时，编译器不知道 `string` 是什么。我们必须告诉编译器 `string` 是一个类，并且它的定义在 `<string>` 头文件中。因此，我们必须包含 `<string>` 头文件。
+### 变量的声明与初始化
 
-如果封装得当，类可以被其他程序员重用。这是像 C++ 这样支持面向对象编程的语言最显著的优势之一。这类语言拥有丰富的、功能强大的预构建类库。例如，通过包含适当的头文件（例如 `<string>` 头文件），你可以在任何程序中重用 C++ 标准库中的类。与`cout`一样，`string` 也属于 `std` 命名空间。
+```cpp
+int a;              // 声明但不初始化（值未定义！）
+int x, y, z;        // 一行声明多个变量
+int score = 100;    // 传统赋值初始化
+double pi{3.14};    // C++11 统一初始化（推荐）
+```
 
-### string 成员函数 length
+!!! warning "未初始化变量的危险"
+    声明变量时不进行初始化，变量的值将是**未定义**的（随机值），后续使用可能导致不可预测的错误。
 
-`string` 类提供了一个成员函数 `length`，它返回字符串中的字符数。成员函数是与类相关联的函数。要调用成员函数，必须使用点运算符（`.`）将成员函数名称连接到一个对象上。例如，`s1.length()` 调用 `s1` 对象的 `length` 成员函数，返回字符串 `s1` 中的字符数。
+**命名规则：**
+- 只能包含字母、数字和下划线，不能以数字开头
+- 严格区分大小写，`age` 和 `Age` 是两个变量
+- 不能使用 C++ 关键字（如 `int`, `if`, `while`）
+- 推荐使用有意义的名称，如 `studentName`, `totalScore`
 
-### 字符串的比较
+### 基本数据类型
 
-`string` 类重载了关系运算符 `==` 和 `!=`，因此你可以使用这些运算符来比较字符串对象，字符串比较是区分大小写的。
+| 类型 | 大小 | 范围 | 场景 |
+|------|------|------|------|
+| `short` | 至少 2 字节 | $-2^{15}$ ~ $2^{15}-1$ | 存储小范围数值 |
+| `int` | 通常 4 字节 | $-2^{31}$ ~ $2^{31}-1$ | 最常用整数类型 |
+| `long` | 至少 4 字节 | 至少与 `int` 相同 | 更大范围的整数 |
+| `long long` | 8 字节 | $-9\times10^{18}$ ~ $9\times10^{18}$ | 超大数值 |
+| `float` | 4 字节 | $\pm3.4\times10^{38}$，约 6-7 位有效数字 | 图形计算等 |
+| `double` | 8 字节 | $\pm1.7\times10^{308}$，约 15-16 位有效数字 | 科学计算（默认浮点类型） |
+| `char` | 1 字节 | -128 ~ 127 或 0 ~ 255 | 存储单个字符 |
+| `bool` | 1 字节 | `true` (1) 或 `false` (0) | 逻辑判断 |
 
-通常，在输出条件语句的值时，C++会显示 0 表示假，显示 1 表示真。`<iostream>`头文件中的流操作符`boolalpha`告诉输出以更自然的方式将条件值显示为`false`或`true`字样。
+!!! note "浮点数精度问题"
+    浮点数是近似表示，存在精度误差（如 $0.1 + 0.2 \neq 0.3$）。比较浮点数时避免使用 `==`，应判断差值是否小于极小阈值（如 $1\times10^{-9}$）。
 
-### string 成员函数 empty
+### 字符类型与转义字符
 
-这是一个用来检查字符串是否为空的成员函数。如果字符串不包含任何字符，则 `empty` 成员函数返回 `true`；否则返回 `false`。
+```cpp
+char ch1 = 'A';     // 普通字符
+char ch2 = '\n';    // 换行转义字符
+```
 
-### string 的连接与赋值
+**常用转义字符：**
 
-字符串可以使用 `+` 运算符连接在一起。连接两个字符串会产生一个新字符串，该新字符串包含了两个原始字符串的内容。连接操作不会修改原始字符串。
+| 转义字符 | 含义 |
+|----------|------|
+| `\n` | 换行 (Newline) |
+| `\t` | 水平制表符 (Tab) |
+| `\\` | 反斜杠本身 |
+| `\'` | 单引号 |
+| `\"` | 双引号 |
+| `\0` | 空字符（字符串结束标志） |
 
-### string 成员函数 starts_with 和 ends_with
+### 布尔类型
 
-`string` 类提供了两个成员函数 `starts_with` 和 `ends_with`，它们分别检查字符串是否以指定的子字符串开头或结尾。
+```cpp
+bool isSunny = true;     // 真 (1)
+bool isRaining = false;  // 假 (0)
+
+if (isSunny) {
+    cout << "Sunny day!";
+}
+```
+
+!!! tip "非零即真"
+    C++ 中任何非零数值被视为 `true`，零被视为 `false`。`if (x)` 等价于 `if (x != 0)`。
+
+### const 常量
+
+```cpp
+const double PI = 3.14159;   // 推荐：类型安全的常量
+// #define PI 3.14159        // 不推荐：C 风格宏定义
+```
+
+!!! important "const vs #define"
+    `const` 有明确的数据类型，编译器会进行类型检查；`#define` 只是简单的文本替换，不进行类型检查。C++ 中**强烈推荐使用 `const`**。
+
+---
+
+## 输入与输出
+
+### cout 输出语句
+
+```cpp
+// 输出字符串
+cout << "Hello, World!" << endl;
+
+// 输出变量拼接
+string name = "Alice";
+int age = 25;
+cout << "Name: " << name << ", Age: " << age << endl;
+
+// 转义字符
+cout << "Line 1\nLine 2" << endl;
+cout << "He said: \"Hi!\"" << endl;
+```
+
+### cin 输入语句
+
+```cpp
+int a, b, c;
+double x, y;
+
+cout << "请输入三个整数：";
+cin >> a >> b >> c;
+
+cout << "请输入两个浮点数：";
+cin >> x >> y;
+```
+
+!!! note "cin 自动忽略空白字符"
+    `cin` 会自动忽略输入中的空格、回车、制表符，因此用户可以用空格或回车分隔数据。
+
+---
+
+## 运算符
+
+### 算术运算符
+
+| 运算符 | 含义 | 示例 |
+|--------|------|------|
+| `+` | 加法 | `a + b` |
+| `-` | 减法 | `a - b` |
+| `*` | 乘法 | `a * b` |
+| `/` | 除法 | `a / b`（整数除法截断） |
+| `%` | 取模 | `a % b`（仅整数） |
+
+### 赋值运算符
+
+```cpp
+int a = 10;
+a += 5;   // 等价于 a = a + 5
+a -= 3;   // 等价于 a = a - 3
+a *= 2;   // 等价于 a = a * 2
+a /= 4;   // 等价于 a = a / 4
+```
+
+### 关系运算符
+
+| 运算符 | 含义 |
+|--------|------|
+| `==` | 等于 |
+| `!=` | 不等于 |
+| `<` | 小于 |
+| `>` | 大于 |
+| `<=` | 小于等于 |
+| `>=` | 大于等于 |
+
+### 逻辑运算符
+
+| 运算符 | 含义 | 说明 |
+|--------|------|------|
+| `&&` | 逻辑与 | 两边都为真才为真 |
+| `\|\|` | 逻辑或 | 一边为真即为真 |
+| `!` | 逻辑非 | 取反 |
+
+### 自增自减运算符
+
+```cpp
+int a = 5, b;
+
+// 前置：先自增，后使用
+b = ++a;   // a=6, b=6
+
+// 后置：先使用，后自增
+b = a++;   // b=6, a=7
+```
+
+!!! tip "记忆口诀"
+    什么在前就先执行什么。运算符在前就先执行运算符，变量在前就先取变量值。
+
+### 运算符优先级（简表）
+
+| 优先级 | 运算符 | 结合性 |
+|--------|--------|--------|
+| 1 (高) | `()` | 左结合 |
+| 2 | `!` `++` `--` `-` (负号) | 右结合 |
+| 3 | `*` `/` `%` | 左结合 |
+| 4 | `+` `-` | 左结合 |
+| 5 | `<` `<=` `>` `>=` | 左结合 |
+| 6 | `==` `!=` | 左结合 |
+| 7 | `&&` | 左结合 |
+| 8 (低) | `\|\|` | 左结合 |
+
+!!! tip "复杂表达式加括号"
+    当表达式逻辑复杂时，建议使用括号 `()` 明确指定运算顺序，提高代码可读性。
+
+---
+
+## 流程控制
+
+### 条件语句
+
+#### if 语句
+
+```cpp
+if (studentGrade >= 60) {
+    cout << "Passed";
+}
+```
+
+#### if-else 语句
+
+```cpp
+if (studentGrade >= 60) {
+    cout << "Passed";
+} else {
+    cout << "Failed";
+}
+```
+
+#### if-else if-else 语句（嵌套）
+
+```cpp
+if (score >= 90) {
+    cout << "A";
+} else if (score >= 80) {
+    cout << "B";
+} else if (score >= 70) {
+    cout << "C";
+} else if (score >= 60) {
+    cout << "D";
+} else {
+    cout << "F";
+}
+```
+
+#### switch 语句
+
+```cpp
+int choice;
+cin >> choice;
+
+switch (choice) {
+    case 1: cout << "Game Start"; break;
+    case 2: cout << "Settings";   break;
+    case 3: cout << "Exit";       break;
+    default: cout << "Invalid";
+}
+```
+
+!!! warning "别忘了 break"
+    每个 `case` 末尾必须有 `break`，否则会"贯穿"（fall-through）到下一个 case。
+
+### 循环语句
+
+#### while 循环（先判断后执行）
+
+```cpp
+int product = 3;
+while (product <= 100) {
+    product *= 3;
+}
+```
+
+#### do-while 循环（先执行后判断，至少执行一次）
+
+```cpp
+int password;
+do {
+    cout << "请输入密码：";
+    cin >> password;
+} while (password != 123456);
+cout << "欢迎进入系统！";
+```
+
+#### for 循环
+
+```cpp
+for (int i = 1; i <= 10; i++) {
+    cout << i << " ";
+}
+```
+
+!!! tip "for 循环的灵活用法"
+    - `for(;;)` — 无限循环，配合 `break` 退出
+    - 逗号运算符扩展：`for (int i=0, j=10; i<j; i++, j--)`
+
+#### 嵌套循环：九九乘法表
+
+```cpp
+for (int i = 1; i <= 9; i++) {
+    for (int j = 1; j <= i; j++) {
+        cout << j << "x" << i << "=" << i*j << "\t";
+    }
+    cout << endl;
+}
+```
+
+### 跳转语句
+
+| 语句 | 作用 |
+|------|------|
+| `break` | 跳出当前循环或 switch |
+| `continue` | 跳过当前迭代剩余部分，进入下一次迭代 |
+
+!!! note "嵌套循环中的作用范围"
+    `break` 和 `continue` 只作用于**最近一层**循环。
+
+---
+
+## 编程规范与良好习惯
+
+- **数据隐藏** — 始终将数据成员设为 `private`，通过公有接口访问
+- **接口清晰** — 隐藏复杂实现，提供简洁的公有接口
+- **初始化** — 始终通过构造函数初始化对象，杜绝未初始化状态
+- **合理使用 const** — 不修改对象状态的成员函数务必声明为 `const`
+- **声明与实现分离** — `.h` 放声明，`.cpp` 放实现
+- **头文件保护** — 使用 `#ifndef` / `#define` / `#endif` 或 `#pragma once`
+
+## 编译与运行
+
+```bash
+# 编译
+g++ -o main main.cpp
+
+# 运行
+./main            # Linux/Mac
+# .\main.exe      # Windows
+```
