@@ -31,20 +31,42 @@ nav = [
     { "index" = "coding/index.md" },
     { "面向对象编程" = [
       { "index" = "coding/oop/index.md" },
-      { "01. C++ 基础入门" = "coding/oop/chap-01.md" },
-      { "02. 类与对象 (Part 1)" = "coding/oop/chap-02.md" },
-      { "03. 封装特性与访问控制" = "coding/oop/chap-03.md" },
-      { "04. 构造函数与析构函数" = "coding/oop/chap-04.md" },
-      { "05. 类的成员函数进阶" = "coding/oop/chap-05.md" },
-      { "06. 继承的基本概念与实现" = "coding/oop/chap-06.md" },
-      { "07. 继承进阶" = "coding/oop/chap-07.md" },
-      { "08. 运算符重载" = "coding/oop/chap-08.md" },
-      { "09. 多态与虚函数" = "coding/oop/chap-09.md" },
-      { "10. 多态进阶与智能指针" = "coding/oop/chap-10.md" }
+      { "课程笔记" = [
+        { "01. C++ 基础入门" = "coding/oop/chap-01.md" },
+        { "02. 类与对象 (Part 1)" = "coding/oop/chap-02.md" },
+        { "03. 封装特性与访问控制" = "coding/oop/chap-03.md" },
+        { "04. 构造函数与析构函数" = "coding/oop/chap-04.md" },
+        { "05. 类的成员函数进阶" = "coding/oop/chap-05.md" },
+        { "06. 继承的基本概念与实现" = "coding/oop/chap-06.md" },
+        { "07. 继承进阶" = "coding/oop/chap-07.md" },
+        { "08. 运算符重载" = "coding/oop/chap-08.md" },
+        { "09. 多态与虚函数" = "coding/oop/chap-09.md" },
+        { "10. 多态进阶与智能指针" = "coding/oop/chap-10.md" }
+      ] }
       ] },
     { "数据结构与算法" = [
       { "index" = "coding/dsa/index.md" },
-      { "课后作业解题报告" = "coding/dsa/report.md" }
+      { "课程笔记" = [
+        { "01. 算法分析" = "coding/dsa/chap-01.md" },
+        { "02. 表、栈与队列" = "coding/dsa/chap-02.md" },
+        { "03. 树" = "coding/dsa/chap-03.md" },
+        { "04. 散列" = "coding/dsa/chap-04.md" },
+        { "05. 优先队列与堆" = "coding/dsa/chap-05.md" },
+        { "06. 排序" = "coding/dsa/chap-06.md" },
+        { "07. 图论算法" = "coding/dsa/chap-07.md" }
+      ] },
+      { "课后作业解题报告" = [
+        { "DS-1 斐波那契数列" = "coding/dsa/DS-1.md" },
+        { "DS-2 完善 Array List" = "coding/dsa/DS-2.md" },
+        { "DS-3 后缀表达式求值" = "coding/dsa/DS-3.md" },
+        { "DS-4 二叉搜索树的功能扩展" = "coding/dsa/DS-4.md" },
+        { "DS-5 AVL 树的功能扩展" = "coding/dsa/DS-5.md" },
+        { "DS-6 双重探查散列表" = "coding/dsa/DS-6.md" },
+        { "DS-7 二叉搜索树的哈希" = "coding/dsa/DS-7.md" },
+        { "DS-8 O(n) 建堆" = "coding/dsa/DS-8.md" },
+        { "DS-9 快速排序" = "coding/dsa/DS-9.md" },
+        { "DS-10 动态规划-蛋糕塔" = "coding/dsa/DS-10.md" }
+      ] }
       ] },
     { "自己研究的小东西" = [
       { "三体问题" = "coding/3body.md" },
@@ -75,7 +97,7 @@ features = [
   "search.suggest",
   "search.highlight",
   "search.share",
-  "navigation.expand",
+  # "navigation.expand",  # 取消以默认折叠子菜单
   "navigation.indexes",
   "navigation.instant",           # 即时导航
   "navigation.instant.prefetch",  # 预加载链接

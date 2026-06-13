@@ -3,3 +3,4 @@ site/
 .venv
 .pilotdeck
 *.pptx
+.tmp
