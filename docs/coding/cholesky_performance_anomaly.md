@@ -1,6 +1,5 @@
 ---
 title: Cholesky 分解在不同平台上的性能异常
-authors: [Quinn]
 comments: true
 date: 2026-03-21
 tags:

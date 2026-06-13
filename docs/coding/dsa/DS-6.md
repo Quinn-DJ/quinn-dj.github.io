@@ -1,6 +1,5 @@
 ---
 title: DS-6 双重探查散列表
-authors: [Quinn]
 comments: true
 date: 2025-12-04
 ---

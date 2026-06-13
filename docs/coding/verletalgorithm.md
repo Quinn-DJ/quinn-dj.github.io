@@ -1,6 +1,5 @@
 ---
 title: Verlet算法
-authors: [Quinn]
 comments: true
 date: 2025-08-29
 tags:

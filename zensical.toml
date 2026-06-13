@@ -101,7 +101,7 @@ toggle = { icon = "material/toggle-switch", name = "切换至夜间模式" }
 media = "(prefers-color-scheme: dark)"
 scheme = "slate"                  # 夜间模式配色
 primary = "black"                # 主色调
-accent = "indigo"                 # 强调色
+accent = "black"                 # 强调色
 toggle = { icon = "material/toggle-switch-off-outline", name = "切换至日间模式" }
 
 [project.extra]
@@ -164,6 +164,7 @@ generic = true
 
 [project.markdown_extensions.toc]
 permalink = true
+toc_depth = 3
 
 [project.markdown_extensions."pymdownx.highlight"]
 anchor_linenums = true

@@ -1,6 +1,5 @@
 ---
 title: 初等函数与 EML 算子
-authors: 
   - name: 林小夏
 comments: true
 date: 2026-04-28

@@ -1,6 +1,5 @@
 ---
 title: 常微分方程（ODE）
-authors:
   - Quinn
 comments: true
 date: 2026-01-14

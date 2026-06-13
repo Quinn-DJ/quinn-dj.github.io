@@ -1,6 +1,5 @@
 ---
 title: 数据结构和算法课后作业解题报告
-authors: [Quinn]
 comments: true
 date: 2025-01-14
 tags:

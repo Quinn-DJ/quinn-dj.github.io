@@ -1,6 +1,5 @@
 ---
 title: DS-9 快速排序
-authors: [Quinn]
 comments: true
 date: 2025-12-04
 ---

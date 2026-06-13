@@ -1,6 +1,5 @@
 ---
 title: DS-1 斐波那契数列
-authors: [Quinn]
 comments: true
 date: 2025-09-17
 ---

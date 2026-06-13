@@ -1,6 +1,5 @@
 ---
 title: DS-2 完善 Array List
-authors: [Quinn]
 comments: true
 date: 2025-09-24
 ---

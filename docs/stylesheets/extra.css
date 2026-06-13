@@ -544,7 +544,7 @@ div.hide {
 
 /* 目录导航的缩进参考线 */
 nav.md-nav--secondary ul {
-  border-left: 1px solid lightblue;
+  border-left: 1px solid rgba(0, 0, 0, 0);
 }
 
 @import url('https://static.zeoseven.com/zsft/292/main/result.css');

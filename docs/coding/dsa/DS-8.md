@@ -1,6 +1,5 @@
 ---
 title: DS-8 O(n) 建堆
-authors: [Quinn]
 comments: true
 date: 2025-12-04
 ---

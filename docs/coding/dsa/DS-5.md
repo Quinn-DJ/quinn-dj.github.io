@@ -1,6 +1,5 @@
 ---
 title: DS-5 AVL 树的功能扩展
-authors: [Quinn]
 comments: true
 date: 2025-12-04
 ---

@@ -1,6 +1,5 @@
 ---
 title: 三体问题
-authors: CrazyFish
 comments: true
 date: 2025-08-26
 tags:

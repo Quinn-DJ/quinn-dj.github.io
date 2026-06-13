@@ -1,6 +1,5 @@
 ---
 title: DS-7 二叉搜索树的哈希
-authors: [Quinn]
 comments: true
 date: 2025-12-04
 ---

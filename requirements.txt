@@ -1,0 +1,5 @@
+# Static site generator (wraps mkdocs)
+zensical>=0.0.45
+# Theme and markdown extensions used by zensical config
+mkdocs-material>=9.0
+pymdown-extensions>=10.0
