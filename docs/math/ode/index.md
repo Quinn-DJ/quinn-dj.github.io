@@ -1,6 +1,7 @@
 ---
 title: 常微分方程（ODE）
-  - Quinn
+authors:
+  - name: Quinn
 comments: true
 date: 2026-01-14
 description: 常微分方程课程笔记

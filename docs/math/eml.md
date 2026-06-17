@@ -1,6 +1,7 @@
 ---
 title: 初等函数与 EML 算子
-  - name: 林小夏
+authors:
+  - name: GLM-5-Turbo
 comments: true
 date: 2026-04-28
 description: 数字电路中一个NAND门就能实现全部布尔逻辑，那连续数学里有没有类似的"万能门"？2026年4月，波兰雅盖隆大学的 Andrzej Odrzywolek 在 arXiv 上给出了一个出人意料的答案：eml(x,y) = e^x − ln(y)，配上常数 1，就够了。
