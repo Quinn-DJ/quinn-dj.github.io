@@ -41,7 +41,13 @@ nav = [
         { "07. 继承进阶" = "coding/oop/chap-07.md" },
         { "08. 运算符重载" = "coding/oop/chap-08.md" },
         { "09. 多态与虚函数" = "coding/oop/chap-09.md" },
-        { "10. 多态进阶与智能指针" = "coding/oop/chap-10.md" }
+        { "10. C++模板与智能指针" = "coding/oop/chap-10.md" },
+        { "11. STL 容器深度解析" = "coding/oop/chap-11.md" },
+        { "12. 迭代器与标准库算法" = "coding/oop/chap-12.md" },
+        { "13. 异常处理" = "coding/oop/chap-13.md" },
+        { "14. 文件操作" = "coding/oop/chap-14.md" },
+        { "15. 实战项目深度解析" = "coding/oop/chap-15.md" },
+        { "16. 现代C++总复习" = "coding/oop/chap-16.md" }
       ] }
       ] },
     { "数据结构与算法" = [
