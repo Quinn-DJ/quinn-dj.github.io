@@ -603,7 +603,7 @@ public:
 
 1. 初始化函数，默认初始化函数；
 2. bodies, t, dt 的读/写基本函数；
-3. computeGravity(int i) ，功能是计算 bodies[i] (存放在 bodies 中) 所受到的来自其他 body 的万有引力；
+3. computeGravity(int i) ，功能是计算 `bodies[i]` (存放在 bodies 中) 所受到的来自其他 body 的万有引力；
 4. stepForward()， 功能是遍历 bodies 中的每一个成员，调用 computeGravity 来更新它们的加速度，然后通过各自的 update(dt) 更新各自的速度和位置，最后更新时间。
 
 请给下面改进后的Body.h文件增加较为详细的 Doxygen 注释，包括文件说明，成员变量，函数的返回值和参数的说明。

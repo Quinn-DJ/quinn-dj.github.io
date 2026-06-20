@@ -280,4 +280,4 @@ EML 不是唯一的功能完备算子。论文还提到了几个变体：
 
 **参考来源：**
 
-- Odrzywolek, A. (2026). *All elementary functions from a single binary operator*. arXiv:2603.21852v2 [cs.SC]. | [论文链接](https://arxiv.org/abs/2603.21852) | [代码仓库](https://github.com/VA00/SymbolicRegressionPackage) | [数据集](https://doi.org/10.5281/zenodo.19183008)
+- Odrzywolek, A. (2026). *All elementary functions from a single binary operator*. arXiv:2603.21852v2. | [论文链接](https://arxiv.org/abs/2603.21852) | [代码仓库](https://github.com/VA00/SymbolicRegressionPackage) | [数据集](https://doi.org/10.5281/zenodo.19183008)
