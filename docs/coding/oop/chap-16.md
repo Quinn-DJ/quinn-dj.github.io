@@ -1,10 +1,10 @@
-# Chapter 16: 现代C++总复习
+# Chapter 16: 现代C++总复习 (Modern C++ Comprehensive Review)
 
 > 系统梳理 C++11-23 核心语法特性与工程最佳实践，建立完整的知识图谱，夯实面向对象、泛型编程与函数式编程的理论基础。
 
 ---
 
-## 知识体系全景图
+## 知识体系全景图 (Knowledge Map Overview)
 
 现代 C++ 学习可分为三个层次：
 
@@ -66,7 +66,7 @@ using Vec = std::vector<T>;  // Vec<int> 即 vector<int>
 
 | 机制 | 作用 |
 |------|------|
-| **封装 (Encapsulation)** | 通过访问控制符隐藏实现细节，仅暴露必要接口 |
+| **封裝 (Encapsulation)** | 通过访问控制符隐藏实现细节，仅暴露必要接口 |
 | **构造函数** | 对象初始化时的资源分配与状态设置 |
 | **析构函数** | 销毁时释放资源；基类析构建议声明为 `virtual` |
 | **const 成员函数** | 承诺不修改对象状态，支持 const 对象调用 |
@@ -465,7 +465,7 @@ auto even_sq = v | std::views::filter(even)
                 | std::views::transform(sq);
 ```
 
-### C++23：std::expected
+### C++23：std::expected (成功返回值 / 失败返回错误类型)
 
 提供"成功返回值 / 失败返回错误"的显式语义，是异常和错误码之外的第三种错误处理范式：
 
@@ -631,5 +631,5 @@ persons.push_back(std::make_shared<Person>("Zhang San", 20));
 1. **深入理解原理**：不仅要会用，更要理解 vtable 结构、引用计数实现、移动语义底层机制
 2. **多写代码多实践**：通过小型实战项目和算法题巩固知识
 3. **阅读优秀代码**：研读 Boost、Abseil 等成熟开源库的源码
-4. **关注标准发展**：了解 C++20/23 新特性（协程、模块、范围等）
+4. **关注标准发展**：了解 C++20/23 新特性（协程 coroutines、模块 modules、范围 ranges 等）
 5. **善用开发工具**：熟练使用 GCC/Clang 编译器、GDB/LLDB 调试器、Clang-Tidy 静态分析工具

@@ -1,6 +1,6 @@
-# Chapter 1: C++ 基础入门
+# Chapter 1: C++ 基础入门 (C++ Basics)
 
-## C++ 简介
+## C++ 简介 (C++ Introduction)
 
 ### 什么是 C++？
 
@@ -12,7 +12,7 @@ C++ 由 Bjarne Stroustrup 于 1979 年在贝尔实验室开发，最初名为 "C
 ### 核心特点
 
 - **极致高效** — 性能接近汇编语言，是高性能应用的首选
-- **面向对象** — 支持封装、继承、多态三大特性
+- **面向对象（Object-Oriented）** — 支持封装（encapsulation）、继承（inheritance）、多态（polymorphism）三大特性
 - **广泛通用** — 操作系统、游戏引擎、嵌入式、数据库等
 - **持续进化** — C++11/14/17/20 不断引入现代特性
 
@@ -31,7 +31,7 @@ C++ 由 Bjarne Stroustrup 于 1979 年在贝尔实验室开发，最初名为 "C
 C++ 是 C 语言的超集——几乎所有 C 代码无需修改即可在 C++ 编译器中编译运行。
 
 !!! important "C++ 对 C 的增强"
-    - 面向对象机制（类与对象）
+    - 面向对象机制（类与对象，class and object）
     - 更严格的类型检查（`const` 关键字）
     - I/O 流（`cout`/`cin`）替代 `printf`/`scanf`
     - 命名空间（`namespace`）解决命名冲突
@@ -88,7 +88,7 @@ int main() {
 
 ---
 
-## 变量与数据类型
+## 变量与数据类型 (Variables and Data Types)
 
 ### 变量的声明与初始化
 
@@ -168,7 +168,7 @@ const double PI = 3.14159;   // 推荐：类型安全的常量
 
 ---
 
-## 输入与输出
+## 输入与输出 (Input and Output)
 
 ### cout 输出语句
 
@@ -204,9 +204,9 @@ cin >> x >> y;
 
 ---
 
-## 运算符
+## 运算符 (Operators)
 
-### 算术运算符
+### 算术运算符 (Arithmetic Operators)
 
 | 运算符 | 含义 | 示例 |
 |--------|------|------|
@@ -278,9 +278,9 @@ b = a++;   // b=6, a=7
 
 ---
 
-## 流程控制
+## 流程控制 (Flow Control)
 
-### 条件语句
+### 条件语句 (Conditional Statements)
 
 #### if 语句
 
@@ -333,7 +333,7 @@ switch (choice) {
 !!! warning "别忘了 break"
     每个 `case` 末尾必须有 `break`，否则会"贯穿"（fall-through）到下一个 case。
 
-### 循环语句
+### 循环语句 (Loop Statements)
 
 #### while 循环（先判断后执行）
 
@@ -378,7 +378,7 @@ for (int i = 1; i <= 9; i++) {
 }
 ```
 
-### 跳转语句
+### 跳转语句 (Jump Statements)
 
 | 语句 | 作用 |
 |------|------|
@@ -390,7 +390,7 @@ for (int i = 1; i <= 9; i++) {
 
 ---
 
-## 编程规范与良好习惯
+## 编程规范与良好习惯 (Coding Conventions)
 
 - **数据隐藏** — 始终将数据成员设为 `private`，通过公有接口访问
 - **接口清晰** — 隐藏复杂实现，提供简洁的公有接口
@@ -399,7 +399,7 @@ for (int i = 1; i <= 9; i++) {
 - **声明与实现分离** — `.h` 放声明，`.cpp` 放实现
 - **头文件保护** — 使用 `#ifndef` / `#define` / `#endif` 或 `#pragma once`
 
-## 编译与运行
+## 编译与运行 (Compilation and Execution)
 
 ```bash
 # 编译

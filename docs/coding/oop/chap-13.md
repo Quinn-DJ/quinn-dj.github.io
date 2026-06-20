@@ -112,7 +112,7 @@ int main() {
 
 ---
 
-## 异常的规则与传递
+## 异常的规则与传递 (Exception Rules and Propagation)
 
 ### 捕获规则
 
@@ -167,7 +167,7 @@ catch (const SomeException& e) {
 
 ---
 
-## 自定义异常类
+## 自定义异常类 (Custom Exception Classes)
 
 ### 为什么需要自定义异常？
 
@@ -233,7 +233,7 @@ int main() {
 
 ---
 
-## 异常与智能指针
+## 异常与智能指针 (Exceptions and Smart Pointers)
 
 ### 裸指针的异常安全问题
 
@@ -289,7 +289,7 @@ int main() {
 
 ---
 
-## 标准异常库
+## 标准异常库 (Standard Exception Library)
 
 ### 层次结构
 
@@ -356,10 +356,10 @@ int main() {
 | **保持异常对象轻量** | 栈展开期间可能多次拷贝 |
 | **析构函数禁止抛异常** | 必须在内部捕获处理 |
 | **使用 RAII 管理资源** | 智能指针、容器等确保异常安全 |
-| **使用 noexcept** | 明确函数不抛出异常，有助于编译器优化 |
+| **使用 noexcept (noexcept specifier)** | 明确函数不抛出异常，有助于编译器优化 |
 | **文档化异常** | 在函数注释中说明可能抛出的异常类型 |
 
-### noexcept 关键字 (C++11)
+### noexcept 关键字 (noexcept Keyword, C++11)
 
 ```cpp
 // 明确声明不抛出异常的函数

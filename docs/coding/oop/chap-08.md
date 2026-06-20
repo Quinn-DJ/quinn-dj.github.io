@@ -4,7 +4,7 @@
 
 ---
 
-## 什么是运算符重载？
+## 什么是运算符重载？ (What is Operator Overloading?)
 
 运算符重载 (Operator Overloading) 是 C++ 的一项强大特性，允许为自定义类型赋予运算符语义，使得用户定义的类型能够像基本类型一样使用运算符。
 
@@ -23,14 +23,14 @@ Complex c = a + b;   // 比 Complex c = a.add(b) 更直观
 
 ---
 
-## 两种重载形式
+## 两种重载形式 (Two Forms of Overloading)
 
 | 形式 | 语法 | 适用场景 |
 |------|------|----------|
-| **成员函数** | `T T::operator+(const T&) const` | 左操作数为当前对象 |
-| **非成员函数** | `T operator+(const T&, const T&)` | 对称运算、左操作数非当前类 |
+| **成员函数（Member Function）** | `T T::operator+(const T&) const` | 左操作数为当前对象 |
+| **非成员函数（Non-member Function）** | `T operator+(const T&, const T&)` | 对称运算、左操作数非当前类 |
 
-### 成员函数形式
+### 成员函数形式 (Member Function Form)
 
 ```cpp
 class Point {
@@ -53,7 +53,7 @@ public:
 };
 ```
 
-### 非成员函数形式
+### 非成员函数形式 (Non-member Function Form)
 
 当**左操作数不是当前类类型**时（如 `cout << point`），必须使用非成员函数形式。
 
@@ -82,7 +82,7 @@ Point operator+(const Point& a, const Point& b) {
 
 ## 常用运算符重载
 
-### 二元算术运算符
+### 二元算术运算符 (Binary Arithmetic Operators)
 
 以成员函数形式：
 
@@ -115,7 +115,7 @@ public:
     }
     ```
 
-### 复合赋值运算符
+### 复合赋值运算符 (Compound Assignment Operators)
 
 复合赋值运算符通常返回**引用**，以支持链式赋值：
 
@@ -145,7 +145,7 @@ public:
 };
 ```
 
-### 关系运算符
+### 关系运算符 (Relational Operators)
 
 ```cpp
 class Point {
@@ -169,7 +169,7 @@ public:
 
 ---
 
-## 自增/自减运算符
+## 自增/自减运算符 (Increment/Decrement Operators)
 
 前置与后置的区别在于参数：
 
@@ -203,7 +203,7 @@ public:
 
 ---
 
-## 输入/输出运算符
+## 输入/输出运算符 (I/O Operators — `<<` `>>`)
 
 `<<` 和 `>>` 的左操作数是 `ostream`/`istream`，**必须是非成员函数**。
 
@@ -247,7 +247,7 @@ int main() {
 
 ---
 
-## 下标运算符 []
+## 下标运算符 `[]` (Subscript Operator)
 
 下标运算符用于模拟数组式访问：
 
@@ -274,9 +274,9 @@ public:
 
 ---
 
-## 函数调用运算符 ()
+## 函数调用运算符 `()` (Function Call Operator)
 
-函数调用运算符允许对象像函数一样调用（函数对象/Functor）：
+函数调用运算符允许对象像函数一样调用（函数对象 / Functor）：
 
 ```cpp
 class Adder {
@@ -306,7 +306,7 @@ sort(vec.begin(), vec.end(), less<int>());
 
 ---
 
-## 类型转换运算符
+## 类型转换运算符 (Type Conversion Operator)
 
 C++ 支持定义从自定义类型到其他类型的隐式转换：
 
@@ -338,12 +338,12 @@ int main() {
 
 ---
 
-## 运算符重载的最佳实践
+## 运算符重载的最佳实践 (Best Practices)
 
 | 准则 | 说明 |
 |------|------|
-| **保持语义一致** | `+` 不能做减法，`==` 不能做排序 |
-| **尊重优先级** | 无法改变运算符优先级，设计时需注意 |
-| **不重载陌生的** | 不重载 `&&` `||` `,`（会失去短路求值特性） |
-| **提供对称性** | 重载 `+` 通常也要重载 `+=` |
-| **使用友元谨慎** | 仅在非成员函数需要访问私有成员时使用 |
+| **保持语义一致（Semantic Consistency）** | `+` 不能做减法，`==` 不能做排序 |
+| **尊重优先级（Respect Precedence）** | 无法改变运算符优先级，设计时需注意 |
+| **不重载陌生的（Don't Overload Unfamiliar）** | 不重载 `&&` `||` `,`（会失去短路求值特性） |
+| **提供对称性（Provide Symmetry）** | 重载 `+` 通常也要重载 `+=` |
+| **使用友元谨慎（Use Friend Judiciously）** | 仅在非成员函数需要访问私有成员时使用 |

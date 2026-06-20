@@ -22,7 +22,7 @@
 
 ---
 
-## 访问控制修饰符
+## 访问控制修饰符 (Access Control Modifiers)
 
 C++ 提供三种访问控制修饰符，用于实现封装：
 
@@ -110,7 +110,7 @@ public:
 
 ---
 
-## Getter 与 Setter 的最佳实践
+## Getter/Setter 最佳实践 (Best Practices)
 
 ### 为什么要用 Getter/Setter？
 
@@ -198,7 +198,7 @@ public:
 
 ---
 
-## mutable 关键字
+## mutable 关键字 (mutable Keyword)
 
 `mutable` 用于修饰成员变量，即使在 `const` 成员函数中也可以修改该变量。
 
@@ -227,7 +227,7 @@ public:
 
 ---
 
-## 全局函数与封装
+## 全局函数与封装 (Global Functions and Encapsulation)
 
 封装并不排斥全局函数——对于**不直接操作类的私有成员**的辅助功能，全局函数是合适的：
 
@@ -262,7 +262,7 @@ bool isAreaEqual(const Circle& c1, const Circle& c2) {
 | 模块层面 | 头文件只暴露必要的声明 |
 
 ```cpp
-// 匿名命名空间：文件内部可见，对外不可见
+// 匿名命名空间 (anonymous namespace)：文件内部可见，对外不可见
 namespace {
     void helperFunc() {
         // 仅当前文件可使用

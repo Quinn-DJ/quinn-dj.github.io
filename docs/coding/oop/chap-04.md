@@ -25,7 +25,7 @@
 | 拷贝构造 | `ClassName(const ClassName& other)` | 用已有对象创建新对象 |
 | 移动构造 (C++11) | `ClassName(ClassName&& other)` | 移动临时对象 |
 
-## 默认构造函数
+## 默认构造函数 (Default Constructor)
 
 默认构造函数是指**不带参数**的构造函数。如果程序员没有定义任何构造函数，编译器会自动生成一个空的默认构造。
 
@@ -84,7 +84,7 @@ Rectangle r(3, 4);  // ✅ 正确
 
 ---
 
-## 带参构造函数
+## 带参构造函数 (Parameterized Constructor)
 
 通过参数为对象提供初始数据，是对默认构造的扩展。
 
@@ -172,7 +172,7 @@ public:
 };
 ```
 
-### explicit 关键字
+### explicit 关键字 (explicit Keyword)
 
 `explicit` 阻止编译器通过单参数构造函数进行**隐式类型转换**。
 
@@ -194,7 +194,7 @@ func(Time(10));     // ✅ 显式转换
 
 ---
 
-## 委托构造函数 (C++11)
+## 委托构造函数 (Delegating Constructor, C++11)
 
 一个构造函数可以调用同一个类的另一个构造函数，避免代码重复：
 
@@ -217,7 +217,7 @@ public:
 
 ---
 
-## 拷贝构造函数
+## 拷贝构造函数 (Copy Constructor)
 
 拷贝构造函数使用**同一个类的已有对象**来初始化新对象。
 
@@ -411,7 +411,7 @@ public:
         strcpy(_data, other._data);
     }
 
-    // 拷贝赋值运算符
+    // 拷贝赋值运算符 (copy assignment operator)
     String& operator=(const String& other) {
         if (this == &other) return *this;  // 自赋值检查
 

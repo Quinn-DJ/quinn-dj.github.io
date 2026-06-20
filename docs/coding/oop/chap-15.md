@@ -1,4 +1,4 @@
-# Chapter 15: C++ 实战项目深度解析
+# Chapter 15: C++ 实战项目深度解析 (C++ Practical Projects In-Depth)
 
 > 从基础语法到 SOLID 设计原则，通过四个由浅入深的实战项目，系统串联 C++ 核心编程技术、面向对象设计思想及现代 C++ 最佳实践。
 
@@ -8,7 +8,7 @@
 
 ### 项目目标
 
-构建一个基础的学生信息增删改查系统，综合运用面向对象三大支柱（封装、继承、多态），实践文件流操作实现数据持久化，并引入异常处理提升程序健壮性。
+构建一个基础的学生信息增删改查系统，综合运用面向对象三大支柱（封装 encapsulation、继承 inheritance、多态 polymorphism），实践文件流操作实现数据持久化，并引入异常处理提升程序健壮性。
 
 ### 核心技术点
 
@@ -92,7 +92,7 @@ void loadFromFile() {
 }
 ```
 
-!!! tip "虚拟构造函数模式"
+!!! tip "虚拟构造函数模式 (Virtual Constructor Pattern)"
     通过"类型标识 + 多态 + 智能指针"的组合，解决了异构对象集合的序列化与反序列化问题。
 
 #### 异常处理
@@ -202,7 +202,7 @@ for (int x : list) {
 }
 ```
 
-### 深拷贝：拷贝-交换技巧
+### 深拷贝：拷贝-交换技巧 (Copy-and-Swap)
 
 ```cpp
 // 拷贝构造：逐节点重建
@@ -224,7 +224,7 @@ LinkedList& operator=(const LinkedList& other) {
 !!! tip "拷贝-交换 = 黄金法则"
     先构造临时对象完成深拷贝，再交换指针转移资源。临时对象析构自动清理旧资源，天然异常安全且正确处理自赋值。
 
-### 移动语义
+### 移动语义 (Move Semantics)
 
 ```cpp
 // 移动构造："窃取"源对象的资源
@@ -244,7 +244,7 @@ LinkedList& operator=(LinkedList&& other) noexcept {
 }
 ```
 
-### 函数式编程接口
+### 函数式编程接口 (Functional Programming Interface)
 
 ```cpp
 // forEach: 对每个元素执行回调
@@ -280,21 +280,21 @@ auto strs = list.map<string>([](int x) { return "n" + to_string(x); });
 
 ---
 
-## 项目三：迷你电商系统
+## 项目三：迷你电商系统 (Mini E-Commerce System)
 
 ### 项目目标
 
-以电商业务为载体，深入实践 **SOLID 设计原则**，结合 C++20 Concepts 和 C++23 `std::print` 等现代特性，构建高内聚、低耦合、可扩展的订单管理系统。
+以电商业务为载体，深入实践 **SOLID 设计原则（SOLID Design Principles）**，结合 C++20 Concepts 和 C++23 `std::print` 等现代特性，构建高内聚、低耦合、可扩展的订单管理系统。
 
-### SOLID 设计原则
+### SOLID 设计原则 (SOLID Design Principles)
 
 | 原则 | 核心思想 | 体现 |
 |------|---------|------|
-| **S** 单一职责 | 一个类只应有一个变化原因 | `Product` 接口只定义产品行为 |
-| **O** 开放封闭 | 对扩展开放，对修改关闭 | 新增 `Product` 子类无需修改 `Order` |
-| **L** 里氏替换 | 子类可替换基类 | `PhysicalProduct`/`DigitalProduct` 无缝替换 `Product` |
-| **I** 接口隔离 | 不依赖不需要的接口 | 保持接口精简，无冗余方法 |
-| **D** 依赖倒置 | 依赖抽象而非具体 | `Order` 依赖 `Product` 接口而非具体类 |
+| **S** 单一职责 (SRP) | 一个类只应有一个变化原因 | `Product` 接口只定义产品行为 |
+| **O** 开放封闭 (OCP) | 对扩展开放，对修改关闭 | 新增 `Product` 子类无需修改 `Order` |
+| **L** 里氏替换 (LSP) | 子类可替换基类 | `PhysicalProduct`/`DigitalProduct` 无缝替换 `Product` |
+| **I** 接口隔离 (ISP) | 不依赖不需要的接口 | 保持接口精简，无冗余方法 |
+| **D** 依赖倒置 (DIP) | 依赖抽象而非具体 | `Order` 依赖 `Product` 接口而非具体类 |
 
 ### 代码剖析
 
@@ -362,7 +362,7 @@ print("Name: {}, Price: ${:.2f}\n", name, price);
 
 ---
 
-## 项目四：综合学生管理系统
+## 项目四：综合学生管理系统 (Integrated Student Management System)
 
 ### 项目目标
 

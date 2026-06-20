@@ -4,9 +4,9 @@
 
 ---
 
-## this 指针
+## this 指针 (this Pointer)
 
-`this` 指针是每个非静态成员函数中隐含的指针，指向**当前调用该函数的对象本身**。
+`this` 指针（this pointer）是每个非静态成员函数中隐含的指针，指向**当前调用该函数的对象本身**。
 
 !!! tip "this 的本质"
     `this` 是一个 `ClassName* const` 常量指针——不能修改它指向的对象，但可以修改它所指向对象的内容（在非 const 函数中）。
@@ -22,7 +22,7 @@ public:
 
     Point& setY(int y) {
         this->_y = y;
-        return *this;   // 返回当前对象引用，支持链式调用
+        return *this;   // 返回当前对象引用，支持链式调用 (method chaining)
     }
 };
 
@@ -41,9 +41,9 @@ p.setX(10).setY(20);
 
 ---
 
-## const 成员函数深入
+## const 成员函数深入 (const Member Functions in Depth)
 
-### const 的重载
+### const 的重载 (Overloading on const)
 
 一个函数可以同时存在 `const` 和非 `const` 版本，形成重载：
 
@@ -234,9 +234,9 @@ public:
 
 ---
 
-## 运算符重载入门
+## 运算符重载入门 (Introduction to Operator Overloading)
 
-运算符重载让自定义类型支持 C++ 内置运算符语法，提高代码可读性。
+运算符重载（operator overloading）让自定义类型支持 C++ 内置运算符语法，提高代码可读性。
 
 ```cpp
 class Point {

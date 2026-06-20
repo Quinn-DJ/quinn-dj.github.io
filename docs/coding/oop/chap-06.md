@@ -124,9 +124,9 @@ class Derived : private Base {    // 等价于 class Derived : Base
 
 ---
 
-## 继承中的构造与析构
+## 继承中的构造与析构 (Construction & Destruction in Inheritance)
 
-### 构造顺序
+### 构造顺序 (Construction Order)
 
 1. 先构造**基类**部分
 2. 再构造**派生类**成员
@@ -160,9 +160,9 @@ int main() {
     构造：基类 → 派生类（先建基础，再建上层）
     析构：派生类 → 基类（先拆上层，再拆基础）
 
-### 派生类的初始化列表
+### 派生类的初始化列表 (Derived Class Initializer List)
 
-派生类初始化列表**必须**调用基类的构造函数：
+派生类初始化列表（initializer list）**必须**调用基类的构造函数：
 
 ```cpp
 class Animal {
@@ -187,9 +187,9 @@ public:
 
 ---
 
-## 向上与向下转型
+## 向上与向下转型 (Upcasting & Downcasting)
 
-### 向上转型 (Upcasting) — 安全的隐式转换
+### 向上转型 (Upcasting) — 安全的隐式转换 (Safe Implicit Conversion)
 
 派生类指针/引用可以隐式转换为基类指针/引用：
 
@@ -199,7 +199,7 @@ Animal* animalPtr = &dog;     // ✅ 向上转型，安全
 Animal& animalRef = dog;      // ✅ 向上转型
 ```
 
-### 向下转型 (Downcasting) — 不安全，需显式
+### 向下转型 (Downcasting) — 不安全，需显式 (Unsafe, Explicit Required)
 
 基类指针/引用转换为派生类指针/引用是不安全的，需要使用运行时类型检查：
 
@@ -211,9 +211,9 @@ Dog* d = dynamic_cast<Dog*>(a); // ✅ 安全向下转型
 
 ---
 
-## 继承中的隐藏（重定义）
+## 继承中的隐藏/重定义 (Name Hiding / Redefinition)
 
-如果派生类定义了与基类同名的方法，基类方法被**隐藏（重定义）**。
+如果派生类定义了与基类同名的方法，基类方法被**隐藏（重定义，name hiding）**。
 
 ```cpp
 class Base {
@@ -235,7 +235,7 @@ int main() {
 }
 ```
 
-!!! warning "名字隐藏"
+!!! warning "名字隐藏 (Name Hiding)"
     派生类只需方法名相同就会隐藏**基类所有同名函数**（不看参数列表）。可以使用 `using Base::show` 将基类函数引入派生类作用域。
 
 ---
@@ -304,5 +304,5 @@ int main() {
 !!! tip "继承的设计原则"
     - 使用继承来表达 **Is-a** 关系
     - 使用组合来表达 **Has-a** 关系
-    - 尽量遵循**里氏替换原则**：派生类应该能替换基类使用
+    - 尽量遵循**里氏替换原则（Liskov Substitution Principle, LSP）**：派生类应该能替换基类使用
     - 如果只是为了复用代码，优先考虑组合而非继承

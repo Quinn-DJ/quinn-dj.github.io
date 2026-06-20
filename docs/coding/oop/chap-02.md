@@ -57,7 +57,7 @@ public:
 !!! warning "分号陷阱"
     类定义结束后的 `}` 后面必须紧跟 `;`。这是一个非常常见的编译错误！
 
-### 成员变量（属性）
+### 成员变量/属性 (Member Variables / Attributes)
 
 ```cpp
 class Student {
@@ -71,7 +71,7 @@ private:
 !!! tip "命名规范"
     推荐给成员变量加前缀（如 `_name` 或 `m_name`），以区分普通局部变量和函数参数。
 
-### 成员函数（方法）
+### 成员函数/方法 (Member Functions / Methods)
 
 成员函数定义了对象的行为，分为两类：
 
@@ -196,7 +196,7 @@ int main() {
 }
 ```
 
-### 初始化列表的优势
+### 初始化列表 (Initializer List) 的优势
 
 ```cpp
 class Point {
@@ -351,7 +351,7 @@ public:
 
 ---
 
-## UML 类图简介
+## UML 类图简介 (UML Class Diagram)
 
 ```
 ┌───────────────────┐

@@ -56,7 +56,7 @@ void swap(T& a, T& b) {
 
 ---
 
-## 函数模板
+## 函数模板 (Function Template)
 
 ### 定义语法
 
@@ -81,7 +81,7 @@ print(3.14);    // T = double
 !!! tip "自动推导"
     编译器根据传入实参的类型自动确定 `T` 的具体类型，无需手动指定。
 
-### 模板参数
+### 模板参数 (Template Parameters)
 
 **类型参数 (Type Parameters)**：代表通用数据类型，使用 `typename` 或 `class` 声明。实现代码泛型复用，适应多种类型。
 
@@ -110,7 +110,7 @@ int main() {
 !!! tip "非类型参数的核心价值"
     将数组大小纳入模板参数，实现编译期自动推导与类型安全保障，避免手动传参错误。
 
-### 实例化机制
+### 实例化机制 (Instantiation Mechanism)
 
 模板如同 3D 模型文件（蓝图），只有在"打印"（实例化）时，才会生成真实的物体（代码）。
 
@@ -135,7 +135,7 @@ int main() {
 }
 ```
 
-### 函数模板重载
+### 函数模板重载 (Function Template Overloading)
 
 允许定义多个同名函数模板，只要其模板参数列表或函数参数列表不同。编译器根据上下文自动选择最佳匹配。
 
@@ -160,7 +160,7 @@ print("Hello");      // 匹配普通函数（精确匹配优先）
 !!! tip "重载判定规则"
     若普通函数与模板均匹配，**普通函数优先调用**。
 
-### 模板特化
+### 模板特化 (Template Specialization)
 
 当通用模板对特定类型效率低下或逻辑不适用时，为这些类型提供定制化的特殊实现。
 
@@ -187,7 +187,7 @@ print("Hello");  // String: Hello (len=5)
 
 ---
 
-## 类模板
+## 类模板 (Class Template)
 
 ### 定义语法
 
@@ -258,7 +258,7 @@ int Counter<T>::count = 0;
 !!! tip "核心结论"
     类模板的静态成员属于特定的实例化类（如 `Counter<int>`），而非模板本身。修改其中一个的静态成员不会影响另一个。
 
-### 类模板特化
+### 类模板特化 (Class Template Specialization)
 
 **全特化 (Full Specialization)**：为所有模板参数指定具体类型。本质上是一个普通的类定义，针对特定类型优化逻辑。
 
@@ -340,7 +340,7 @@ constexpr int result = factorial<5>();
 int arr[result];  // 可直接作为数组大小
 ```
 
-### 模板参数默认值 (C++11)
+### 模板参数默认值 (Template Parameter Defaults, C++11)
 
 ```cpp
 template <typename T = int, size_t C = 10>

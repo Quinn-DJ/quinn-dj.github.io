@@ -56,7 +56,7 @@ int main() {
 
 - 将**不同来源的功能**组合到一个类中
 - 实现**多个接口**（Java 接口的概念在 C++ 中通过纯虚基类实现）
-- **混合类 (Mixin)**：为类添加特定功能
+- 使用 **Mixin（混合类）**代替深层的多重继承
 
 !!! tip "多重继承 vs 组合"
     当你只是想要一个类拥有另一个类的功能时，优先考虑组合；只有当类的确是"既是 A 又是 B"时（Is-a），才使用多重继承。
@@ -231,9 +231,9 @@ int main() {
 
 ---
 
-## 组合优于继承
+## 组合优于继承 (Composition over Inheritance)
 
-多重继承的许多问题可以通过**组合模式**避免：
+多重继承的许多问题可以通过**组合模式（composition pattern）**避免：
 
 ```cpp
 // ❌ 多重继承方式
@@ -253,11 +253,11 @@ class Dragon : public Animal, public Flyable, public Runnable {
 
 ---
 
-## 面向对象设计与编程规范
+## 面向对象设计与编程规范 (OOA/OOD/OOP)
 
-- **面向对象分析 (OOA)**：识别类和对象、确定属性与行为
-- **面向对象设计 (OOD)**：定义类间关系（继承/组合/关联）
-- **面向对象编程 (OOP)**：编码实现，通过封装保证数据安全
+- **面向对象分析 (OOA — Object-Oriented Analysis)**：识别类和对象、确定属性与行为
+- **面向对象设计 (OOD — Object-Oriented Design)**：定义类间关系（继承/组合/关联）
+- **面向对象编程 (OOP — Object-Oriented Programming)**：编码实现，通过封装保证数据安全
 
 ### 规范实践
 
@@ -267,4 +267,4 @@ class Dragon : public Animal, public Flyable, public Runnable {
 | 避免深层继承 | 深度超过 3-4 层的继承关系难以维护 |
 | 优先使用组合 | "Has-a" 比 "Is-a" 更灵活 |
 | 使用 override 关键字 | 明确表达重写意图，编译器检查签名 |
-| 头文件保护 | `#pragma once` 或 `#ifndef` 宏 |
+| 头文件保护（Header Guard） | `#pragma once` 或 `#ifndef` 宏 |

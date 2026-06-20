@@ -43,21 +43,21 @@ c1.swap(c2);               // 交换两个容器（O(1)）
 
 | 类别 | 底层结构 | 特点 | 示例 |
 |------|---------|------|------|
-| **序列式容器** | 线性排列 | 位置固定，支持顺序/随机访问 | `vector`, `list`, `deque`, `array`, `forward_list` |
-| **关联式容器** | 红黑树 | 按键排序，O(log n) 查找 | `set`, `map`, `multiset`, `multimap` |
-| **无序关联式容器** | 哈希表 | 无序，平均 O(1) 查找 (C++11) | `unordered_set`, `unordered_map` |
-| **适配器容器** | 封装基础容器 | 提供特定接口（栈、队列） | `stack`, `queue`, `priority_queue` |
+| **序列式容器 (Sequence Containers)** | 线性排列 | 位置固定，支持顺序/随机访问 | `vector`, `list`, `deque`, `array`, `forward_list` |
+| **关联式容器 (Associative Containers)** | 红黑树 | 按键排序，O(log n) 查找 | `set`, `map`, `multiset`, `multimap` |
+| **无序关联式容器 (Unordered Associative)** | 哈希表 | 无序，平均 O(1) 查找 (C++11) | `unordered_set`, `unordered_map` |
+| **适配器容器 (Container Adapters)** | 封装基础容器 | 提供特定接口（栈、队列） | `stack`, `queue`, `priority_queue` |
 
 ---
 
-## 序列式容器
+## 序列式容器 (Sequence Containers)
 
 ### 各容器特性对比
 
 | 容器 | 底层结构 | 随机访问 | 头插入 | 尾插入 | 中间插入 | 内存连续性 |
 |------|---------|----------|--------|--------|----------|-----------|
-| `vector` | 动态数组 | O(1) | O(n) | O(1)* | O(n) | 是 |
-| `list` | 双向链表 | O(n) | O(1) | O(1) | O(1) | 否 |
+| `vector` | 动态数组 (Dynamic Array) | O(1) | O(n) | O(1)* | O(n) | 是 |
+| `list` | 双向链表 (Doubly Linked List) | O(n) | O(1) | O(1) | O(1) | 否 |
 | `deque` | 分段数组 | O(1) | O(1) | O(1)* | O(n) | 分段连续 |
 | `array` | 静态数组 | O(1) | — | — | — | 是 |
 | `forward_list` | 单向链表 | O(n) | O(1) | — | 指定后 O(1) | 否 |
@@ -69,7 +69,7 @@ c1.swap(c2);               // 交换两个容器（O(1)）
 
 ---
 
-### vector (动态数组)
+### vector — 动态数组 (Dynamic Array)
 
 **底层实现**：连续内存的动态数组，以"空间换时间"策略预分配内存（capacity >= size）。
 
@@ -126,7 +126,7 @@ if (m.contains(42)) { /* ... */ }
 
 ---
 
-### list (双向链表)
+### list — 双向链表 (Doubly Linked List)
 
 **底层实现**：双向链表，每个节点包含数据区和前驱/后继指针。
 
@@ -219,13 +219,13 @@ fl.erase_after(fl.begin());       // 删除指定节点之后的元素
 
 ---
 
-## 关联式容器
+## 关联式容器 (Associative Containers)
 
 ### 核心特性
 
 关联式容器基于**红黑树**实现，元素按键自动排序存储。查找、插入、删除的时间复杂度均为 O(log n)。
 
-### 红黑树简介
+### 红黑树简介 (Red-Black Tree)
 
 红黑树是一种自平衡的二叉搜索树，通过以下五项规则维持 O(log n) 的树高：
 
@@ -309,7 +309,7 @@ mm.insert({1, "Bob"});             // 同一个 Key 多个值
 
 ---
 
-## 无序关联式容器 (C++11)
+## 无序关联式容器 (Unordered Associative Containers, C++11)
 
 基于**哈希表**实现，元素存储无序，但查找效率平均为 O(1)。
 
@@ -317,8 +317,8 @@ mm.insert({1, "Bob"});             // 同一个 Key 多个值
 
 1. 哈希函数将关键字转化为哈希值
 2. 哈希值对应表中"桶"的索引位置
-3. 冲突时使用链地址法（拉链）解决
-4. 负载因子（元素总数 / 桶数）影响性能，过高会触发重哈希
+3. 冲突时使用链地址法（Separate Chaining，拉链）解决
+4. 负载因子（Load Factor，元素总数 / 桶数）影响性能，过高会触发重哈希
 
 ### unordered_set / unordered_map
 
@@ -346,7 +346,7 @@ umap.rehash(100);                     // 强制重哈希
 
 ---
 
-## 适配器容器
+## 适配器容器 (Container Adapters)
 
 适配器容器**不是独立容器**，而是对 `deque`、`vector` 等底层容器的封装与接口适配。
 
