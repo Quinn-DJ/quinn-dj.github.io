@@ -23,7 +23,7 @@ jobs:
       - run: pip install zensical
       - run: pip install mkdocs-material
       - run: |
-          BUILD_DATE=$(TZ='Asia/Shanghai' git log -1 --format='%Y-%m-%d %H:%M:%S')
+          BUILD_DATE=$(TZ='Asia/Shanghai' git log -1 --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%cd')
           sed -i "s|^\[project.extra\]|[project.extra]\nbuild_date = \"$BUILD_DATE\"|" zensical.toml
       - run: zensical build --clean
       - uses: actions/upload-pages-artifact@v4
