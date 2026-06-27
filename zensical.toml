@@ -21,35 +21,31 @@ extra_css = [
 nav = [
   { "首页" = [
     { "index" = "index.md" }
-    ] },
+  ] },
+
   { "Mathematics" = [
     { "index" = "math/index.md" },
     { "常微分方程" = "math/ode/index.md" },
     { "初等函数与 EML 算子" = "math/eml.md" }
-    ] },
+  ] },
+
   { "Computing & Coding" = [
     { "index" = "coding/index.md" },
     { "面向对象编程" = [
       { "index" = "coding/oop/index.md" },
       { "课程笔记" = [
-        { "01. C++ 基础入门" = "coding/oop/chap-01.md" },
-        { "02. 类与对象 (Part 1)" = "coding/oop/chap-02.md" },
-        { "03. 封装特性与访问控制" = "coding/oop/chap-03.md" },
-        { "04. 构造函数与析构函数" = "coding/oop/chap-04.md" },
-        { "05. 类的成员函数进阶" = "coding/oop/chap-05.md" },
-        { "06. 继承的基本概念与实现" = "coding/oop/chap-06.md" },
-        { "07. 继承进阶" = "coding/oop/chap-07.md" },
-        { "08. 运算符重载" = "coding/oop/chap-08.md" },
-        { "09. 多态与虚函数" = "coding/oop/chap-09.md" },
-        { "10. C++模板与智能指针" = "coding/oop/chap-10.md" },
-        { "11. STL 容器深度解析" = "coding/oop/chap-11.md" },
-        { "12. 迭代器与标准库算法" = "coding/oop/chap-12.md" },
-        { "13. 异常处理" = "coding/oop/chap-13.md" },
-        { "14. 文件操作" = "coding/oop/chap-14.md" },
-        { "15. 实战项目深度解析" = "coding/oop/chap-15.md" },
-        { "16. 现代C++总复习" = "coding/oop/chap-16.md" }
+        { "01. C++ 语言基础" = "coding/oop/01-cpp-basics.md" },
+        { "02. 类与对象" = "coding/oop/02-classes-and-objects.md" },
+        { "03. 构造函数与析构函数" = "coding/oop/03-constructors-destructors.md" },
+        { "04. 运算符重载" = "coding/oop/04-operator-overloading.md" },
+        { "05. 继承" = "coding/oop/05-inheritance.md" },
+        { "06. 多态" = "coding/oop/06-polymorphism.md" },
+        { "07. 模板与泛型编程" = "coding/oop/07-templates.md" },
+        { "08. STL：容器、迭代器与算法" = "coding/oop/08-stl.md" },
+        { "09. 异常处理与文件操作" = "coding/oop/09-exceptions-and-files.md" },
+        { "10. 现代 C++ 特性" = "coding/oop/10-modern-cpp.md" }
       ] }
-      ] },
+    ] },
     { "数据结构与算法" = [
       { "index" = "coding/dsa/index.md" },
       { "课程笔记" = [
@@ -73,20 +69,23 @@ nav = [
         { "DS-9 快速排序" = "coding/dsa/DS-9.md" },
         { "DS-10 动态规划-蛋糕塔" = "coding/dsa/DS-10.md" }
       ] }
-      ] },
+    ] },
     { "自己研究的小东西" = [
       { "三体问题" = "coding/3body.md" },
       { "Verlet 算法" = "coding/verletalgorithm.md" },
       { "Cholesky 分解在不同平台上的性能异常" = "coding/cholesky_performance_anomaly.md" }
-      ] }
-    ] },
+    ] }
+  ] },
+
   { "博客" = [
     { "index" = "blog/index.md" }
-    ] },
+  ] },
+
   { "标签" = "tags.md" },
+  
   { "友情连接" = [
     { "Links" = "links/index.md" }
-    ] },
+  ] },
 ]
 
 [project.theme]
