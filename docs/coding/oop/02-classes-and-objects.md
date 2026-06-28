@@ -421,15 +421,25 @@ private:
     int _x, _y;
 public:
     Point(int x, int y) : _x(x), _y(y) {}
-    friend Point add(const Point& a, const Point& b);
+    friend Point add1(const Point& a, const Point& b);
+    Point add2(const Point& a, const Point& b) {
+        return Point(a._x + b._x, a._y + b._y);  // 成员函数可以访问私有成员
+    }
 };
 
-Point add(const Point& a, const Point& b) {
+Point add1(const Point& a, const Point& b) {
     return Point(a._x + b._x, a._y + b._y);
 }
+
+/*
+Point add3(const Point& a, const Point& b) {
+    return Point(a._x + b._x, a._y + b._y);
+}
+add3 不是 Point 的友元函数，无法访问私有成员 _x 和 _y，会编译报错
+*/
 ```
 
-这里 `add` 函数是 `Point` 类的友元函数（拥有 `friend` 关键字），因此可以访问 `_x` 和 `_y`。
+这里 `add1` 函数是 `Point` 类的友元函数（拥有 `friend` 关键字），因此可以访问 `_x` 和 `_y`。
 
 ### 友元类
 

@@ -26,8 +26,8 @@
 // 传统方式：两次深拷贝
 vector<int> createLargeVector() {
     vector<int> v(1000000);
-    return v;  // C++98: 拷贝返回 → 性能差
-}              // C++11: 移动返回 → 高效
+    return v;  // C++98: 拷贝返回 -> 性能差
+}              // C++11: 移动返回 -> 高效
 
 vector<int> result = createLargeVector();
 ```
@@ -50,7 +50,7 @@ public:
     // 移动构造函数
     Buffer(Buffer&& other) noexcept
         : _data(other._data), _size(other._size) {
-        other._data = nullptr;   // ★ 将源对象置为安全状态
+        other._data = nullptr;   // 将源对象置为安全状态
         other._size = 0;
     }
 
@@ -100,8 +100,8 @@ void wrapper(T&& arg) {
 
 ```cpp
 auto p1 = make_unique<int>(42);
-// auto p2 = p1;                   // ❌ 禁止拷贝
-auto p3 = std::move(p1);           // ✅ 转移所有权
+// auto p2 = p1;                   // 禁止拷贝
+auto p3 = std::move(p1);           // 转移所有权
 
 // 自动释放
 void func() {
@@ -116,9 +116,9 @@ void func() {
 auto s1 = make_shared<Resource>();     // 引用计数 = 1
 auto s2 = s1;                          // 引用计数 = 2
 auto s3 = s1;                          // 引用计数 = 3
-// s3 出作用域 → 引用计数 = 2
-// s2 出作用域 → 引用计数 = 1
-// s1 出作用域 → 引用计数 = 0 → 释放资源
+// s3 出作用域 -> 引用计数 = 2
+// s2 出作用域 -> 引用计数 = 1
+// s1 出作用域 -> 引用计数 = 0 -> 释放资源
 ```
 
 ### weak_ptr — 解决循环引用
@@ -130,7 +130,7 @@ class B { weak_ptr<A> _aPtr; };  // ★ 用 weak_ptr 打破循环
 ```
 
 !!! warning "循环引用陷阱"
-    两个 `shared_ptr` 互相指向对方 → 引用计数永远不为 0 → 内存泄漏！
+    两个 `shared_ptr` 互相指向对方 -> 引用计数永远不为 0 -> 内存泄漏！
 
 ---
 
@@ -177,7 +177,7 @@ auto it = find_if(v.begin(), v.end(),
 
 ---
 
-## C++17 关键特性
+## C++17 特性
 
 | 特性 | 说明 |
 |------|------|

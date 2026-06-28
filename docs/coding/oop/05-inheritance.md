@@ -14,8 +14,8 @@
 | **Has-a** | 类包含另一个类的对象（组合） | 车有一个引擎 |
 
 !!! tip "区分 Is-a 与 Has-a"
-    - Is-a → **继承**: `class Dog : public Animal {}`
-    - Has-a → **组合**: `class Car { Engine _engine; }`
+    - Is-a 是 **继承**: `class Dog : public Animal {}`
+    - Has-a 是 **组合**: `class Car { Engine _engine; }`
 
 ### 继承的核心作用
 
@@ -51,7 +51,7 @@ public:
 
 ## 三种继承方式
 
-| 继承方式 | 基类 `public` → | 基类 `protected` → | 基类 `private` → |
+| 继承方式 | 基类的 `public` 成员 | 基类 `protected` 成员 | 基类 `private` 成员 |
 |----------|-----------------|--------------------|--------------------|
 | `public` 继承 | `public` | `protected` | **不可访问** |
 | `protected` 继承 | `protected` | `protected` | **不可访问** |
@@ -64,7 +64,7 @@ public:
 
 ```cpp
 class Derived : public Base {
-    // pub → public, pro → protected, pri → 不可访问
+    // pub -> public, pro -> protected, pri -> 不可访问
 };
 ```
 
@@ -72,7 +72,7 @@ class Derived : public Base {
 
 ```cpp
 class Derived : protected Base {
-    // pub → protected, pro → protected, pri → 不可访问
+    // pub -> protected, pro -> protected, pri -> 不可访问
 };
 ```
 
@@ -80,7 +80,7 @@ class Derived : protected Base {
 
 ```cpp
 class Derived : private Base {  // class Derived : Base 等价
-    // pub → private, pro → private, pri → 不可访问
+    // pub -> private, pro -> private, pri -> 不可访问
 };
 ```
 
@@ -92,6 +92,13 @@ class Derived : private Base {  // class Derived : Base 等价
 
 1. 先构造**基类**部分
 2. 再构造**派生类**成员
+
+### 析构顺序
+
+1. 先析构**派生类**成员
+2. 再析构**基类**部分
+
+同样也是先进后出的栈式结构。
 
 ```cpp
 class Base {
@@ -105,14 +112,19 @@ public:
     Derived() { cout << "Derived constructor" << endl; }
     ~Derived() { cout << "Derived destructor" << endl; }
 };
+```
 
-// 输出：Base constructor → Derived constructor
-//       Derived destructor → Base destructor
+输出为：
+```bash
+Base constructor
+Derived constructor
+Derived destructor
+Base destructor
 ```
 
 !!! tip "记忆"
-    构造：基类 → 派生类（先建基础，再建上层）
-    析构：派生类 → 基类（先拆上层，再拆基础）
+    构造：基类 -> 派生类（先建基础，再建上层）
+    析构：派生类 -> 基类（先拆上层，再拆基础）
 
 ### 派生类的初始化列表
 
@@ -120,12 +132,14 @@ public:
 
 ```cpp
 class Animal {
+private:
     string _name;
 public:
     Animal(string name) : _name(name) {}
 };
 
 class Dog : public Animal {
+private:
     string _breed;
 public:
     Dog(string name, string breed)
@@ -145,9 +159,10 @@ public:
 派生类指针/引用可以隐式转换为基类指针/引用：
 
 ```cpp
+// 与上文相同的类定义：Dog 继承自 Animal
 Dog dog("Buddy", 3);
-Animal* animalPtr = &dog;     // ✅ 向上转型，安全
-Animal& animalRef = dog;      // ✅ 向上转型
+Animal* animalPtr = &dog;     // 向上转型
+Animal& animalRef = dog;      // 向上转型
 ```
 
 ### 向下转型 (Downcasting) — 需显式
@@ -155,8 +170,9 @@ Animal& animalRef = dog;      // ✅ 向上转型
 基类指针/引用转换为派生类需要运行时类型检查：
 
 ```cpp
+// 与上文相同的类定义：Dog 继承自 Animal
 Animal* a = new Dog("Buddy", 3);
-Dog* d = dynamic_cast<Dog*>(a); // ✅ 安全向下转型
+Dog* d = dynamic_cast<Dog*>(a); // 检查 a 中的实际对象类型是否为 Dog
 ```
 
 ---
@@ -178,9 +194,10 @@ public:
 };
 
 Derived d;
-d.show();              // ✅ 派生类的 show()
-// d.show(10);         // ❌ 编译错误！基类的 show(int) 被隐藏了！
-d.Base::show(10);      // ✅ 通过作用域解析访问
+d.show();              // 派生类的 show()，输出 Derived show()
+// d.show(10);         // 编译错误！基类的 show(int) 被隐藏了！
+d.Base::show();        // 通过作用域解析访问，输出 Base show()
+d.Base::show(10);      // 通过作用域解析访问，输出 Base show(10)
 ```
 
 !!! warning "名字隐藏"
@@ -233,13 +250,20 @@ public:
       D
 ```
 
+例如：
 ```cpp
-// ❌ 问题：Dragon 会拥有两份 Animal 的副本
+class Animal {
+public:
+    void eat() { cout << "Animal is eating." << endl; }
+};
+class FlyingAnimal : public Animal { /* ... */ };
+class RunningAnimal : public Animal { /* ... */ };
+// 问题：Dragon 会拥有两份 Animal 的副本
 class Dragon : public FlyingAnimal, public RunningAnimal { /* ... */ };
 // d.eat();  // 二义性错误！
 ```
 
-### 菱形继承的三宗罪
+### 菱形继承容易产生的问题
 
 | 问题 | 表现 |
 |------|------|
@@ -266,10 +290,10 @@ public:
 
 class Dragon : public FlyingAnimal, public RunningAnimal {
 public:
-    Dragon(string name)
-        : Animal(name)            // ★ 由最派生类直接初始化虚基类
-        , FlyingAnimal(name)
-        , RunningAnimal(name) {}
+    Dragon(string name):
+        Animal(name),           // 由最派生类直接初始化虚基类
+        FlyingAnimal(name),
+        RunningAnimal(name) {}
 };
 ```
 
@@ -278,7 +302,7 @@ public:
 
 ### 构造顺序（虚继承的特殊性）
 
-虚基类最先构造，且只构造一次：`虚基类 A → B → C → D`
+虚基类最先构造，且只构造一次：`虚基类 A -> B -> C -> D`
 
 ---
 
@@ -291,6 +315,17 @@ public:
 | 调用方式 | 指针类型决定 | 对象实际类型决定 |
 
 ```cpp
+class Base {
+public:
+    void redefined() { cout << "Base redefined" << endl; }
+    virtual void overridden() { cout << "Base overridden" << endl; }
+};
+
+class Derived : public Base {
+public:
+    void overridden() override { cout << "Derived overridden" << endl; }
+};
+
 Base* p = new Derived();
 p->redefined();      // 输出：Base redefined（静态绑定）
 p->overridden();     // 输出：Derived overridden（动态绑定）
@@ -298,8 +333,8 @@ p->overridden();     // 输出：Derived overridden（动态绑定）
 
 !!! tip "override 关键字 (C++11)"
     ```cpp
-    void overridden() override;  // ✅ 正确
-    void Overridden() override;  // ❌ 编译错误！签名不匹配
+    void overridden() override;  // 正确
+    void Overridden() override;  // 编译错误！签名不匹配
     ```
 
 ---
@@ -309,7 +344,7 @@ p->overridden();     // 输出：Derived overridden（动态绑定）
 多重继承的许多问题可以通过**组合模式**避免：
 
 ```cpp
-// ✅ 组合方式：将能力拆分为接口
+// 组合方式：将能力拆分为接口
 class Dragon : public Animal, public Flyable, public Runnable { /* ... */ };
 ```
 

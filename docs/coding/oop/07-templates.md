@@ -37,7 +37,7 @@ T getMax(T a, T b) {
 
 ```cpp
 int x = 10, y = 20;
-cout << getMax(x, y) << endl;     // 自动推导 T=int
+cout << getMax(x, y) << endl;        // 自动推导 T=int
 cout << getMax<int>(10, 20) << endl; // 显式指定
 ```
 
@@ -83,8 +83,8 @@ public:
     void add(T value);  // 声明
 };
 
-// ★ 模板的实现也必须放在头文件中！
-template <typename T>
+// .cpp 文件
+template <typename T>   // 同样需要模板声明
 void Container<T>::add(T value) {
     _data[_size++] = value;
 }
@@ -176,7 +176,7 @@ public:
     T& operator[](int index) { return _data[index]; }
 };
 
-StaticArray<int, 10> arr;   // 类型为 int，大小为 10
+StaticArray<int, 10> arr1;   // 类型为 int，大小为 10
 StaticArray<double, 5> arr2; // 类型为 double，大小为 5
 ```
 
@@ -214,9 +214,8 @@ int result = sum(1, 2, 3, 4, 5);  // 15
 ```cpp
 #include <concepts>
 
-// 要求 T 支持比较
 template <typename T>
-requires totally_ordered<T>
+requires totally_ordered<T> // 这行约束 T 必须是可比较的
 T getMax(T a, T b) {
     return (a > b) ? a : b;
 }

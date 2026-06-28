@@ -60,7 +60,7 @@ try {
 
 1. **按 catch 顺序匹配**，第一个匹配的 catch 块被选中
 2. **精确匹配**优先于 const/reference 匹配
-3. 派生类异常被基类 catch 捕获（**基类放后面**）
+3. 派生类异常被基类 catch 捕获（一般**基类放后面**）
 
 ---
 
@@ -80,7 +80,7 @@ void funcA() {
 }
 ```
 
-调用链：`funcA()` → `funcB()` → `funcC()` → `throw` → 沿链回溯 → `funcA` 捕获
+调用链：`funcA()` -> `funcB()` -> `funcC()` -> `throw` -> 沿链回溯 -> `funcA` 捕获
 
 ---
 
@@ -98,7 +98,7 @@ public:
         _conn = new Connection(cfg);      // _conn 分配成功
         if (!_conn->isValid())
             throw runtime_error("Failed"); // 异常！
-        // 此时 _name 和 _conn 会自动清理
+            // 此时 _name 和 _conn 会自动清理，但是不调用析构函数
     }
 };
 ```
@@ -118,14 +118,16 @@ public:
 };
 ```
 
+这里定义了一个继承自 `runtime_error` 的自定义异常类 `FileException`，它包含了额外的文件名信息。如果程序抛出了 `FileException`，可以通过 `getFilename()` 获取相关文件名。
+
+需要注意的是，如果将基类 `runtime_error` 的 `catch` 放在 `FileException` 的 `catch` 之前，`FileException` 将被基类捕获，无法访问 `_filename`，同时后方的 `FileException catch` 块也不会被执行。
+
 ---
 
 ### 异常与智能指针
 
-**核心原则：使用 RAII 对象管理资源，避免手动 new/delete。**
-
 ```cpp
-// ✅ 安全：unique_ptr 自动清理内存
+// SAFE：unique_ptr 自动清理内存
 void safeFunction() {
     unique_ptr<Resource> ptr1(new Resource("A"));
     unique_ptr<Resource> ptr2(new Resource("B"));
@@ -133,6 +135,8 @@ void safeFunction() {
     // ptr1 和 ptr2 自动析构
 }
 ```
+
+使用智能指针（如 `unique_ptr` 或 `shared_ptr`）可以确保在异常发生时自动释放资源，不需要手动编写代码来释放指针，避免内存泄漏。
 
 ---
 
@@ -230,6 +234,8 @@ while (getline(inFile, line)) {
 inFile.close();
 ```
 
+这里 `cerr` 是标准错误输出流，通常用于打印错误信息。
+
 ---
 
 ### 二进制文件写入
@@ -292,13 +298,13 @@ outFile.seekp(0, ios::end);  // 跳到末尾
 
 ---
 
-### 健壮的文件操作
+### 比较完整的文件操作
 
 ```cpp
-// ✅ 错误检查
+// 错误检查
 if (!outFile) { cerr << "File error!" << endl; return 1; }
 
-// ✅ try-catch 包裹
+// try-catch 包裹
 try {
     outFile.write(reinterpret_cast<const char*>(&s), sizeof(Student));
     outFile.close();
@@ -307,11 +313,11 @@ try {
     outFile.close();
 }
 
-// ✅ RAII 确保资源释放
+// RAII 确保资源释放
 {
     ofstream outFile("data.txt");
     // ... 写入 ...
-}  // 离开作用域，outFile 自动调用 close()
+}   // 离开作用域，outFile 自动调用 close()
 ```
 
 ---

@@ -48,6 +48,10 @@ public:
         return *this;
     }
 };
+
+Point p1(1, 2), p2(3, 4);
+Point p3 = p1 + p2;  // 调用成员函数 operator+
+p1 += p2;            // 调用成员函数 operator+=
 ```
 
 ### 非成员函数形式

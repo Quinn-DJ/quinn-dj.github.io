@@ -27,18 +27,18 @@
 
 ```
 ┌────────────────────────────────────────────┐
-│                  STL 容器                    │
+│                  STL 容器                   │
 ├──────────────────┬─────────────────────────┤
-│    序列式容器     │      关联式容器          │
-│  (Sequence)      │    (Associative)         │
+│   序列式容器       │      关联式容器          │
+│  (Sequence)      │    (Associative)        │
 ├──────────────────┼─────────────────────────┤
-│  vector          │  set / multiset          │
-│  list            │  map / multimap          │
-│  deque           │                          │
+│  vector          │  set / multiset         │
+│  list            │  map / multimap         │
+│  deque           │                         │
 │  array (C++11)   │  无序关联式容器           │
-│  forward_list    │  unordered_set / map     │
+│  forward_list    │  unordered_set / map    │
 ├──────────────────┴─────────────────────────┤
-│            容器适配器 (Adapters)             │
+│            容器适配器（Adapters)             │
 │  stack (LIFO) / queue (FIFO)               │
 │  priority_queue                            │
 └────────────────────────────────────────────┘
@@ -55,11 +55,11 @@
 vector<int> v = {1, 2, 3, 4, 5};
 
 // 常用操作
-v.push_back(6);         // 末尾添加
-v.pop_back();           // 末尾删除
+v.push_back(6);            // 末尾添加
+v.pop_back();              // 末尾删除
 v.insert(v.begin()+2, 99); // 在第 2 位置插入
-v.erase(v.begin()+1);   // 删除第 1 位置
-v[0] = 10;              // 随机访问
+v.erase(v.begin()+1);      // 删除第 1 位置
+v[0] = 10;                 // 随机访问
 ```
 
 #### list — 双向链表
@@ -68,10 +68,10 @@ v[0] = 10;              // 随机访问
 #include <list>
 list<int> lst = {1, 2, 3, 4, 5};
 
-lst.push_front(0);      // 头部插入
-lst.push_back(6);       // 尾部插入
-lst.pop_front();        // 头部删除
-lst.pop_back();         // 尾部删除
+lst.push_front(0);             // 头部插入
+lst.push_back(6);              // 尾部插入
+lst.pop_front();               // 头部删除
+lst.pop_back();                // 尾部删除
 lst.insert(++lst.begin(), 99); // 任意位置 O(1)
 ```
 
@@ -81,7 +81,7 @@ lst.insert(++lst.begin(), 99); // 任意位置 O(1)
     | 随机访问 | O(1) | O(n) |
     | 头/尾插入删除 | O(1) | O(1) |
     | 中间插入删除 | O(n) | O(1) |
-    | 内存连续 | ✅ | ❌ |
+    | 内存连续 | 连续 | 不连续 |
 
 #### deque — 双端队列
 
@@ -89,7 +89,7 @@ lst.insert(++lst.begin(), 99); // 任意位置 O(1)
 deque<int> dq = {1, 2, 3};
 dq.push_front(0);  // 首部插入
 dq.push_back(4);   // 尾部插入
-cout << dq[1];     // ✅ 支持随机访问
+cout << dq[1];     // 支持随机访问
 ```
 
 #### C++11: array — 固定大小数组
@@ -131,8 +131,9 @@ for (const auto& [name, score] : scores) {  // C++17 structured binding
     cout << name << ": " << score << endl;
 }
 
-auto pos = scores.find("Alice");
-if (pos != scores.end()) cout << pos->second;
+auto pos = scores.find("Alice"); // 查找键为 "Alice" 的元素
+if (pos != scores.end())         // 检查是否找到（找不到的话 pos 会是 scores.end()）
+    cout << pos->second;         // 获取对应值
 ```
 
 #### multiset / multimap — 允许重复键
@@ -140,7 +141,7 @@ if (pos != scores.end()) cout << pos->second;
 ```cpp
 multimap<string, int> mm;
 mm.insert({"Alice", 95});
-mm.insert({"Alice", 88});  // OK，重复键允许
+mm.insert({"Alice", 88});  // OK，允许重复键
 ```
 
 ---
@@ -160,7 +161,7 @@ um["apple"] = 5;
     |------|-----|---------------|
     | 实现 | 红黑树 | 哈希表 |
     | 查找 | O(log n) | O(1) 平均 |
-    | 有序 | ✅ | ❌ |
+    | 有序性 | 有序 | 无序 |
     | 适用 | 需要排序 | 只需快速查找 |
 
 ---
@@ -170,13 +171,13 @@ um["apple"] = 5;
 基于已有容器实现的受限接口：
 
 ```cpp
-// stack：LIFO，默认基于 deque
+// stack：先进后出 (LIFO)
 stack<int> stk;
 stk.push(1); stk.push(2); stk.push(3);
 stk.top();   // 3
 stk.pop();   // 移除 3
 
-// queue：FIFO
+// queue：先进先出 (FIFO)
 queue<int> q;
 q.push(1); q.push(2);
 q.front(); // 1
@@ -242,7 +243,7 @@ for (int val : v) { cout << val << " "; }
 // 修改遍历
 for (int& val : v) { val *= 2; }
 
-// 避免拷贝
+// 使用 const auto& 避免拷贝
 for (const auto& val : mapData) { /* ... */ }
 ```
 
@@ -266,12 +267,12 @@ for (auto it = begin(arr); it != end(arr); ++it) { /* ... */ }
     `vector` 插入元素可能触发**重新分配内存**，所有已获取的迭代器都会失效。
 
 ```cpp
-// ❌ 危险！
+// DANGER: 迭代器可能失效
 for (auto it = v.begin(); it != v.end(); ++it) {
     v.push_back(*it);  // 可能导致 reallocation，it 失效！
 }
 
-// ✅ 安全：先记录大小，或使用 reserve 预留空间
+// SAFE: 先记录大小，或使用 reserve 预留空间
 ```
 
 ---
@@ -319,7 +320,7 @@ for_each(v.begin(), v.end(), [](int& x) { x *= 2; });
 | 算法 | 复杂度 | 作用 |
 |------|--------|------|
 | `sort(first, last)` | O(n log n) | 默认升序排序 |
-| `stable_sort` | O(n log² n) | 保持相等元素相对顺序 |
+| `stable_sort` | O(n log^2 n) | 保持相等元素相对顺序 |
 | `binary_search` | O(log n) | 二分搜索（需有序） |
 | `lower_bound` | O(log n) | 第一个 ≥ value 的位置 |
 | `upper_bound` | O(log n) | 第一个 > value 的位置 |
@@ -338,8 +339,16 @@ vector<int> v = {1, 2, 3, 4, 5};
 
 int sum = accumulate(v.begin(), v.end(), 0);  // 15
 adjacent_difference / inner_product / partial_sum / iota
-// iota(v.begin(), v.end(), 1)  → {1, 2, 3, 4, 5}
+// iota(v.begin(), v.end(), 1); // 生成 1,2,3,4,5
 ```
+
+| 算法 | 作用 |
+|------|------|
+| `accumulate` | 累加 |
+| `adjacent_difference` | 相邻差分 |
+| `inner_product` | 内积 |
+| `partial_sum` | 前缀和 |
+| `iota` | 生成连续整数序列 |
 
 ---
 

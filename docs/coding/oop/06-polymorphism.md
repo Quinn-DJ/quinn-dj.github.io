@@ -43,8 +43,8 @@ playSound(Cat());   // Meow~
 | **框架设计** | 定义抽象接口，让用户提供具体实现 |
 
 !!! tip "多态 vs 重定义"
-    没有 `virtual` → **重定义**（静态绑定）。
-    有 `virtual` → **多态**（动态绑定）。两种完全不同的机制。
+    没有 `virtual` -> **重定义**（静态绑定）。
+    有 `virtual` -> **多态**（动态绑定）。两种完全不同的机制。
 
 ---
 
@@ -78,7 +78,8 @@ public:
 !!! warning "通过值传递会丢失多态"
     值传递会发生**对象切割 (Slicing)**：
     ```cpp
-    void func(Animal a) { a.makeSound(); }  // 总是调用 Animal 的版本
+    void func1(Animal a) { a.makeSound(); }  // 总是调用 Animal 的版本
+    void func2(Animal& a) { a.makeSound(); } // 多态，调用实际类型的版本
     ```
 
 ---
@@ -94,17 +95,17 @@ public:
 ```
 Animal 对象内存布局：
 ┌─────────────────────┐
-│ vptr (虚表指针)      │ ← 指向 Animal 的 vtable
+│ vptr（虚表指针）      │ <- 指向 Animal 的 vtable
 ├─────────────────────┤
 │ 其他数据成员...       │
 └─────────────────────┘
 
 Animal 的 vtable:              Derived 的 vtable（重写了 eat）:
-┌─────────────────────┐       ┌─────────────────────┐
-│ &Animal::eat()       │       │ &Derived::eat()      │ ← 指向派生类版本
-│ &Animal::sleep()     │       │ &Animal::sleep()     │ ← 未重写，指向基类
-│ &Animal::~Animal()   │       │ &Derived::~Derived() │
-└─────────────────────┘       └─────────────────────┘
+┌─────────────────────┐       ┌──────────────────────┐
+│ &Animal::eat()      │       │ &Derived::eat()      │ <- 指向派生类版本
+│ &Animal::sleep()    │       │ &Animal::sleep()     │ <- 未重写，指向基类
+│ &Animal::~Animal()  │       │ &Derived::~Derived() │
+└─────────────────────┘       └──────────────────────┘
 ```
 
 ### 动态绑定过程
@@ -186,7 +187,7 @@ for (auto s : shapes) {
 如果通过基类指针删除派生类对象，而析构函数不是虚函数，则**只调用基类的析构函数**，资源泄漏！
 
 ```cpp
-// ❌ 错误：非虚析构
+// 错误：非虚析构
 class Base {
 public:
     ~Base() { cout << "Base destructor" << endl; }
@@ -198,11 +199,14 @@ public:
 };
 
 Base* p = new Derived();
-delete p;   // ❌ 只调用 Base 的析构！Derived 的资源泄漏！
+delete p;
+// p 是含有 Derived 对象的 Base*，因此析构时只调用 Base 的析构函数，导致 Derived 的资源泄漏！
+// 此时程序只会输出：
+// Base destructor
 ```
 
 ```cpp
-// ✅ 正确：虚析构
+// 正确：虚析构
 class Base {
 public:
     virtual ~Base() { cout << "Base destructor" << endl; }
@@ -214,7 +218,10 @@ public:
 };
 
 Base* p = new Derived();
-delete p;   // ✅ 先调用 Derived 析构，再调用 Base 析构
+delete p;   // 先调用 Derived 析构，再调用 Base 析构
+// 程序输出：
+// Derived destructor
+// Base destructor
 ```
 
 !!! important "黄金法则"
