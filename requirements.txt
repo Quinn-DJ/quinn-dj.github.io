@@ -1,5 +1,13 @@
 # Static site generator (wraps mkdocs)
 zensical
+
 # Theme and markdown extensions used by zensical config
 mkdocs-material
 pymdown-extensions
+markdown-exec[ansi]
+
+# Python dependencies
+numpy
+matplotlib
+Pillow
+material
