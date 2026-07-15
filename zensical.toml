@@ -26,7 +26,8 @@ nav = [
   { "Mathematics" = [
     { "index" = "math/index.md" },
     { "常微分方程" = "math/ode/index.md" },
-    { "初等函数与 EML 算子" = "math/eml.md" }
+    { "初等函数与 EML 算子" = "math/eml.md" },
+    { "卷积" = "math/convolution/index.md" }
   ] },
 
   { "Computing & Coding" = [
@@ -77,8 +78,9 @@ nav = [
     ] }
   ] },
 
-  { "博客" = [
-    { "index" = "blog/index.md" }
+  { "随笔" = [
+    { "index" = "blog/index.md" },
+    { "A interesting Problem" = "blog/posts/26-03-09.md" }
   ] },
 
   { "标签" = "tags.md" },
@@ -164,6 +166,8 @@ post_readtime_words_per_minute = 265
 post_url_format = "{date}/{slug}"
 pagination_url_format = "page/{page}"
 authors_file = "blog/.authors.yml"
+
+[project.plugins.markdown-exec]
 
 [project.markdown_extensions]
 abbr = {}

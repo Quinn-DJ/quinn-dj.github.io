@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>二维图像卷积：核在图像上滑动</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a2e;
+    --muted: #6b7280;
+    --line: #d1d5db;
+    --blue: #3b82f6;
+    --green: #10b981;
+    --red: #ef4444;
+    --purple: #8b5cf6;
+    --amber: #f59e0b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+    color: var(--fg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .diagram { max-width: 960px; width: 100%; padding: 20px; }
+  svg { display: block; width: 100%; height: auto; }
+  text.title { font-size: 17px; font-weight: 700; }
+  text.sec-title { font-size: 13px; font-weight: 600; }
+  text.cell-val { font-size: 10px; text-anchor: middle; }
+  text.small { font-size: 9px; fill: var(--muted); }
+  text.label { font-size: 11px; }
+  .math-box { text-align: center; margin-top: 10px; font-size: 11px; color: var(--fg); padding: 8px 20px; }
+  .math-box .formula { font-family: monospace; font-size: 11px; display: inline-block; text-align: left; }
+  .math-box .result { font-weight: bold; color: var(--green); margin-top: 4px; }
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$','$']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+<div class="diagram">
+<svg viewBox="0 0 700 540" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Title -->
+  <text x="350" y="20" text-anchor="middle" class="title">二维图像卷积：核在图像上滑动</text>
+
+  <!-- ============================================================ -->
+  <!-- LEFT: Input Image 5×5 -->
+  <!-- ============================================================ -->
+
+  <text x="185" y="62" text-anchor="middle" class="sec-title">输入图像 (5×5)</text>
+
+  <!-- Image pixel values row by row -->
+  <!-- Row 0: [10, 50, 100, 150, 200] -->
+  <rect x="60"  y="80" width="50" height="50" rx="0" fill="#1a1a1a"/>
+  <text x="85"  y="110" class="cell-val" fill="#fff">10</text>
+  <rect x="110" y="80" width="50" height="50" rx="0" fill="#4a4a4a"/>
+  <text x="135" y="110" class="cell-val" fill="#fff">50</text>
+  <rect x="160" y="80" width="50" height="50" rx="0" fill="#8a8a8a"/>
+  <text x="185" y="110" class="cell-val" fill="#fff">100</text>
+  <rect x="210" y="80" width="50" height="50" rx="0" fill="#c0c0c0"/>
+  <text x="235" y="110" class="cell-val" fill="#1a1a1a">150</text>
+  <rect x="260" y="80" width="50" height="50" rx="0" fill="#e6e6e6"/>
+  <text x="285" y="110" class="cell-val" fill="#1a1a1a">200</text>
+
+  <!-- Row 1: [30, 80, 130, 180, 220] -->
+  <rect x="60"  y="130" width="50" height="50" rx="0" fill="#2a2a2a"/>
+  <text x="85"  y="160" class="cell-val" fill="#fff">30</text>
+  <rect x="110" y="130" width="50" height="50" rx="0" fill="#5c5c5c"/>
+  <text x="135" y="160" class="cell-val" fill="#fff">80</text>
+  <rect x="160" y="130" width="50" height="50" rx="0" fill="#9c9c9c"/>
+  <text x="185" y="160" class="cell-val" fill="#fff">130</text>
+  <rect x="210" y="130" width="50" height="50" rx="0" fill="#cecece"/>
+  <text x="235" y="160" class="cell-val" fill="#1a1a1a">180</text>
+  <rect x="260" y="130" width="50" height="50" rx="0" fill="#eaeaea"/>
+  <text x="285" y="160" class="cell-val" fill="#1a1a1a">220</text>
+
+  <!-- Row 2: [60, 110, 160, 210, 250] -->
+  <rect x="60"  y="180" width="50" height="50" rx="0" fill="#505050"/>
+  <text x="85"  y="210" class="cell-val" fill="#fff">60</text>
+  <rect x="110" y="180" width="50" height="50" rx="0" fill="#787878"/>
+  <text x="135" y="210" class="cell-val" fill="#fff">110</text>
+  <rect x="160" y="180" width="50" height="50" rx="0" fill="#a8a8a8"/>
+  <text x="185" y="210" class="cell-val" fill="#fff">160</text>
+  <rect x="210" y="180" width="50" height="50" rx="0" fill="#d8d8d8"/>
+  <text x="235" y="210" class="cell-val" fill="#1a1a1a">210</text>
+  <rect x="260" y="180" width="50" height="50" rx="0" fill="#f0f0f0"/>
+  <text x="285" y="210" class="cell-val" fill="#1a1a1a">250</text>
+
+  <!-- Row 3: [90, 140, 190, 240, 255] -->
+  <rect x="60"  y="230" width="50" height="50" rx="0" fill="#666666"/>
+  <text x="85"  y="260" class="cell-val" fill="#fff">90</text>
+  <rect x="110" y="230" width="50" height="50" rx="0" fill="#8e8e8e"/>
+  <text x="135" y="260" class="cell-val" fill="#fff">140</text>
+  <rect x="160" y="230" width="50" height="50" rx="0" fill="#b4b4b4"/>
+  <text x="185" y="260" class="cell-val" fill="#1a1a1a">190</text>
+  <rect x="210" y="230" width="50" height="50" rx="0" fill="#dedede"/>
+  <text x="235" y="260" class="cell-val" fill="#1a1a1a">240</text>
+  <rect x="260" y="230" width="50" height="50" rx="0" fill="#f8f8f8"/>
+  <text x="285" y="260" class="cell-val" fill="#1a1a1a">255</text>
+
+  <!-- Row 4: [120, 170, 200, 230, 180] -->
+  <rect x="60"  y="280" width="50" height="50" rx="0" fill="#7a7a7a"/>
+  <text x="85"  y="310" class="cell-val" fill="#fff">120</text>
+  <rect x="110" y="280" width="50" height="50" rx="0" fill="#9e9e9e"/>
+  <text x="135" y="310" class="cell-val" fill="#fff">170</text>
+  <rect x="160" y="280" width="50" height="50" rx="0" fill="#c2c2c2"/>
+  <text x="185" y="310" class="cell-val" fill="#1a1a1a">200</text>
+  <rect x="210" y="280" width="50" height="50" rx="0" fill="#e0e0e0"/>
+  <text x="235" y="310" class="cell-val" fill="#1a1a1a">230</text>
+  <rect x="260" y="280" width="50" height="50" rx="0" fill="#d0d0d0"/>
+  <text x="285" y="310" class="cell-val" fill="#1a1a1a">180</text>
+
+  <!-- Convolution window highlight: rows 0-2, cols 0-2 -->
+  <rect x="58" y="78" width="154" height="154" rx="0" fill="none" stroke="var(--blue)" stroke-width="2.5"/>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT: Kernel 3×3 -->
+  <!-- ============================================================ -->
+
+  <text x="480" y="62" text-anchor="middle" class="sec-title">卷积核 (3×3) — Sobel 水平边缘检测</text>
+
+  <rect x="370" y="80" width="55" height="55" rx="2" fill="#fee2e2" stroke="var(--red)" stroke-width="1.5"/>
+  <text x="397" y="113" class="cell-val" fill="#b91c1c" font-size="13">−1</text>
+  <rect x="425" y="80" width="55" height="55" rx="2" fill="#f3f4f6" stroke="var(--line)" stroke-width="1.5"/>
+  <text x="452" y="113" class="cell-val" fill="var(--muted)" font-size="13">0</text>
+  <rect x="480" y="80" width="55" height="55" rx="2" fill="#d1fae5" stroke="var(--green)" stroke-width="1.5"/>
+  <text x="507" y="113" class="cell-val" fill="#047857" font-size="13">+1</text>
+
+  <rect x="370" y="135" width="55" height="55" rx="2" fill="#fee2e2" stroke="var(--red)" stroke-width="1.5"/>
+  <text x="397" y="168" class="cell-val" fill="#b91c1c" font-size="13">−2</text>
+  <rect x="425" y="135" width="55" height="55" rx="2" fill="#f3f4f6" stroke="var(--line)" stroke-width="1.5"/>
+  <text x="452" y="168" class="cell-val" fill="var(--muted)" font-size="13">0</text>
+  <rect x="480" y="135" width="55" height="55" rx="2" fill="#d1fae5" stroke="var(--green)" stroke-width="1.5"/>
+  <text x="507" y="168" class="cell-val" fill="#047857" font-size="13">+2</text>
+
+  <rect x="370" y="190" width="55" height="55" rx="2" fill="#fee2e2" stroke="var(--red)" stroke-width="1.5"/>
+  <text x="397" y="223" class="cell-val" fill="#b91c1c" font-size="13">−1</text>
+  <rect x="425" y="190" width="55" height="55" rx="2" fill="#f3f4f6" stroke="var(--line)" stroke-width="1.5"/>
+  <text x="452" y="223" class="cell-val" fill="var(--muted)" font-size="13">0</text>
+  <rect x="480" y="190" width="55" height="55" rx="2" fill="#d1fae5" stroke="var(--green)" stroke-width="1.5"/>
+  <text x="507" y="223" class="cell-val" fill="#047857" font-size="13">+1</text>
+
+  <!-- Arrow from kernel to image -->
+  <defs>
+    <marker id="arrowBlue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="var(--blue)"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="var(--green)"/>
+    </marker>
+    <marker id="arrowMuted" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="var(--muted)"/>
+    </marker>
+  </defs>
+
+  <!-- Arrow from kernel to image -->
+  <line x1="365" y1="180" x2="225" y2="180" stroke="var(--blue)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <!-- Arrow: see formula below -->
+  <text x="290" y="174" text-anchor="middle" class="small" fill="var(--blue)">滑动 slide →</text>
+
+  <!-- ============================================================ -->
+  <!-- OUTPUT FEATURE MAP -->
+  <!-- ============================================================ -->
+
+  <text x="185" y="358" text-anchor="middle" class="sec-title">输出特征图 (3×3)</text>
+
+  <!-- Row 0 -->
+  <rect x="85"  y="370" width="55" height="55" rx="3" fill="#a7f3d0" stroke="var(--green)" stroke-width="1"/>
+  <text x="112" y="403" class="cell-val" fill="#047857" font-size="13">390</text>
+  <rect x="140" y="370" width="55" height="55" rx="3" fill="#bbf7d0" stroke="var(--green)" stroke-width="1"/>
+  <text x="167" y="403" class="cell-val" fill="#047857" font-size="13">320</text>
+  <rect x="195" y="370" width="55" height="55" rx="3" fill="#d1fae5" stroke="var(--green)" stroke-width="1"/>
+  <text x="222" y="403" class="cell-val" fill="#047857" font-size="13">180</text>
+
+  <!-- Row 1 -->
+  <rect x="85"  y="425" width="55" height="55" rx="3" fill="#86efac" stroke="var(--green)" stroke-width="1"/>
+  <text x="112" y="458" class="cell-val" fill="#047857" font-size="13">450</text>
+  <rect x="140" y="425" width="55" height="55" rx="3" fill="#a7f3d0" stroke="var(--green)" stroke-width="1"/>
+  <text x="167" y="458" class="cell-val" fill="#047857" font-size="13">380</text>
+  <rect x="195" y="425" width="55" height="55" rx="3" fill="#bbf7d0" stroke="var(--green)" stroke-width="1"/>
+  <text x="222" y="458" class="cell-val" fill="#047857" font-size="13">260</text>
+
+  <!-- Row 2 -->
+  <rect x="85"  y="480" width="55" height="55" rx="3" fill="#6ee7b7" stroke="var(--green)" stroke-width="1"/>
+  <text x="112" y="513" class="cell-val" fill="#047857" font-size="13">410</text>
+  <rect x="140" y="480" width="55" height="55" rx="3" fill="#86efac" stroke="var(--green)" stroke-width="1"/>
+  <text x="167" y="513" class="cell-val" fill="#047857" font-size="13">350</text>
+  <rect x="195" y="480" width="55" height="55" rx="3" fill="#a7f3d0" stroke="var(--green)" stroke-width="1"/>
+  <text x="222" y="513" class="cell-val" fill="#047857" font-size="13">240</text>
+
+  <!-- Arrow from image to output -->
+  <line x1="110" y1="335" x2="110" y2="365" stroke="var(--green)" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <text x="40" y="350" class="small" fill="var(--green)">步长=1, 无填充</text>
+
+</svg>
+
+</body>
+</html>

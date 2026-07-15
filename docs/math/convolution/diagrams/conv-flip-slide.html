@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>卷积的直观理解：翻转 → 滑动 → 乘积累加</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a2e;
+    --muted: #6b7280;
+    --line: #d1d5db;
+    --blue: #3b82f6;
+    --orange: #f59e0b;
+    --purple: #d8b4fe;
+    --purple-light: #f3e8ff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+    color: var(--fg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .diagram { max-width: 960px; width: 100%; padding: 20px; }
+  svg { display: block; width: 100%; height: auto; }
+  text.title { font-size: 18px; font-weight: 700; }
+  text.panel-title { font-size: 13px; font-weight: 600; }
+  text.axis-label { font-size: 11px; fill: var(--muted); }
+  text.signal-label { font-size: 11px; font-weight: 600; }
+  text.calc-label { font-size: 12px; }
+  text.arrow-label { font-size: 10px; fill: var(--muted); }
+  .math-note { text-align: center; margin-top: 12px; font-size: 13px; color: var(--muted); padding: 0 20px; }
+  .math-note mjx-container { display: inline-block; }
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$','$']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+<div class="diagram">
+<svg viewBox="0 0 960 480" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Title -->
+  <text x="480" y="32" text-anchor="middle" class="title">卷积的直观理解：翻转 → 滑动 → 乘积累加</text>
+
+  <!-- ============================================================ -->
+  <!-- PANEL 1: 原始信号 (left: x=20..300) -->
+  <!-- ============================================================ -->
+
+  <!-- Panel background -->
+  <rect x="15" y="55" width="290" height="360" rx="8" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/>
+
+  <!-- Panel title -->
+  <text x="160" y="78" text-anchor="middle" class="panel-title">原始信号 f(τ) 与 g(τ)</text>
+
+  <!-- Axes for panel 1 -->
+  <line x1="60" y1="370" x2="260" y2="370" stroke="var(--fg)" stroke-width="1.5"/>
+  <line x1="60" y1="100" x2="60" y2="370" stroke="var(--fg)" stroke-width="1.5"/>
+  <!-- Arrow heads -->
+  <polygon points="260,370 254,366 254,374" fill="var(--fg)"/>
+  <polygon points="60,100 56,106 64,106" fill="var(--fg)"/>
+
+  <!-- Tick marks τ -->
+  <text x="60" y="390" text-anchor="middle" class="axis-label">−2</text>
+  <text x="100" y="390" text-anchor="middle" class="axis-label">−1</text>
+  <text x="140" y="390" text-anchor="middle" class="axis-label">0</text>
+  <text x="180" y="390" text-anchor="middle" class="axis-label">1</text>
+  <text x="220" y="390" text-anchor="middle" class="axis-label">2</text>
+  <text x="260" y="390" text-anchor="middle" class="axis-label">τ</text>
+
+  <!-- y axis label -->
+  <text x="45" y="260" text-anchor="middle" class="axis-label" transform="rotate(-90,45,260)">值</text>
+
+  <!-- Grid lines (light) -->
+  <line x1="100" y1="105" x2="100" y2="370" stroke="var(--line)" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="140" y1="105" x2="140" y2="370" stroke="var(--line)" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="180" y1="105" x2="180" y2="370" stroke="var(--line)" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="220" y1="105" x2="220" y2="370" stroke="var(--line)" stroke-width="0.5" stroke-dasharray="3,3"/>
+
+  <!-- f(τ) bars -->
+  <!-- Bar: x centered at tick, width=30, y from value to baseline (370). Scale: 1 unit = 80px -->
+  <!-- f[-2]=1: bar at x=60, h=80, y=290 -->
+  <rect x="45" y="290" width="30" height="80" rx="2" fill="var(--blue)" opacity="0.85"/>
+  <!-- f[-1]=2: bar at x=100, h=160, y=210 -->
+  <rect x="85" y="210" width="30" height="160" rx="2" fill="var(--blue)" opacity="0.85"/>
+  <!-- f[0]=3: bar at x=140, h=240, y=130 -->
+  <rect x="125" y="130" width="30" height="240" rx="2" fill="var(--blue)" opacity="0.85"/>
+  <!-- f[1]=2: bar at x=180, h=160, y=210 -->
+  <rect x="165" y="210" width="30" height="160" rx="2" fill="var(--blue)" opacity="0.85"/>
+  <!-- f[2]=1: bar at x=220, h=80, y=290 -->
+  <rect x="205" y="290" width="30" height="80" rx="2" fill="var(--blue)" opacity="0.85"/>
+
+  <!-- f bar value labels -->
+  <text x="60" y="283" text-anchor="middle" class="signal-label" fill="var(--blue)">1</text>
+  <text x="100" y="203" text-anchor="middle" class="signal-label" fill="var(--blue)">2</text>
+  <text x="140" y="123" text-anchor="middle" class="signal-label" fill="var(--blue)">3</text>
+  <text x="180" y="203" text-anchor="middle" class="signal-label" fill="var(--blue)">2</text>
+  <text x="220" y="283" text-anchor="middle" class="signal-label" fill="var(--blue)">1</text>
+
+  <!-- g(τ) bars (orange, slightly offset and translucent) -->
+  <!-- g[-1]=1, g[0]=1, g[1]=1 -->
+  <rect x="82" y="290" width="24" height="80" rx="2" fill="var(--orange)" opacity="0.75"/>
+  <rect x="122" y="290" width="24" height="80" rx="2" fill="var(--orange)" opacity="0.75"/>
+  <rect x="162" y="290" width="24" height="80" rx="2" fill="var(--orange)" opacity="0.75"/>
+
+  <!-- g bar value labels -->
+  <text x="94" y="283" text-anchor="middle" class="signal-label" fill="#d97706" font-size="10">1</text>
+  <text x="134" y="283" text-anchor="middle" class="signal-label" fill="#d97706" font-size="10">1</text>
+  <text x="174" y="283" text-anchor="middle" class="signal-label" fill="#d97706" font-size="10">1</text>
+
+  <!-- Legend for panel 1 -->
+  <rect x="70" y="400" width="14" height="10" rx="2" fill="var(--blue)" opacity="0.85"/>
+  <text x="88" y="409" class="axis-label" font-size="10">f(τ)</text>
+  <rect x="130" y="400" width="14" height="10" rx="2" fill="var(--orange)" opacity="0.75"/>
+  <text x="148" y="409" class="axis-label" font-size="10">g(τ)</text>
+
+  <!-- ============================================================ -->
+  <!-- ARROW 1→2 -->
+  <!-- ============================================================ -->
+  <line x1="310" y1="235" x2="338" y2="235" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrowMuted)"/>
+  <text x="324" y="228" text-anchor="middle" class="arrow-label">翻转</text>
+
+  <!-- ============================================================ -->
+  <!-- PANEL 2: 翻转 g (middle: x=345..635) -->
+  <!-- ============================================================ -->
+
+  <rect x="345" y="55" width="290" height="360" rx="8" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/>
+
+  <text x="490" y="78" text-anchor="middle" class="panel-title">翻转 g(τ) → g(t−τ)</text>
+
+  <!-- Axes -->
+  <line x1="390" y1="370" x2="590" y2="370" stroke="var(--fg)" stroke-width="1.5"/>
+  <line x1="390" y1="100" x2="390" y2="370" stroke="var(--fg)" stroke-width="1.5"/>
+  <polygon points="590,370 584,366 584,374" fill="var(--fg)"/>
+  <polygon points="390,100 386,106 394,106" fill="var(--fg)"/>
+
+  <text x="390" y="390" text-anchor="middle" class="axis-label">−2</text>
+  <text x="430" y="390" text-anchor="middle" class="axis-label">−1</text>
+  <text x="470" y="390" text-anchor="middle" class="axis-label">0</text>
+  <text x="510" y="390" text-anchor="middle" class="axis-label">1</text>
+  <text x="550" y="390" text-anchor="middle" class="axis-label">2</text>
+  <text x="590" y="390" text-anchor="middle" class="axis-label">τ</text>
+
+  <line x1="430" y1="105" x2="430" y2="370" stroke="var(--line)" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="470" y1="105" x2="470" y2="370" stroke="var(--line)" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="510" y1="105" x2="510" y2="370" stroke="var(--line)" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="550" y1="105" x2="550" y2="370" stroke="var(--line)" stroke-width="0.5" stroke-dasharray="3,3"/>
+
+  <!-- f(τ) bars (same as panel 1) -->
+  <rect x="375" y="290" width="30" height="80" rx="2" fill="var(--blue)" opacity="0.5"/>
+  <rect x="415" y="210" width="30" height="160" rx="2" fill="var(--blue)" opacity="0.5"/>
+  <rect x="455" y="130" width="30" height="240" rx="2" fill="var(--blue)" opacity="0.5"/>
+  <rect x="495" y="210" width="30" height="160" rx="2" fill="var(--blue)" opacity="0.5"/>
+  <rect x="535" y="290" width="30" height="80" rx="2" fill="var(--blue)" opacity="0.5"/>
+
+  <!-- g(t-τ) FLIPPED: for t=0, g(0-τ)=g(-τ), so g flipped is at τ: -1,0,1 same as original -->
+  <!-- But visually "flipped" g: the kernel slides right as t increases -->
+  <!-- Show original g position with dashed outline -->
+  <rect x="412" y="290" width="24" height="80" rx="2" fill="none" stroke="var(--orange)" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>
+  <rect x="452" y="290" width="24" height="80" rx="2" fill="none" stroke="var(--orange)" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>
+  <rect x="492" y="290" width="24" height="80" rx="2" fill="none" stroke="var(--orange)" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>
+
+  <!-- Flipped g (t=0, which is same as original for symmetric g, but show "flip" visually) -->
+  <!-- For non-trivial illustration, show t=1: g(1-τ) at τ=0,1,2 shifted right by 1 -->
+  <rect x="452" y="290" width="24" height="80" rx="2" fill="var(--orange)" opacity="0.75"/>
+  <rect x="492" y="290" width="24" height="80" rx="2" fill="var(--orange)" opacity="0.75"/>
+  <rect x="532" y="290" width="24" height="80" rx="2" fill="var(--orange)" opacity="0.75"/>
+
+  <!-- Labels for g(t-τ) -->
+  <text x="464" y="283" text-anchor="middle" class="signal-label" fill="#d97706" font-size="10">1</text>
+  <text x="504" y="283" text-anchor="middle" class="signal-label" fill="#d97706" font-size="10">1</text>
+  <text x="544" y="283" text-anchor="middle" class="signal-label" fill="#d97706" font-size="10">1</text>
+
+  <text x="44" y="285" transform="rotate(-90,44,285) translate(0,0)" class="axis-label">值</text>
+
+  <!-- Curved arrow for "flip" -->
+  <path d="M 430 150 Q 450 130 470 150 Q 490 130 510 150" fill="none" stroke="#ef4444" stroke-width="1.2" marker-end="url(#arrowRed)"/>
+  <text x="470" y="138" text-anchor="middle" class="arrow-label" fill="#ef4444">翻转</text>
+
+  <!-- Legend -->
+  <rect x="395" y="400" width="14" height="10" rx="2" fill="var(--orange)" opacity="0.75"/>
+  <text x="413" y="409" class="axis-label" font-size="10">g(t−τ) 翻转后</text>
+  <rect x="490" y="400" width="14" height="10" rx="2" fill="none" stroke="var(--orange)" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="508" y="409" class="axis-label" font-size="10">g(τ) 原始位置</text>
+
+  <!-- ============================================================ -->
+  <!-- ARROW 2→3 -->
+  <!-- ============================================================ -->
+  <line x1="640" y1="235" x2="668" y2="235" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrowMuted)"/>
+  <text x="654" y="225" text-anchor="middle" class="arrow-label">平移</text>
+  <text x="654" y="250" text-anchor="middle" class="arrow-label">相乘</text>
+
+  <!-- ============================================================ -->
+  <!-- PANEL 3: 逐点相乘并求和 (right: x=675..965) -->
+  <!-- ============================================================ -->
+
+  <rect x="675" y="55" width="275" height="360" rx="8" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/>
+
+  <text x="812" y="78" text-anchor="middle" class="panel-title">逐点相乘并求和</text>
+
+  <!-- Axes -->
+  <line x1="705" y1="370" x2="855" y2="370" stroke="var(--fg)" stroke-width="1.5"/>
+  <line x1="705" y1="100" x2="705" y2="370" stroke="var(--fg)" stroke-width="1.5"/>
+  <polygon points="855,370 849,366 849,374" fill="var(--fg)"/>
+
+  <text x="705" y="390" text-anchor="middle" class="axis-label">−2</text>
+  <text x="742" y="390" text-anchor="middle" class="axis-label">−1</text>
+  <text x="780" y="390" text-anchor="middle" class="axis-label">0</text>
+  <text x="818" y="390" text-anchor="middle" class="axis-label">1</text>
+  <text x="855" y="390" text-anchor="middle" class="axis-label">τ</text>
+
+  <line x1="742" y1="105" x2="742" y2="370" stroke="var(--line)" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="780" y1="105" x2="780" y2="370" stroke="var(--line)" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="818" y1="105" x2="818" y2="370" stroke="var(--line)" stroke-width="0.5" stroke-dasharray="3,3"/>
+
+  <!-- f(τ) bars -->
+  <rect x="690" y="290" width="28" height="80" rx="2" fill="var(--blue)" opacity="0.85"/>
+  <rect x="728" y="210" width="28" height="160" rx="2" fill="var(--blue)" opacity="0.85"/>
+  <rect x="766" y="130" width="28" height="240" rx="2" fill="var(--blue)" opacity="0.85"/>
+  <rect x="804" y="210" width="28" height="160" rx="2" fill="var(--blue)" opacity="0.85"/>
+  <rect x="842" y="290" width="28" height="80" rx="2" fill="var(--blue)" opacity="0.85"/>
+
+  <!-- Overlap region highlight (τ=-1, 0, 1 has both f and g non-zero) -->
+  <rect x="720" y="105" width="120" height="265" rx="4" fill="var(--purple-light)" opacity="0.5"/>
+
+  <!-- g(t-τ) bars (flipped, at t=0: position τ=-1,0,1) -->
+  <rect x="726" y="290" width="22" height="80" rx="2" fill="var(--orange)" opacity="0.8"/>
+  <rect x="764" y="290" width="22" height="80" rx="2" fill="var(--orange)" opacity="0.8"/>
+  <rect x="802" y="290" width="22" height="80" rx="2" fill="var(--orange)" opacity="0.8"/>
+
+  <!-- Vertical dotted lines connecting paired bars -->
+  <line x1="737" y1="210" x2="737" y2="290" stroke="var(--purple)" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="775" y1="130" x2="775" y2="290" stroke="var(--purple)" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="813" y1="210" x2="813" y2="290" stroke="var(--purple)" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- Multiplication annotations -->
+  <text x="737" y="198" text-anchor="middle" class="calc-label" fill="#7c3aed" font-size="10">2×1</text>
+  <text x="775" y="118" text-anchor="middle" class="calc-label" fill="#7c3aed" font-size="10">3×1</text>
+  <text x="813" y="198" text-anchor="middle" class="calc-label" fill="#7c3aed" font-size="10">2×1</text>
+
+  <!-- Bar value labels -->
+  <text x="704" y="283" text-anchor="middle" class="signal-label" fill="var(--blue)" font-size="10">1</text>
+  <text x="742" y="203" text-anchor="middle" class="signal-label" fill="var(--blue)" font-size="10">2</text>
+  <text x="780" y="123" text-anchor="middle" class="signal-label" fill="var(--blue)" font-size="10">3</text>
+  <text x="818" y="203" text-anchor="middle" class="signal-label" fill="var(--blue)" font-size="10">2</text>
+  <text x="856" y="283" text-anchor="middle" class="signal-label" fill="var(--blue)" font-size="10">1</text>
+
+  <text x="737" y="283" text-anchor="middle" class="signal-label" fill="#d97706" font-size="9">1</text>
+  <text x="775" y="283" text-anchor="middle" class="signal-label" fill="#d97706" font-size="9">1</text>
+  <text x="813" y="283" text-anchor="middle" class="signal-label" fill="#d97706" font-size="9">1</text>
+
+  <!-- Sum calculation box -->
+  <rect x="700" y="420" width="230" height="50" rx="6" fill="#fafaf9" stroke="var(--line)" stroke-width="1"/>
+  <text x="815" y="438" text-anchor="middle" class="calc-label" fill="#7c3aed">
+    2×1 + 3×1 + 2×1 = 7
+  </text>
+  <text x="815" y="460" text-anchor="middle" class="calc-label" fill="var(--muted)" font-size="10">
+    (f ∗ g)(0) — 卷积结果
+  </text>
+
+  <!-- Legend -->
+  <rect x="710" y="400" width="14" height="10" rx="2" fill="var(--purple-light)" stroke="var(--purple)" stroke-width="0.5"/>
+  <text x="728" y="409" class="axis-label" font-size="10">重叠区域</text>
+
+  <!-- ============================================================ -->
+  <!-- Arrow marker definitions -->
+  <!-- ============================================================ -->
+  <defs>
+    <marker id="arrowMuted" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="var(--muted)"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#ef4444"/>
+    </marker>
+  </defs>
+
+</svg>
+
+<!-- MathJax-rendered formula below the SVG -->
+<div class="math-note">
+  \((f * g)(t) = \sum_{\tau} f(\tau)\,g(t-\tau)\) &ensp;—&ensp; 翻转 \(g\)，然后在 \(\tau\) 轴上滑动，逐点相乘后求和
+</div>
+
+</div>
+</body>
+</html>
