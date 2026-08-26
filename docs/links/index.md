@@ -118,7 +118,15 @@ title: 友情链接
         <div class="info">摸鱼系超小型 Minecraft 服务器<br>欢迎来摸鱼</div>
         </div>
     </div>
-
+    <div class="card">
+        <img class="ava" src="https://conscient.hk.cn/tx.png" />
+        <div class="card-header">
+        <div>
+            <a href="https://conscient.hk.cn/" target="_blank">Conscient</a>
+        </div>
+        <div class="info">新的心跳</div>
+        </div>
+    </div>
 </div>
 </div>
 </div>

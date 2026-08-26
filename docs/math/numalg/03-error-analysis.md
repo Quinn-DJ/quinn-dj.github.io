@@ -219,7 +219,7 @@ $$ \kappa(A) = \|A^{-1}\| \|A\| $$
     1. 条件数大（小），$A$ 是病（良）态的
     2. 任意两个范数下的条件数是等价的
     3. $\kappa(A) \geq 1$
-   
+
 若 $A \in \mathbb{R}^{n \times n}$ 非奇异，$b \in \mathbb{R}^n$，假定 $\delta A \in \mathbb{R}^{n \times n}$，满足 $\|A^{-1}\| \|\delta A\| < 1$，则
 $$ \frac{\|\delta x\|}{\|x\|} \leq \kappa(A) \left(\frac{\|\delta A\|}{\|A\|} + \frac{\|\delta b\|}{\|b\|}\right)
 $$
