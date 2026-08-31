@@ -11,7 +11,7 @@ description: 分析 DeepSeek V4 分词器时发现词表里似乎没有中文，
 
 > 学习词元（token）和分词器的时候，我下载了 DeepSeek 官方提供的 `deepseek_v4_tokenizer.zip`。打开 `tokenizer.json` 翻词表，第一眼完全没看到汉字，全是 `!`、`#`、`Ġthe` 和一堆像乱码一样的字符。当时的第一个疑问是：这样的词表，到底是怎么训练出中文的？
 
-## 结论先说
+## 省流
 
 这份词表不是没有中文，而是用了**字节级 BPE（byte-level BPE）**。词条不是"字符/词语"，是 UTF-8 字节片段；为了能放进 JSON 又保持可读，每个字节被映射成一个可见字符（GPT-2 风格的 `bytes_to_unicode`）。所以中文字符在词表里，就以"乱码"的形式存在。
 
@@ -86,7 +86,7 @@ tokenizer = AutoTokenizer.from_pretrained("./", trust_remote_code=True)
 print(tokenizer.encode("你好"))  # [] ?!
 ```
 
-输出是空列表 `[]`。这不是文件编码问题（只要 `.py` 文件保存为 UTF-8），而是 transformers 5.x 的一个兼容问题。
+输出是空列表 `[]`。这不是文件编码问题（确认过 `.py` 文件保存为 UTF-8），而是 transformers 5.x 的一个兼容问题。
 
 原因：`tokenizer_config.json` 里写的 `tokenizer_class` 是 `LlamaTokenizerFast`。transformers 5.x 重构之后，加载这个类时会强制把预切分器换成 `Metaspace("▁")`，丢掉 `tokenizer.json` 里真正的 CJK/ByteLevel 规则。"你好"先变成 `▁你好`，但词表里没有 `你`、`好` 这两个直接字符（它们以字节形态存在），`unk_token` 又是 `null`，匹配不到的内容就被静默丢弃，最终得到空列表。英文还能正常输出，只是碰巧 ASCII 字母在两种规则下的样子完全一样。
 
@@ -118,7 +118,7 @@ print(tok.encode("你好"))  # [30594]
 
 ## 小结
 
-一句话总结：词表不是没有中文，中文 token 是语料统计出来的，藏在 `merges` 里。以后再遇到 `encode()` 返回空列表，先检查预切分器是不是被换掉了。
+词表含有中文，中文 token 是语料统计出来的，藏在 `merges` 里。以后再遇到 `encode()` 返回空列表，先检查预切分器是不是被换掉了。
 
 ## 参考资料
 
