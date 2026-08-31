@@ -74,7 +74,8 @@ nav = [
     { "自己研究的小东西" = [
       { "三体问题" = "coding/3body.md" },
       { "Verlet 算法" = "coding/verletalgorithm.md" },
-      { "Cholesky 分解在不同平台上的性能异常" = "coding/cholesky_performance_anomaly.md" }
+      { "Cholesky 分解在不同平台上的性能异常" = "coding/cholesky_performance_anomaly.md" },
+      { "字节级 BPE 与中文分词" = "coding/tokenizer_byte_level_bpe.md" }
     ] }
   ] },
 
@@ -180,6 +181,7 @@ meta = {}
 "pymdownx.betterem" = {}
 "pymdownx.critic" = {}
 "pymdownx.details" = {}
+"pymdownx.quotes" = { callouts = true }
 "pymdownx.inlinehilite" = {}
 "pymdownx.keys" = {}
 "pymdownx.mark" = {}

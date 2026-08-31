@@ -30,11 +30,13 @@ $$
 
 其中 $\rho(G) = \max_i |\lambda_i(G)|$ 是迭代矩阵的**谱半径**。
 
-!!! important "收敛速度"
-    $\|e^{(k)}\| \approx \rho^k \|e^{(0)}\|$，每步约减少因子 $\rho$。达到精度 $\varepsilon$ 所需迭代步数：
-    $$
-    k \approx \frac{\log \varepsilon}{\log \rho}
-    $$
+> [!IMPORTANT]
+> **收敛速度**
+>
+> $\|e^{(k)}\| \approx \rho^k \|e^{(0)}\|$，每步约减少因子 $\rho$。达到精度 $\varepsilon$ 所需迭代步数：
+> $$
+> k \approx \frac{\log \varepsilon}{\log \rho}
+> $$
 
 ### 收敛的充分条件
 
@@ -84,8 +86,10 @@ def jacobi(A, b, x0, tol=1e-6, max_iter=1000):
     return x
 ```
 
-!!! tip "并行性"
-    Jacobi 的每个分量更新互不依赖——天然适合 GPU / 多核并行。
+> [!TIP]
+> **并行性**
+>
+> Jacobi 的每个分量更新互不依赖——天然适合 GPU / 多核并行。
 
 ---
 
@@ -105,8 +109,10 @@ $$
 x_i^{(k+1)} = \frac{1}{a_{ii}}\left(b_i - \sum_{j < i} a_{ij} x_j^{(k+1)} - \sum_{j > i} a_{ij} x_j^{(k)}\right)
 $$
 
-!!! important "关键区别"
-    计算 $x_i^{(k+1)}$ 时**立即使用**已算出的 $x_1^{(k+1)},\dots,x_{i-1}^{(k+1)}$。这使收敛通常比 Jacobi 快约一倍，但牺牲了并行度。
+> [!IMPORTANT]
+> **关键区别**
+>
+> 计算 $x_i^{(k+1)}$ 时**立即使用**已算出的 $x_1^{(k+1)},\dots,x_{i-1}^{(k+1)}$。这使收敛通常比 Jacobi 快约一倍，但牺牲了并行度。
 
 ```python
 def gauss_seidel(A, b, x0, tol=1e-6, max_iter=1000):
@@ -141,12 +147,14 @@ $$
 | $\omega = 1$ | 退化为 Gauss-Seidel |
 | $1 < \omega < 2$ | 超松弛（SOR）—— 加速收敛 |
 
-!!! tip "最优 $\omega$"
-    存在 $\omega_{\text{opt}} \in (1, 2)$ 使 $\rho(G_\omega)$ 最小。对某些特殊矩阵（如一致排序矩阵）可解析求解：
-    $$
-    \omega_{\text{opt}} = \frac{2}{1 + \sqrt{1 - \rho(J)^2}}
-    $$
-    其中 $\rho(J)$ 是 Jacobi 迭代矩阵的谱半径。一般情形需通过实验估计。
+> [!TIP]
+> **最优 $\omega$**
+>
+> 存在 $\omega_{\text{opt}} \in (1, 2)$ 使 $\rho(G_\omega)$ 最小。对某些特殊矩阵（如一致排序矩阵）可解析求解：
+> $$
+> \omega_{\text{opt}} = \frac{2}{1 + \sqrt{1 - \rho(J)^2}}
+> $$
+> 其中 $\rho(J)$ 是 Jacobi 迭代矩阵的谱半径。一般情形需通过实验估计。
 
 ---
 
@@ -158,5 +166,7 @@ $$
 | G-S | $D - L$ | 差 | $\approx 2\times$ Jacobi | 原位更新 |
 | SOR | $\frac{1}{\omega}D - L$ | 差 | 选 $\omega_{\text{opt}}$ 可大幅加速 | 原位更新 |
 
-!!! warning "经典迭代法的局限"
-    Jacobi、Gauss-Seidel、SOR 统称**经典迭代法**（也称定常迭代法），收敛速度受限于谱半径，对病态问题极慢。现代大规模求解器通常优先使用 **Krylov 子空间方法**（CG、GMRES、BiCGSTAB 等），这些方法将在下一章开始介绍。
+> [!WARNING]
+> **经典迭代法的局限**
+>
+> Jacobi、Gauss-Seidel、SOR 统称**经典迭代法**（也称定常迭代法），收敛速度受限于谱半径，对病态问题极慢。现代大规模求解器通常优先使用 **Krylov 子空间方法**（CG、GMRES、BiCGSTAB 等），这些方法将在下一章开始介绍。

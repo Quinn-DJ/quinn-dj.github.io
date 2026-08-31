@@ -129,8 +129,10 @@ class A { shared_ptr<B> _bPtr; };
 class B { weak_ptr<A> _aPtr; };  // ★ 用 weak_ptr 打破循环
 ```
 
-!!! warning "循环引用陷阱"
-    两个 `shared_ptr` 互相指向对方 -> 引用计数永远不为 0 -> 内存泄漏！
+> [!WARNING]
+> **循环引用陷阱**
+>
+> 两个 `shared_ptr` 互相指向对方 -> 引用计数永远不为 0 -> 内存泄漏！
 
 ---
 

@@ -13,9 +13,11 @@
 | **Is-a** | 派生类是基类的一种 | 狗是一种动物 |
 | **Has-a** | 类包含另一个类的对象（组合） | 车有一个引擎 |
 
-!!! tip "区分 Is-a 与 Has-a"
-    - Is-a 是 **继承**: `class Dog : public Animal {}`
-    - Has-a 是 **组合**: `class Car { Engine _engine; }`
+> [!TIP]
+> **区分 Is-a 与 Has-a**
+>
+> - Is-a 是 **继承**: `class Dog : public Animal {}`
+> - Has-a 是 **组合**: `class Car { Engine _engine; }`
 
 ### 继承的核心作用
 
@@ -57,8 +59,10 @@ public:
 | `protected` 继承 | `protected` | `protected` | **不可访问** |
 | `private` 继承 | `private` | `private` | **不可访问** |
 
-!!! important "关键规则"
-    无论哪种继承方式，基类的 `private` 成员在派生类中都**不可直接访问**。
+> [!IMPORTANT]
+> **关键规则**
+>
+> 无论哪种继承方式，基类的 `private` 成员在派生类中都**不可直接访问**。
 
 ### 公有继承 (public) — 最常用
 
@@ -122,9 +126,11 @@ Derived destructor
 Base destructor
 ```
 
-!!! tip "记忆"
-    构造：基类 -> 派生类（先建基础，再建上层）
-    析构：派生类 -> 基类（先拆上层，再拆基础）
+> [!TIP]
+> **记忆**
+>
+> 构造：基类 -> 派生类（先建基础，再建上层）
+> 析构：派生类 -> 基类（先拆上层，再拆基础）
 
 ### 派生类的初始化列表
 
@@ -147,8 +153,10 @@ public:
 };
 ```
 
-!!! warning "基类默认构造不可用时"
-    如果基类没有默认构造函数，派生类必须在初始化列表中显式调用基类的带参构造函数。
+> [!WARNING]
+> **基类默认构造不可用时**
+>
+> 如果基类没有默认构造函数，派生类必须在初始化列表中显式调用基类的带参构造函数。
 
 ---
 
@@ -200,8 +208,10 @@ d.Base::show();        // 通过作用域解析访问，输出 Base show()
 d.Base::show(10);      // 通过作用域解析访问，输出 Base show(10)
 ```
 
-!!! warning "名字隐藏"
-    派生类只需方法名相同就会隐藏**基类所有同名函数**。可用 `using Base::show` 引入。
+> [!WARNING]
+> **名字隐藏**
+>
+> 派生类只需方法名相同就会隐藏**基类所有同名函数**。可用 `using Base::show` 引入。
 
 ---
 
@@ -233,8 +243,10 @@ public:
 };
 ```
 
-!!! tip "多重继承 vs 组合"
-    只有当类的确是"既是 A 又是 B"时（Is-a），才使用多重继承。否则优先考虑组合。
+> [!TIP]
+> **多重继承 vs 组合**
+>
+> 只有当类的确是"既是 A 又是 B"时（Is-a），才使用多重继承。否则优先考虑组合。
 
 ---
 
@@ -297,8 +309,10 @@ public:
 };
 ```
 
-!!! important "虚继承的关键规则"
-    **虚基类由最派生类的构造函数直接初始化**，中间类对虚基类的构造调用的初始化会被忽略。
+> [!IMPORTANT]
+> **虚继承的关键规则**
+>
+> **虚基类由最派生类的构造函数直接初始化**，中间类对虚基类的构造调用的初始化会被忽略。
 
 ### 构造顺序（虚继承的特殊性）
 
@@ -331,11 +345,13 @@ p->redefined();      // 输出：Base redefined（静态绑定）
 p->overridden();     // 输出：Derived overridden（动态绑定）
 ```
 
-!!! tip "override 关键字 (C++11)"
-    ```cpp
-    void overridden() override;  // 正确
-    void Overridden() override;  // 编译错误！签名不匹配
-    ```
+> [!TIP]
+> **override 关键字 (C++11)**
+>
+> ```cpp
+> void overridden() override;  // 正确
+> void Overridden() override;  // 编译错误！签名不匹配
+> ```
 
 ---
 

@@ -44,8 +44,10 @@ def power_method(A, v0, tol=1e-8, max_iter=1000):
     return lam, v
 ```
 
-!!! warning "限制"
-    仅能收敛到**按模最大的特征值**。若 $|\lambda_1| = |\lambda_2|$（如一对共轭复根），幂法发散。
+> [!WARNING]
+> **限制**
+>
+> 仅能收敛到**按模最大的特征值**。若 $|\lambda_1| = |\lambda_2|$（如一对共轭复根），幂法发散。
 
 ### 反幂法（Inverse Power Method）
 
@@ -96,8 +98,10 @@ $$
      - 复共轭特征值对 → 2×2 对角块
 ```
 
-!!! info "计算量"
-    Hessenberg 化约 $10n^3/3$；每次双位移 QR 迭代约 $6n^2$。LAPACK `dgeev`（一般）和 `dsyev`（对称）实现了此方法。
+> [!NOTE]
+> **计算量**
+>
+> Hessenberg 化约 $10n^3/3$；每次双位移 QR 迭代约 $6n^2$。LAPACK `dgeev`（一般）和 `dsyev`（对称）实现了此方法。
 
 ---
 
@@ -160,11 +164,13 @@ def jacobi_eigenvalues(A, tol=1e-8, max_iter=100):
     return [V[i][i] for i in range(n)]
 ```
 
-!!! note "Jacobi 方法的特点"
-    - 非对角元平方和**单调递减**
-    - 结合循环策略可达到**三次收敛**（渐进）
-    - 天然适合**并行**实现（可同时消去多对非对角元）
-    - 精度极高，常被用作其他方法的校核
+> [!NOTE]
+> **Jacobi 方法的特点**
+>
+> - 非对角元平方和**单调递减**
+> - 结合循环策略可达到**三次收敛**（渐进）
+> - 天然适合**并行**实现（可同时消去多对非对角元）
+> - 精度极高，常被用作其他方法的校核
 
 ---
 
@@ -213,8 +219,10 @@ def count_eigenvalues_below(T, mu):
     return count
 ```
 
-!!! tip "何时使用二分法"
-    当**只需要部分特征值**（如最小特征值、或某区间内的特征值）时，二分法比 QR 方法更高效。配合反幂法可同时求出对应的特征向量。
+> [!TIP]
+> **何时使用二分法**
+>
+> 当**只需要部分特征值**（如最小特征值、或某区间内的特征值）时，二分法比 QR 方法更高效。配合反幂法可同时求出对应的特征向量。
 
 ---
 
@@ -231,8 +239,10 @@ def count_eigenvalues_below(T, mu):
 | Lanczos | 稀疏对称 | $k \ll n$ | $O(k \cdot \text{nnz})$ | 良好（需重正交） |
 | Arnoldi | 稀疏一般 | $k \ll n$ | $O(k \cdot \text{nnz})$ | 良好 |
 
-!!! tip "实践建议"
-    - 一般矩阵全部特征值 → QR（LAPACK `dgeev`）
-    - 对称矩阵全部特征值 → 对称 QR / 分治法（LAPACK `dsyev`）
-    - 对称矩阵部分特征值 → 二分法 + 反幂法（LAPACK `dstebz` + `dstein`）
-    - 大规模稀疏的少数特征值 → Lanczos / Arnoldi（ARPACK、SLEPc）
+> [!TIP]
+> **实践建议**
+>
+> - 一般矩阵全部特征值 → QR（LAPACK `dgeev`）
+> - 对称矩阵全部特征值 → 对称 QR / 分治法（LAPACK `dsyev`）
+> - 对称矩阵部分特征值 → 二分法 + 反幂法（LAPACK `dstebz` + `dstein`）
+> - 大规模稀疏的少数特征值 → Lanczos / Arnoldi（ARPACK、SLEPc）

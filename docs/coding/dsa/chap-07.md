@@ -24,9 +24,11 @@ struct Edge {
 vector<vector<Edge>> graph(n + 1);
 ```
 
-!!! tip "何时用哪种？"
-    - **邻接矩阵**：稠密图（$E \approx V^2$），如 Floyd-Warshall
-    - **邻接表**：稀疏图（$E \ll V^2$），大多数情况
+> [!TIP]
+> **何时用哪种？**
+>
+> - **邻接矩阵**：稠密图（$E \approx V^2$），如 Floyd-Warshall
+> - **邻接表**：稀疏图（$E \ll V^2$），大多数情况
 
 ---
 
@@ -116,8 +118,10 @@ vector<int> dijkstra(int n, vector<vector<Edge>>& graph, int start) {
 | 二叉堆 | $O((V+E)\log V)$ |
 | Fibonacci 堆 | $O(E + V\log V)$ |
 
-!!! warning "Dijkstra 的限制"
-    不能处理**负权边**。负权边会破坏 Dijkstra 的贪心性质——一个已经确定为最短路径的节点可能被后续的负权边"反向优化"。
+> [!WARNING]
+> **Dijkstra 的限制**
+>
+> 不能处理**负权边**。负权边会破坏 Dijkstra 的贪心性质——一个已经确定为最短路径的节点可能被后续的负权边"反向优化"。
 
 ### Bellman-Ford 算法 — 支持负权边
 
@@ -161,8 +165,10 @@ void floydWarshall(int n, vector<vector<int>>& dist) {
 
 复杂度：$O(V^3)$，适用于**稠密图**（$V \le 300$ 左右）。
 
-!!! tip "Floyd 的巧妙之处"
-    三维 DP 可以压缩到二维——`dist[i][j]` 在每轮更新中原地被改写，而 $k$ 循环的顺序保证了正确性。
+> [!TIP]
+> **Floyd 的巧妙之处**
+>
+> 三维 DP 可以压缩到二维——`dist[i][j]` 在每轮更新中原地被改写，而 $k$ 循环的顺序保证了正确性。
 
 ---
 
@@ -271,9 +277,11 @@ int kruskal(int n, vector<array<int,3>>& edges) {
 | Prim (朴素) | 扫描所有节点 | $O(V^2)$ |
 | Kruskal | 并查集 + 排序 | $O(E\log E)$ |
 
-!!! tip "如何选择？"
-    - **稠密图**（$E \approx V^2$）→ Prim 朴素 $O(V^2)$ 比 Kruskal 的 $O(E\log E)$ 更快
-    - **稀疏图** → Kruskal 或 Prim 二叉堆均可
+> [!TIP]
+> **如何选择？**
+>
+> - **稠密图**（$E \approx V^2$）→ Prim 朴素 $O(V^2)$ 比 Kruskal 的 $O(E\log E)$ 更快
+> - **稀疏图** → Kruskal 或 Prim 二叉堆均可
 
 ---
 

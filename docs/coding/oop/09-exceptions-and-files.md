@@ -263,8 +263,10 @@ inFile.read(reinterpret_cast<char*>(&s2), sizeof(Student));
 inFile.close();
 ```
 
-!!! warning "二进制文件不跨平台"
-    `sizeof` 在不同平台/不同编译器可能不同。跨平台需自定义序列化格式（JSON、Protobuf 等）。
+> [!WARNING]
+> **二进制文件不跨平台**
+>
+> `sizeof` 在不同平台/不同编译器可能不同。跨平台需自定义序列化格式（JSON、Protobuf 等）。
 
 ---
 

@@ -134,9 +134,11 @@ $$
 
 其中 $\rho(\cdot)$ 为谱半径，$\|A\|_2$ 也被称为谱范数。
 
-!!! note "谱半径"
-    若 $A$ 有特征值 $\lambda_1, \ldots, \lambda_n$，则 $A$ 的谱半径为
-    $$ \rho(A) = \max_{1 \le i \le n} |\lambda_i| $$
+> [!NOTE]
+> **谱半径**
+>
+> 若 $A$ 有特征值 $\lambda_1, \ldots, \lambda_n$，则 $A$ 的谱半径为
+> $$ \rho(A) = \max_{1 \le i \le n} |\lambda_i| $$
 
 特别的，若 $A$ 是对称矩阵，则 $\|A\|_2 = \rho(A)$。
 
@@ -215,10 +217,12 @@ $$
 $A$ 非奇异，记 $A$ 的条件数为
 $$ \kappa(A) = \|A^{-1}\| \|A\| $$
 
-!!! note "条件数性质"
-    1. 条件数大（小），$A$ 是病（良）态的
-    2. 任意两个范数下的条件数是等价的
-    3. $\kappa(A) \geq 1$
+> [!NOTE]
+> **条件数性质**
+>
+> 1. 条件数大（小），$A$ 是病（良）态的
+> 2. 任意两个范数下的条件数是等价的
+> 3. $\kappa(A) \geq 1$
 
 若 $A \in \mathbb{R}^{n \times n}$ 非奇异，$b \in \mathbb{R}^n$，假定 $\delta A \in \mathbb{R}^{n \times n}$，满足 $\|A^{-1}\| \|\delta A\| < 1$，则
 $$ \frac{\|\delta x\|}{\|x\|} \leq \kappa(A) \left(\frac{\|\delta A\|}{\|A\|} + \frac{\|\delta b\|}{\|b\|}\right)

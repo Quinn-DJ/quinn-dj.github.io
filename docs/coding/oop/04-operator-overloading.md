@@ -13,8 +13,10 @@ Complex a(1, 2), b(3, 4);
 Complex c = a + b;   // 比 Complex c = a.add(b) 更直观
 ```
 
-!!! tip "基本原则"
-    运算符重载的目的是让代码**更自然、更易读**，不是炫技。重载后应该保持运算符原有的含义。
+> [!TIP]
+> **基本原则**
+>
+> 运算符重载的目的是让代码**更自然、更易读**，不是炫技。重载后应该保持运算符原有的含义。
 
 ### 可以重载的运算符
 
@@ -81,10 +83,12 @@ istream& operator>>(istream& is, Point& p) {
 }
 ```
 
-!!! important "选择标准"
-    - 左操作数必须是当前类对象 → 成员函数
-    - 左操作数非当前类（如 `cout`）→ 非成员函数
-    - 对称二元运算符（如 `+`、`==`）→ 推荐非成员函数
+> [!IMPORTANT]
+> **选择标准**
+>
+> - 左操作数必须是当前类对象 → 成员函数
+> - 左操作数非当前类（如 `cout`）→ 非成员函数
+> - 对称二元运算符（如 `+`、`==`）→ 推荐非成员函数
 
 ---
 
@@ -111,13 +115,15 @@ public:
 };
 ```
 
-!!! tip "对称性的处理"
-    让 `2 * v` 也合法（左操作数是 `double`）：
-    ```cpp
-    Vector2D operator*(double scalar, const Vector2D& v) {
-        return v * scalar;  // 复用成员函数版本
-    }
-    ```
+> [!TIP]
+> **对称性的处理**
+>
+> 让 `2 * v` 也合法（左操作数是 `double`）：
+> ```cpp
+> Vector2D operator*(double scalar, const Vector2D& v) {
+>     return v * scalar;  // 复用成员函数版本
+> }
+> ```
 
 ---
 
@@ -144,14 +150,16 @@ public:
 };
 ```
 
-!!! tip "最佳实践"
-    先实现 `operator+=` 作为成员函数，再用非成员 `operator+` 复用其逻辑：
-    ```cpp
-    Complex operator+(Complex a, const Complex& b) {
-        a += b;
-        return a;
-    }
-    ```
+> [!TIP]
+> **最佳实践**
+>
+> 先实现 `operator+=` 作为成员函数，再用非成员 `operator+` 复用其逻辑：
+> ```cpp
+> Complex operator+(Complex a, const Complex& b) {
+>     a += b;
+>     return a;
+> }
+> ```
 
 ---
 
@@ -201,8 +209,10 @@ public:
 | 前置 `++c` | `T& operator++()` | 引用 | 更高 |
 | 后置 `c++` | `T operator++(int)` | 值 | 需拷贝 |
 
-!!! tip "优先使用前置 ++"
-    对于自定义类型，前置 `++` 效率更高（不产生临时对象）。
+> [!TIP]
+> **优先使用前置 ++**
+>
+> 对于自定义类型，前置 `++` 效率更高（不产生临时对象）。
 
 ---
 
@@ -210,8 +220,10 @@ public:
 
 左操作数是 `ostream`/`istream`，**必须是非成员函数**。
 
-!!! important "为什么必须是非成员函数？"
-    因为 `cout << p` 翻译为 `operator<<(cout, p)`，左操作数是 `ostream`。
+> [!IMPORTANT]
+> **为什么必须是非成员函数？**
+>
+> 因为 `cout << p` 翻译为 `operator<<(cout, p)`，左操作数是 `ostream`。
 
 ---
 
@@ -278,11 +290,13 @@ Fraction f(3, 4);
 double d = f;  // 隐式调用 operator double()
 ```
 
-!!! warning "隐式转换需谨慎"
-    C++11 中可使用 `explicit` 限制：
-    ```cpp
-    explicit operator double() const;  // 只能显式转换
-    ```
+> [!WARNING]
+> **隐式转换需谨慎**
+>
+> C++11 中可使用 `explicit` 限制：
+> ```cpp
+> explicit operator double() const;  // 只能显式转换
+> ```
 
 ---
 
