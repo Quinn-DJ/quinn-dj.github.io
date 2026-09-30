@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="400" viewBox="0 0 940 400" role="img" aria-label="M = 3 的 B+ 树插入 8 前后的变化">
+  <style>
+    .edge{stroke:#5f6368;stroke-width:1.6;fill:none}
+    .link{stroke:#9aa0a6;stroke-width:1.4;fill:none}
+    .bk{fill:#37474f;stroke:#263238;stroke-width:1.6}
+    .rd{fill:#d84343;stroke:#b71c1c;stroke-width:1.6}
+    .nt{fill:#ffffff;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .box{fill:#f4f5f7;stroke:#9aa0a6;stroke-width:1.4}
+    .hl{fill:#dbe4ff;stroke:#3f51b5;stroke-width:1.6}
+    .key{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:12.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
+    .lbl{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:14px;font-weight:500}
+    .mk{fill:#5f6368}
+    @media (prefers-color-scheme: dark){
+      .edge{stroke:#9aa0a6}
+      .link{stroke:#7a7f8f}
+      .bk{fill:#455a64;stroke:#90a4ae}
+      .rd{fill:#c62828;stroke:#ef9a9a}
+      .box{fill:#262a3a;stroke:#7a7f8f}
+      .hl{fill:#33406b;stroke:#9fa8da}
+      .key{fill:#e8eaf6}
+      .cap{fill:#9fa8da}
+      .lbl{fill:#c7cad6}
+      .mk{fill:#9aa0a6}
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path class="mk" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+  </defs>
+  <text class="cap" x="230" y="45" >插入 8 之前</text>
+  <rect class="box" x="195.0" y="65" width="70" height="30" rx="5"/>
+  <text class="key" x="212.5" y="81">3</text>
+  <line class="edge" x1="230.0" y1="65" x2="230.0" y2="95" stroke-width="1"/>
+  <text class="key" x="247.5" y="81">5</text>
+
+  <line class="edge" x1="230" y1="95" x2="110" y2="175"/>
+  <rect class="box" x="75.0" y="175" width="70" height="30" rx="5"/>
+  <text class="key" x="110.0" y="191">1,2</text>
+
+  <line class="edge" x1="230" y1="95" x2="230" y2="175"/>
+  <rect class="box" x="195.0" y="175" width="70" height="30" rx="5"/>
+  <text class="key" x="230.0" y="191">3,4</text>
+
+  <line class="link" x1="145" y1="190" x2="195" y2="190" marker-end="url(#arrow)"/>
+  <line class="edge" x1="230" y1="95" x2="350" y2="175"/>
+  <rect class="hl" x="315.0" y="175" width="70" height="30" rx="5"/>
+  <text class="key" x="350.0" y="191">5,6,7</text>
+
+  <line class="link" x1="265" y1="190" x2="315" y2="190" marker-end="url(#arrow)"/>
+  <line class="edge" x1="470" y1="140" x2="540" y2="140" marker-end="url(#arrow)"/>
+  <text class="lbl" x="505" y="120" text-anchor="middle">插入 8</text>
+  <text class="cap" x="760" y="45">插入 8 之后</text>
+  <rect class="box" x="740.0" y="65" width="40" height="30" rx="5"/>
+  <text class="key" x="760.0" y="81">5</text>
+
+  <line class="edge" x1="760" y1="95" x2="635" y2="175"/>
+  <rect class="box" x="615.0" y="175" width="40" height="30" rx="5"/>
+  <text class="key" x="635.0" y="191">3</text>
+
+  <line class="edge" x1="760" y1="95" x2="845" y2="175"/>
+  <rect class="box" x="825.0" y="175" width="40" height="30" rx="5"/>
+  <text class="key" x="845.0" y="191">7</text>
+
+  <line class="edge" x1="635" y1="205" x2="590" y2="255"/>
+  <rect class="box" x="557.0" y="255" width="66" height="30" rx="5"/>
+  <text class="key" x="590.0" y="271">1,2</text>
+
+  <line class="edge" x1="635" y1="205" x2="680" y2="255"/>
+  <rect class="box" x="647.0" y="255" width="66" height="30" rx="5"/>
+  <text class="key" x="680.0" y="271">3,4</text>
+
+  <line class="link" x1="623" y1="270" x2="647" y2="270" marker-end="url(#arrow)"/>
+  <line class="edge" x1="845" y1="205" x2="800" y2="255"/>
+  <rect class="hl" x="767.0" y="255" width="66" height="30" rx="5"/>
+  <text class="key" x="800.0" y="271">5,6</text>
+
+  <line class="link" x1="713" y1="270" x2="767" y2="270" marker-end="url(#arrow)"/>
+  <line class="edge" x1="845" y1="205" x2="890" y2="255"/>
+  <rect class="hl" x="857.0" y="255" width="66" height="30" rx="5"/>
+  <text class="key" x="890.0" y="271">7,8</text>
+
+  <line class="link" x1="833" y1="270" x2="857" y2="270" marker-end="url(#arrow)"/>
+  <text class="lbl" x="470" y="355" text-anchor="middle">叶子 {5,6,7} 变成 {5,6} 和 {7,8}，分隔键 7 上移；父节点 [3 5 7] 再分裂成 [3] 和 [7]，5 上移成新根</text>
+</svg>

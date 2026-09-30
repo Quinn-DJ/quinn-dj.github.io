@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="530" viewBox="0 0 880 530" role="img" aria-label="同一组数字用两种插入顺序得到的二叉搜索树">
+  <style>
+    .edge{stroke:#5f6368;stroke-width:1.6;fill:none}
+    .n{fill:#eef1ff;stroke:#3f51b5;stroke-width:2}
+    .t{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:16px;font-weight:600;text-anchor:middle}
+    @media (prefers-color-scheme: dark){
+      .edge{stroke:#9aa0a6}
+      .n{fill:#2a2f4a;stroke:#9fa8da}
+      .t{fill:#e8eaf6}
+      .cap{fill:#9fa8da}
+    }
+  </style>
+
+  <!-- 左边：按 1..12 顺序插入，得到一条链 -->
+  <line class="edge" x1="75" y1="40" x2="93" y2="78"/>
+  <line class="edge" x1="93" y1="78" x2="111" y2="116"/>
+  <line class="edge" x1="111" y1="116" x2="129" y2="154"/>
+  <line class="edge" x1="129" y1="154" x2="147" y2="192"/>
+  <line class="edge" x1="147" y1="192" x2="165" y2="230"/>
+  <line class="edge" x1="165" y1="230" x2="183" y2="268"/>
+  <line class="edge" x1="183" y1="268" x2="201" y2="306"/>
+  <line class="edge" x1="201" y1="306" x2="219" y2="344"/>
+  <line class="edge" x1="219" y1="344" x2="237" y2="382"/>
+  <line class="edge" x1="237" y1="382" x2="255" y2="420"/>
+  <line class="edge" x1="255" y1="420" x2="273" y2="458"/>
+
+  <circle class="n" cx="75" cy="40" r="15"/><text class="t" x="75" y="41">1</text>
+  <circle class="n" cx="93" cy="78" r="15"/><text class="t" x="93" y="79">2</text>
+  <circle class="n" cx="111" cy="116" r="15"/><text class="t" x="111" y="117">3</text>
+  <circle class="n" cx="129" cy="154" r="15"/><text class="t" x="129" y="155">4</text>
+  <circle class="n" cx="147" cy="192" r="15"/><text class="t" x="147" y="193">5</text>
+  <circle class="n" cx="165" cy="230" r="15"/><text class="t" x="165" y="231">6</text>
+  <circle class="n" cx="183" cy="268" r="15"/><text class="t" x="183" y="269">7</text>
+  <circle class="n" cx="201" cy="306" r="15"/><text class="t" x="201" y="307">8</text>
+  <circle class="n" cx="219" cy="344" r="15"/><text class="t" x="219" y="345">9</text>
+  <circle class="n" cx="237" cy="382" r="15"/><text class="t" x="237" y="383">10</text>
+  <circle class="n" cx="255" cy="420" r="15"/><text class="t" x="255" y="421">11</text>
+  <circle class="n" cx="273" cy="458" r="15"/><text class="t" x="273" y="459">12</text>
+
+  <text class="cap" x="176" y="505">顺序插入：高度 11，平均 6.5 次比较</text>
+
+  <!-- 右边：换一个插入顺序，得到平衡的树 -->
+  <line class="edge" x1="620" y1="70" x2="530" y2="148"/>
+  <line class="edge" x1="620" y1="70" x2="710" y2="148"/>
+  <line class="edge" x1="530" y1="148" x2="470" y2="226"/>
+  <line class="edge" x1="530" y1="148" x2="590" y2="226"/>
+  <line class="edge" x1="710" y1="148" x2="650" y2="226"/>
+  <line class="edge" x1="710" y1="148" x2="770" y2="226"/>
+  <line class="edge" x1="470" y1="226" x2="500" y2="304"/>
+  <line class="edge" x1="590" y1="226" x2="560" y2="304"/>
+  <line class="edge" x1="650" y1="226" x2="680" y2="304"/>
+  <line class="edge" x1="770" y1="226" x2="740" y2="304"/>
+  <line class="edge" x1="770" y1="226" x2="800" y2="304"/>
+
+  <circle class="n" cx="620" cy="70" r="15"/><text class="t" x="620" y="71">6</text>
+  <circle class="n" cx="530" cy="148" r="15"/><text class="t" x="530" y="149">3</text>
+  <circle class="n" cx="710" cy="148" r="15"/><text class="t" x="710" y="149">9</text>
+  <circle class="n" cx="470" cy="226" r="15"/><text class="t" x="470" y="227">1</text>
+  <circle class="n" cx="590" cy="226" r="15"/><text class="t" x="590" y="227">5</text>
+  <circle class="n" cx="650" cy="226" r="15"/><text class="t" x="650" y="227">7</text>
+  <circle class="n" cx="770" cy="226" r="15"/><text class="t" x="770" y="227">11</text>
+  <circle class="n" cx="500" cy="304" r="15"/><text class="t" x="500" y="305">2</text>
+  <circle class="n" cx="560" cy="304" r="15"/><text class="t" x="560" y="305">4</text>
+  <circle class="n" cx="680" cy="304" r="15"/><text class="t" x="680" y="305">8</text>
+  <circle class="n" cx="740" cy="304" r="15"/><text class="t" x="740" y="305">10</text>
+  <circle class="n" cx="800" cy="304" r="15"/><text class="t" x="800" y="305">12</text>
+
+  <text class="cap" x="635" y="505">换一种插入顺序：高度 3，平均 3.1 次比较</text>
+</svg>

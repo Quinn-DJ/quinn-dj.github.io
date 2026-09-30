@@ -3,6 +3,11 @@ site/
 .venv
 .pilotdeck
 *.pptx
+*.ppt
+*.zip
+~$*
 .tmp
 .oldNote
 docs/math/numalg/slides
+*.pdf
+!ode.pdf

@@ -71,6 +71,13 @@ nav = [
         { "DS-10 动态规划-蛋糕塔" = "coding/dsa/DS-10.md" }
       ] }
     ] },
+    { "高级数据结构与算法分析" = [
+      { "index" = "coding/ads/index.md" },
+      { "课程笔记" = [
+        { "01. AVL 树、Splay 树与均摊分析" = "coding/ads/class01.md" },
+        { "02. 红黑树与 B+ 树" = "coding/ads/class02.md" }
+      ] }
+    ] },
     { "自己研究的小东西" = [
       { "三体问题" = "coding/3body.md" },
       { "Verlet 算法" = "coding/verletalgorithm.md" },

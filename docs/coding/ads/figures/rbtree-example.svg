@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="400" viewBox="0 0 860 400" role="img" aria-label="一棵合法的红黑树">
+  <style>
+    .edge{stroke:#5f6368;stroke-width:1.6;fill:none}
+    .link{stroke:#9aa0a6;stroke-width:1.4;fill:none}
+    .bk{fill:#37474f;stroke:#263238;stroke-width:1.6}
+    .rd{fill:#d84343;stroke:#b71c1c;stroke-width:1.6}
+    .nt{fill:#ffffff;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .box{fill:#f4f5f7;stroke:#9aa0a6;stroke-width:1.4}
+    .hl{fill:#dbe4ff;stroke:#3f51b5;stroke-width:1.6}
+    .key{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:12.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
+    .lbl{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:14px;font-weight:500}
+    .mk{fill:#5f6368}
+    @media (prefers-color-scheme: dark){
+      .edge{stroke:#9aa0a6}
+      .link{stroke:#7a7f8f}
+      .bk{fill:#455a64;stroke:#90a4ae}
+      .rd{fill:#c62828;stroke:#ef9a9a}
+      .box{fill:#262a3a;stroke:#7a7f8f}
+      .hl{fill:#33406b;stroke:#9fa8da}
+      .key{fill:#e8eaf6}
+      .cap{fill:#9fa8da}
+      .lbl{fill:#c7cad6}
+      .mk{fill:#9aa0a6}
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path class="mk" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+  </defs>
+  <line class="edge" x1="430" y1="88" x2="230" y2="147"/>
+  <line class="edge" x1="430" y1="88" x2="630" y2="147"/>
+  <line class="edge" x1="230" y1="183" x2="150" y2="242"/>
+  <line class="edge" x1="230" y1="183" x2="310" y2="242"/>
+  <line class="edge" x1="310" y1="278" x2="380" y2="337"/>
+  <line class="edge" x1="630" y1="183" x2="550" y2="242"/>
+  <line class="edge" x1="630" y1="183" x2="710" y2="242"/>
+  <line class="edge" x1="710" y1="278" x2="780" y2="337"/>
+  <circle class="bk" cx="150" cy="260" r="18"/>
+  <text class="nt" x="150" y="261">1</text>
+  <circle class="rd" cx="230" cy="165" r="18"/>
+  <text class="nt" x="230" y="166">2</text>
+  <circle class="rd" cx="380" cy="355" r="18"/>
+  <text class="nt" x="380" y="356">4</text>
+  <circle class="bk" cx="310" cy="260" r="18"/>
+  <text class="nt" x="310" y="261">5</text>
+  <circle class="bk" cx="430" cy="70" r="18"/>
+  <text class="nt" x="430" y="71">7</text>
+  <circle class="bk" cx="550" cy="260" r="18"/>
+  <text class="nt" x="550" y="261">8</text>
+  <circle class="rd" cx="630" cy="165" r="18"/>
+  <text class="nt" x="630" y="166">11</text>
+  <circle class="bk" cx="710" cy="260" r="18"/>
+  <text class="nt" x="710" y="261">14</text>
+  <circle class="rd" cx="780" cy="355" r="18"/>
+  <text class="nt" x="780" y="356">15</text>
+  <text class="lbl" x="430" y="390" text-anchor="middle">红节点：2、11、4、15；NIL 叶子没有画出来，空指针都当黑色的 NIL</text>
+</svg>

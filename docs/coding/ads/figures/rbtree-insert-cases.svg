@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560" role="img" aria-label="红黑树插入后的三种修复情况">
+  <style>
+    .edge{stroke:#5f6368;stroke-width:1.6;fill:none}
+    .link{stroke:#9aa0a6;stroke-width:1.4;fill:none}
+    .bk{fill:#37474f;stroke:#263238;stroke-width:1.6}
+    .rd{fill:#d84343;stroke:#b71c1c;stroke-width:1.6}
+    .nt{fill:#ffffff;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .box{fill:#f4f5f7;stroke:#9aa0a6;stroke-width:1.4}
+    .hl{fill:#dbe4ff;stroke:#3f51b5;stroke-width:1.6}
+    .key{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:12.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
+    .lbl{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:14px;font-weight:500}
+    .mk{fill:#5f6368}
+    @media (prefers-color-scheme: dark){
+      .edge{stroke:#9aa0a6}
+      .link{stroke:#7a7f8f}
+      .bk{fill:#455a64;stroke:#90a4ae}
+      .rd{fill:#c62828;stroke:#ef9a9a}
+      .box{fill:#262a3a;stroke:#7a7f8f}
+      .hl{fill:#33406b;stroke:#9fa8da}
+      .key{fill:#e8eaf6}
+      .cap{fill:#9fa8da}
+      .lbl{fill:#c7cad6}
+      .mk{fill:#9aa0a6}
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path class="mk" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+  </defs>
+  <text class="cap" x="120" y="70" text-anchor="end">情况 1</text>
+  <line class="edge" x1="260" y1="40" x2="200" y2="100"/>
+  <line class="edge" x1="260" y1="40" x2="320" y2="100"/>
+  <line class="edge" x1="200" y1="100" x2="170" y2="160"/>
+  <circle class="bk" cx="260" cy="40" r="18"/>
+  <text class="nt" x="260" y="41">G</text>
+  <circle class="rd" cx="200" cy="100" r="18"/>
+  <text class="nt" x="200" y="101">P</text>
+  <circle class="rd" cx="320" cy="100" r="18"/>
+  <text class="nt" x="320" y="101">U</text>
+  <circle class="rd" cx="170" cy="160" r="18"/>
+  <text class="nt" x="170" y="161">N</text>
+  <line class="edge" x1="400" y1="80" x2="470" y2="80" marker-end="url(#arrow)"/>
+  <line class="edge" x1="680" y1="40" x2="620" y2="100"/>
+  <line class="edge" x1="680" y1="40" x2="740" y2="100"/>
+  <line class="edge" x1="620" y1="100" x2="590" y2="160"/>
+  <circle class="rd" cx="680" cy="40" r="18"/>
+  <text class="nt" x="680" y="41">G</text>
+  <circle class="bk" cx="620" cy="100" r="18"/>
+  <text class="nt" x="620" y="101">P</text>
+  <circle class="bk" cx="740" cy="100" r="18"/>
+  <text class="nt" x="740" y="101">U</text>
+  <circle class="rd" cx="590" cy="160" r="18"/>
+  <text class="nt" x="590" y="161">N</text>
+  <text class="cap" x="120" y="240" text-anchor="end">情况 2</text>
+  <line class="edge" x1="260" y1="210" x2="200" y2="270"/>
+  <line class="edge" x1="260" y1="210" x2="320" y2="270"/>
+  <line class="edge" x1="200" y1="270" x2="235" y2="330"/>
+  <circle class="bk" cx="260" cy="210" r="18"/>
+  <text class="nt" x="260" y="211">G</text>
+  <circle class="rd" cx="200" cy="270" r="18"/>
+  <text class="nt" x="200" y="271">P</text>
+  <circle class="bk" cx="320" cy="270" r="18"/>
+  <text class="nt" x="320" y="271">U</text>
+  <circle class="rd" cx="235" cy="330" r="18"/>
+  <text class="nt" x="235" y="331">N</text>
+  <line class="edge" x1="400" y1="250" x2="470" y2="250" marker-end="url(#arrow)"/>
+  <line class="edge" x1="680" y1="210" x2="620" y2="270"/>
+  <line class="edge" x1="680" y1="210" x2="740" y2="270"/>
+  <line class="edge" x1="620" y1="270" x2="585" y2="330"/>
+  <circle class="bk" cx="680" cy="210" r="18"/>
+  <text class="nt" x="680" y="211">G</text>
+  <circle class="rd" cx="620" cy="270" r="18"/>
+  <text class="nt" x="620" y="271">N</text>
+  <circle class="bk" cx="740" cy="270" r="18"/>
+  <text class="nt" x="740" y="271">U</text>
+  <circle class="rd" cx="585" cy="330" r="18"/>
+  <text class="nt" x="585" y="331">P</text>
+  <text class="cap" x="120" y="410" text-anchor="end">情况 3</text>
+  <line class="edge" x1="260" y1="380" x2="200" y2="440"/>
+  <line class="edge" x1="260" y1="380" x2="320" y2="440"/>
+  <line class="edge" x1="200" y1="440" x2="165" y2="500"/>
+  <circle class="bk" cx="260" cy="380" r="18"/>
+  <text class="nt" x="260" y="381">G</text>
+  <circle class="rd" cx="200" cy="440" r="18"/>
+  <text class="nt" x="200" y="441">P</text>
+  <circle class="bk" cx="320" cy="440" r="18"/>
+  <text class="nt" x="320" y="441">U</text>
+  <circle class="rd" cx="165" cy="500" r="18"/>
+  <text class="nt" x="165" y="501">N</text>
+  <line class="edge" x1="400" y1="420" x2="470" y2="420" marker-end="url(#arrow)"/>
+  <line class="edge" x1="680" y1="380" x2="620" y2="440"/>
+  <line class="edge" x1="680" y1="380" x2="760" y2="440"/>
+  <line class="edge" x1="760" y1="440" x2="800" y2="500"/>
+  <circle class="bk" cx="680" cy="380" r="18"/>
+  <text class="nt" x="680" y="381">P</text>
+  <circle class="rd" cx="620" cy="440" r="18"/>
+  <text class="nt" x="620" y="441">N</text>
+  <circle class="rd" cx="760" cy="440" r="18"/>
+  <text class="nt" x="760" y="441">G</text>
+  <circle class="bk" cx="800" cy="500" r="18"/>
+  <text class="nt" x="800" y="501">U</text>
+  <text class="lbl" x="450" y="545" text-anchor="middle">G 是祖父、P 是父节点、U 是叔叔；情况 2 转完就变成情况 3 的形状，情况 3 做完这棵子树就平衡了</text>
+</svg>

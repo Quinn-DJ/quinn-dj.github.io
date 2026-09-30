@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="340" viewBox="0 0 940 340" role="img" aria-label="一棵 4 阶 B+ 树">
+  <style>
+    .edge{stroke:#5f6368;stroke-width:1.6;fill:none}
+    .link{stroke:#9aa0a6;stroke-width:1.4;fill:none}
+    .bk{fill:#37474f;stroke:#263238;stroke-width:1.6}
+    .rd{fill:#d84343;stroke:#b71c1c;stroke-width:1.6}
+    .nt{fill:#ffffff;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .box{fill:#f4f5f7;stroke:#9aa0a6;stroke-width:1.4}
+    .hl{fill:#dbe4ff;stroke:#3f51b5;stroke-width:1.6}
+    .key{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:12.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
+    .lbl{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:14px;font-weight:500}
+    .mk{fill:#5f6368}
+    @media (prefers-color-scheme: dark){
+      .edge{stroke:#9aa0a6}
+      .link{stroke:#7a7f8f}
+      .bk{fill:#455a64;stroke:#90a4ae}
+      .rd{fill:#c62828;stroke:#ef9a9a}
+      .box{fill:#262a3a;stroke:#7a7f8f}
+      .hl{fill:#33406b;stroke:#9fa8da}
+      .key{fill:#e8eaf6}
+      .cap{fill:#9fa8da}
+      .lbl{fill:#c7cad6}
+      .mk{fill:#9aa0a6}
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path class="mk" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+  </defs>
+  <rect class="box" x="402.0" y="39" width="130" height="32" rx="5"/>
+  <text class="key" x="423.7" y="56">21</text>
+  <line class="edge" x1="445.3" y1="39" x2="445.3" y2="71" stroke-width="1"/>
+  <text class="key" x="467.0" y="56">48</text>
+  <line class="edge" x1="488.7" y1="39" x2="488.7" y2="71" stroke-width="1"/>
+  <text class="key" x="510.3" y="56">72</text>
+
+  <rect class="box" x="90.0" y="139" width="88" height="32" rx="5"/>
+  <text class="key" x="112.0" y="156">12</text>
+  <line class="edge" x1="134.0" y1="139" x2="134.0" y2="171" stroke-width="1"/>
+  <text class="key" x="156.0" y="156">15</text>
+
+  <line class="edge" x1="467" y1="71" x2="134" y2="139"/>
+  <line class="edge" x1="134" y1="171" x2="60" y2="250"/>
+  <line class="edge" x1="134" y1="171" x2="134" y2="250"/>
+  <line class="edge" x1="134" y1="171" x2="208" y2="250"/>
+  <rect class="box" x="332.0" y="139" width="122" height="32" rx="5"/>
+  <text class="key" x="352.3" y="156">25</text>
+  <line class="edge" x1="372.7" y1="139" x2="372.7" y2="171" stroke-width="1"/>
+  <text class="key" x="393.0" y="156">31</text>
+  <line class="edge" x1="413.3" y1="139" x2="413.3" y2="171" stroke-width="1"/>
+  <text class="key" x="433.7" y="156">41</text>
+
+  <line class="edge" x1="467" y1="71" x2="393" y2="139"/>
+  <line class="edge" x1="393" y1="171" x2="282" y2="250"/>
+  <line class="edge" x1="393" y1="171" x2="356" y2="250"/>
+  <line class="edge" x1="393" y1="171" x2="430" y2="250"/>
+  <line class="edge" x1="393" y1="171" x2="504" y2="250"/>
+  <rect class="box" x="588.0" y="139" width="54" height="32" rx="5"/>
+  <text class="key" x="615.0" y="156">59</text>
+
+  <line class="edge" x1="467" y1="71" x2="615" y2="139"/>
+  <line class="edge" x1="615" y1="171" x2="578" y2="250"/>
+  <line class="edge" x1="615" y1="171" x2="652" y2="250"/>
+  <rect class="box" x="756.0" y="139" width="88" height="32" rx="5"/>
+  <text class="key" x="778.0" y="156">84</text>
+  <line class="edge" x1="800.0" y1="139" x2="800.0" y2="171" stroke-width="1"/>
+  <text class="key" x="822.0" y="156">91</text>
+
+  <line class="edge" x1="467" y1="71" x2="800" y2="139"/>
+  <line class="edge" x1="800" y1="171" x2="726" y2="250"/>
+  <line class="edge" x1="800" y1="171" x2="800" y2="250"/>
+  <line class="edge" x1="800" y1="171" x2="874" y2="250"/>
+  <rect class="box" x="25.0" y="250" width="70" height="30" rx="5"/>
+  <text class="key" x="60.0" y="266">1,4,8,11</text>
+
+  <rect class="box" x="99.0" y="250" width="70" height="30" rx="5"/>
+  <text class="key" x="134.0" y="266">12,13</text>
+
+  <line class="link" x1="95" y1="265" x2="99" y2="265" marker-end="url(#arrow)"/>
+  <rect class="box" x="173.0" y="250" width="70" height="30" rx="5"/>
+  <text class="key" x="208.0" y="266">15,18,19</text>
+
+  <line class="link" x1="169" y1="265" x2="173" y2="265" marker-end="url(#arrow)"/>
+  <rect class="box" x="247.0" y="250" width="70" height="30" rx="5"/>
+  <text class="key" x="282.0" y="266">21,24</text>
+
+  <line class="link" x1="243" y1="265" x2="247" y2="265" marker-end="url(#arrow)"/>
+  <rect class="box" x="321.0" y="250" width="70" height="30" rx="5"/>
+  <text class="key" x="356.0" y="266">25,26</text>
+
+  <line class="link" x1="317" y1="265" x2="321" y2="265" marker-end="url(#arrow)"/>
+  <rect class="box" x="395.0" y="250" width="70" height="30" rx="5"/>
+  <text class="key" x="430.0" y="266">31,38</text>
+
+  <line class="link" x1="391" y1="265" x2="395" y2="265" marker-end="url(#arrow)"/>
+  <rect class="box" x="469.0" y="250" width="70" height="30" rx="5"/>
+  <text class="key" x="504.0" y="266">41,43,46</text>
+
+  <line class="link" x1="465" y1="265" x2="469" y2="265" marker-end="url(#arrow)"/>
+  <rect class="box" x="543.0" y="250" width="70" height="30" rx="5"/>
+  <text class="key" x="578.0" y="266">48,49,50</text>
+
+  <line class="link" x1="539" y1="265" x2="543" y2="265" marker-end="url(#arrow)"/>
+  <rect class="box" x="617.0" y="250" width="70" height="30" rx="5"/>
+  <text class="key" x="652.0" y="266">59,68</text>
+
+  <line class="link" x1="613" y1="265" x2="617" y2="265" marker-end="url(#arrow)"/>
+  <rect class="box" x="691.0" y="250" width="70" height="30" rx="5"/>
+  <text class="key" x="726.0" y="266">72,78</text>
+
+  <line class="link" x1="687" y1="265" x2="691" y2="265" marker-end="url(#arrow)"/>
+  <rect class="box" x="765.0" y="250" width="70" height="30" rx="5"/>
+  <text class="key" x="800.0" y="266">84,88</text>
+
+  <line class="link" x1="761" y1="265" x2="765" y2="265" marker-end="url(#arrow)"/>
+  <rect class="box" x="839.0" y="250" width="70" height="30" rx="5"/>
+  <text class="key" x="874.0" y="266">91,92,99</text>
+
+  <line class="link" x1="835" y1="265" x2="839" y2="265" marker-end="url(#arrow)"/>
+  <text class="lbl" x="470" y="325" text-anchor="middle">内部节点里存的是右边那棵子树的最小 key；数据都在叶子上，叶子之间串成链表</text>
+</svg>
