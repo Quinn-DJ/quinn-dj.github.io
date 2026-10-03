@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="430" viewBox="0 0 920 430" role="img" aria-label="倒排索引：词典与倒排记录表">
+  <style>
+    .edge{stroke:#5f6368;stroke-width:1.6;fill:none}
+    .box{fill:#f4f5f7;stroke:#9aa0a6;stroke-width:1.4}
+    .step{fill:#eef1ff;stroke:#3f51b5;stroke-width:1.6}
+    .cell{fill:#ffffff;stroke:#9aa0a6;stroke-width:1.2}
+    .blk{fill:#fdf0e6;stroke:#c98a4b;stroke-width:1.4}
+    .txt{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:13.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .hd{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:14px;font-weight:600;text-anchor:middle}
+    .term{fill:#1f2330;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
+    .lbl{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:13.5px;font-weight:500}
+    .axis{stroke:#5f6368;stroke-width:1.6;fill:none}
+    .curve{stroke:#3f51b5;stroke-width:2.4;fill:none}
+    .mk{fill:#5f6368}
+    .pt{fill:#d84343;stroke:#b71c1c;stroke-width:1.4}
+    @media (prefers-color-scheme: dark){
+      .edge{stroke:#9aa0a6}
+      .box{fill:#262a3a;stroke:#7a7f8f}
+      .step{fill:#33406b;stroke:#9fa8da}
+      .cell{fill:#2f3346;stroke:#7a7f8f}
+      .blk{fill:#4a3524;stroke:#c98a4b}
+      .txt{fill:#e8eaf6}
+      .hd{fill:#c7cad6}
+      .term{fill:#e8eaf6}
+      .cap{fill:#9fa8da}
+      .lbl{fill:#c7cad6}
+      .axis{stroke:#9aa0a6}
+      .curve{stroke:#9fa8da}
+      .mk{fill:#9aa0a6}
+      .pt{fill:#ef9a9a;stroke:#c62828}
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path class="mk" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+  </defs>
+  <text class="hd" x="80" y="60">词典（term）</text>
+  <text class="hd" x="215" y="60">出现次数</text>
+  <text class="hd" x="620" y="60">倒排记录表（docID, tf）</text>
+  <rect class="box" x="43" y="90" width="74" height="40" rx="6"/>
+  <text class="term" x="80" y="111">a</text>
+  <rect class="box" x="185" y="90" width="60" height="40" rx="6"/>
+  <text class="txt" x="215" y="111">2</text>
+  <rect class="cell" x="354" y="90" width="92" height="40" rx="6"/>
+  <line class="edge" x1="408" y1="98" x2="408" y2="122" stroke-width="1"/>
+  <text class="txt" x="378" y="111">2</text>
+  <text class="txt" x="422" y="111">1</text>
+  <rect class="cell" x="464" y="90" width="92" height="40" rx="6"/>
+  <line class="edge" x1="518" y1="98" x2="518" y2="122" stroke-width="1"/>
+  <text class="txt" x="488" y="111">4</text>
+  <text class="txt" x="532" y="111">1</text>
+  <line class="edge" x1="117" y1="110" x2="184" y2="110" marker-end="" stroke-dasharray="3 3"/>
+  <line class="edge" x1="245" y1="110" x2="348" y2="110" marker-end="" stroke-dasharray="3 3"/>
+  <rect class="box" x="43" y="152" width="74" height="40" rx="6"/>
+  <text class="term" x="80" y="173">arrived</text>
+  <rect class="box" x="185" y="152" width="60" height="40" rx="6"/>
+  <text class="txt" x="215" y="173">2</text>
+  <rect class="cell" x="354" y="152" width="92" height="40" rx="6"/>
+  <line class="edge" x1="408" y1="160" x2="408" y2="184" stroke-width="1"/>
+  <text class="txt" x="378" y="173">3</text>
+  <text class="txt" x="422" y="173">1</text>
+  <rect class="cell" x="464" y="152" width="92" height="40" rx="6"/>
+  <line class="edge" x1="518" y1="160" x2="518" y2="184" stroke-width="1"/>
+  <text class="txt" x="488" y="173">4</text>
+  <text class="txt" x="532" y="173">1</text>
+  <line class="edge" x1="117" y1="172" x2="184" y2="172" marker-end="" stroke-dasharray="3 3"/>
+  <line class="edge" x1="245" y1="172" x2="348" y2="172" marker-end="" stroke-dasharray="3 3"/>
+  <rect class="box" x="43" y="214" width="74" height="40" rx="6"/>
+  <text class="term" x="80" y="235">gold</text>
+  <rect class="box" x="185" y="214" width="60" height="40" rx="6"/>
+  <text class="txt" x="215" y="235">3</text>
+  <rect class="cell" x="354" y="214" width="92" height="40" rx="6"/>
+  <line class="edge" x1="408" y1="222" x2="408" y2="246" stroke-width="1"/>
+  <text class="txt" x="378" y="235">1</text>
+  <text class="txt" x="422" y="235">1</text>
+  <rect class="cell" x="464" y="214" width="92" height="40" rx="6"/>
+  <line class="edge" x1="518" y1="222" x2="518" y2="246" stroke-width="1"/>
+  <text class="txt" x="488" y="235">2</text>
+  <text class="txt" x="532" y="235">1</text>
+  <rect class="cell" x="574" y="214" width="92" height="40" rx="6"/>
+  <line class="edge" x1="628" y1="222" x2="628" y2="246" stroke-width="1"/>
+  <text class="txt" x="598" y="235">4</text>
+  <text class="txt" x="642" y="235">1</text>
+  <line class="edge" x1="117" y1="234" x2="184" y2="234" marker-end="" stroke-dasharray="3 3"/>
+  <line class="edge" x1="245" y1="234" x2="348" y2="234" marker-end="" stroke-dasharray="3 3"/>
+  <rect class="box" x="43" y="276" width="74" height="40" rx="6"/>
+  <text class="term" x="80" y="297">silver</text>
+  <rect class="box" x="185" y="276" width="60" height="40" rx="6"/>
+  <text class="txt" x="215" y="297">3</text>
+  <rect class="cell" x="354" y="276" width="92" height="40" rx="6"/>
+  <line class="edge" x1="408" y1="284" x2="408" y2="308" stroke-width="1"/>
+  <text class="txt" x="378" y="297">1</text>
+  <text class="txt" x="422" y="297">1</text>
+  <rect class="cell" x="464" y="276" width="92" height="40" rx="6"/>
+  <line class="edge" x1="518" y1="284" x2="518" y2="308" stroke-width="1"/>
+  <text class="txt" x="488" y="297">3</text>
+  <text class="txt" x="532" y="297">2</text>
+  <line class="edge" x1="117" y1="296" x2="184" y2="296" marker-end="" stroke-dasharray="3 3"/>
+  <line class="edge" x1="245" y1="296" x2="348" y2="296" marker-end="" stroke-dasharray="3 3"/>
+  <rect class="box" x="43" y="338" width="74" height="40" rx="6"/>
+  <text class="term" x="80" y="359">truck</text>
+  <rect class="box" x="185" y="338" width="60" height="40" rx="6"/>
+  <text class="txt" x="215" y="359">3</text>
+  <rect class="cell" x="354" y="338" width="92" height="40" rx="6"/>
+  <line class="edge" x1="408" y1="346" x2="408" y2="370" stroke-width="1"/>
+  <text class="txt" x="378" y="359">1</text>
+  <text class="txt" x="422" y="359">1</text>
+  <rect class="cell" x="464" y="338" width="92" height="40" rx="6"/>
+  <line class="edge" x1="518" y1="346" x2="518" y2="370" stroke-width="1"/>
+  <text class="txt" x="488" y="359">3</text>
+  <text class="txt" x="532" y="359">1</text>
+  <rect class="cell" x="574" y="338" width="92" height="40" rx="6"/>
+  <line class="edge" x1="628" y1="346" x2="628" y2="370" stroke-width="1"/>
+  <text class="txt" x="598" y="359">4</text>
+  <text class="txt" x="642" y="359">1</text>
+  <line class="edge" x1="117" y1="358" x2="184" y2="358" marker-end="" stroke-dasharray="3 3"/>
+  <line class="edge" x1="245" y1="358" x2="348" y2="358" marker-end="" stroke-dasharray="3 3"/>
+  <text class="cap" x="460" y="405">silver 的两条记录表示：文档 1 里出现 1 次，文档 3 里出现 2 次，一共 3 次</text>
+</svg>

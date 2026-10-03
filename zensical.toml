@@ -75,7 +75,8 @@ nav = [
       { "index" = "coding/ads/index.md" },
       { "课程笔记" = [
         { "01. AVL 树、Splay 树与均摊分析" = "coding/ads/class01.md" },
-        { "02. 红黑树与 B+ 树" = "coding/ads/class02.md" }
+        { "02. 红黑树与 B+ 树" = "coding/ads/class02.md" },
+        { "03. 倒排索引" = "coding/ads/class03.md" }
       ] }
     ] },
     { "自己研究的小东西" = [
