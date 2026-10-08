@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="860" viewBox="0 0 980 860" role="img" aria-label="红黑树删除后的四种修复情况">
+  <style>
+    .edge{stroke:#5f6368;stroke-width:1.6;fill:none}
+    .link{stroke:#9aa0a6;stroke-width:1.4;fill:none}
+    .bk{fill:#37474f;stroke:#263238;stroke-width:1.6}
+    .rd{fill:#d84343;stroke:#b71c1c;stroke-width:1.6}
+    .ring{fill:none;stroke:#263238;stroke-width:1.6}
+    .nt{fill:#ffffff;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .box{fill:#f4f5f7;stroke:#9aa0a6;stroke-width:1.4}
+    .hl{fill:#dbe4ff;stroke:#3f51b5;stroke-width:1.6}
+    .key{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:12.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
+    .lbl{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:14px;font-weight:500}
+    .row{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600}
+    .note{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:13px;text-anchor:middle}
+    .mk{fill:#5f6368}
+    @media (prefers-color-scheme: dark){
+      .edge{stroke:#9aa0a6}
+      .link{stroke:#7a7f8f}
+      .bk{fill:#455a64;stroke:#90a4ae}
+      .rd{fill:#c62828;stroke:#ef9a9a}
+      .ring{stroke:#90a4ae}
+      .box{fill:#262a3a;stroke:#7a7f8f}
+      .hl{fill:#33406b;stroke:#9fa8da}
+      .key{fill:#e8eaf6}
+      .cap{fill:#9fa8da}
+      .lbl{fill:#c7cad6}
+      .row{fill:#9fa8da}
+      .note{fill:#c7cad6}
+      .mk{fill:#9aa0a6}
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path class="mk" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+  </defs>
+  <text class="row" x="30" y="60">情况 1</text>
+  <text class="note" x="490" y="240">w 染黑、p 染红，绕 p 旋转，问题变成情况 2、3 或 4</text>
+  <line class="edge" x1="235" y1="82" x2="180" y2="122"/>
+  <line class="edge" x1="235" y1="82" x2="323" y2="122"/>
+  <line class="edge" x1="323" y1="122" x2="280" y2="184"/>
+  <line class="edge" x1="323" y1="122" x2="365" y2="184"/>
+  <circle class="bk" cx="235" cy="60" r="18"/>
+  <text class="nt" x="235" y="61">p</text>
+  <rect class="bk" x="158" y="115" width="30" height="30" rx="5"/>
+  <rect class="ring" x="154" y="111" width="38" height="38" rx="7"/>
+  <text class="nt" x="173" y="131" font-size="13">x</text>
+  <circle class="rd" cx="323" cy="130" r="18"/>
+  <text class="nt" x="323" y="131">w</text>
+  <circle class="bk" cx="280" cy="192" r="18"/>
+  <text class="nt" x="280" y="193">c</text>
+  <circle class="bk" cx="365" cy="192" r="18"/>
+  <text class="nt" x="365" y="193">d</text>
+  <line class="edge" x1="700" y1="60" x2="642" y2="122"/>
+  <line class="edge" x1="700" y1="60" x2="758" y2="122"/>
+  <line class="edge" x1="642" y1="122" x2="592" y2="184"/>
+  <line class="edge" x1="642" y1="122" x2="672" y2="184"/>
+  <circle class="bk" cx="700" cy="60" r="18"/>
+  <text class="nt" x="700" y="61">w</text>
+  <circle class="rd" cx="642" cy="130" r="18"/>
+  <text class="nt" x="642" y="131">p</text>
+  <circle class="bk" cx="758" cy="130" r="18"/>
+  <text class="nt" x="758" y="131">d</text>
+  <rect class="bk" x="570" y="177" width="30" height="30" rx="5"/>
+  <rect class="ring" x="566" y="173" width="38" height="38" rx="7"/>
+  <text class="nt" x="585" y="193" font-size="13">x</text>
+  <circle class="bk" cx="672" cy="192" r="18"/>
+  <text class="nt" x="672" y="193">c</text>
+  <text class="row" x="30" y="250">情况 2</text>
+  <text class="note" x="490" y="430">w 染红，多出来的一重黑上移给 p，p 变成新的 x，继续往上处理</text>
+  <line class="edge" x1="235" y1="272" x2="180" y2="312"/>
+  <line class="edge" x1="235" y1="272" x2="323" y2="312"/>
+  <line class="edge" x1="323" y1="312" x2="280" y2="374"/>
+  <line class="edge" x1="323" y1="312" x2="365" y2="374"/>
+  <circle class="bk" cx="235" cy="250" r="18"/>
+  <text class="nt" x="235" y="251">p</text>
+  <rect class="bk" x="158" y="305" width="30" height="30" rx="5"/>
+  <rect class="ring" x="154" y="301" width="38" height="38" rx="7"/>
+  <text class="nt" x="173" y="321" font-size="13">x</text>
+  <circle class="bk" cx="323" cy="320" r="18"/>
+  <text class="nt" x="323" y="321">w</text>
+  <circle class="bk" cx="280" cy="382" r="18"/>
+  <text class="nt" x="280" y="383">c</text>
+  <circle class="bk" cx="365" cy="382" r="18"/>
+  <text class="nt" x="365" y="383">d</text>
+  <line class="edge" x1="700" y1="272" x2="638" y2="312"/>
+  <line class="edge" x1="700" y1="272" x2="788" y2="312"/>
+  <line class="edge" x1="788" y1="312" x2="745" y2="374"/>
+  <line class="edge" x1="788" y1="312" x2="830" y2="374"/>
+  <circle class="bk" cx="700" cy="250" r="16"/>
+  <text class="nt" x="700" y="251">p</text>
+  <circle class="ring" cx="700" cy="250" r="20"/>
+  <rect class="bk" x="615" y="305" width="30" height="30" rx="5"/>
+  <text class="nt" x="630" y="321" font-size="13">x</text>
+  <circle class="rd" cx="788" cy="320" r="18"/>
+  <text class="nt" x="788" y="321">w</text>
+  <circle class="bk" cx="745" cy="382" r="18"/>
+  <text class="nt" x="745" y="383">c</text>
+  <circle class="bk" cx="830" cy="382" r="18"/>
+  <text class="nt" x="830" y="383">d</text>
+  <text class="row" x="30" y="440">情况 3</text>
+  <text class="note" x="490" y="620">c 染黑、w 染红，绕 w 旋转，转成情况 4</text>
+  <line class="edge" x1="235" y1="462" x2="180" y2="502"/>
+  <line class="edge" x1="235" y1="462" x2="323" y2="502"/>
+  <line class="edge" x1="323" y1="502" x2="280" y2="564"/>
+  <line class="edge" x1="323" y1="502" x2="365" y2="564"/>
+  <circle class="bk" cx="235" cy="440" r="18"/>
+  <text class="nt" x="235" y="441">p</text>
+  <rect class="bk" x="158" y="495" width="30" height="30" rx="5"/>
+  <rect class="ring" x="154" y="491" width="38" height="38" rx="7"/>
+  <text class="nt" x="173" y="511" font-size="13">x</text>
+  <circle class="bk" cx="323" cy="510" r="18"/>
+  <text class="nt" x="323" y="511">w</text>
+  <circle class="rd" cx="280" cy="572" r="18"/>
+  <text class="nt" x="280" y="573">c</text>
+  <circle class="bk" cx="365" cy="572" r="18"/>
+  <text class="nt" x="365" y="573">d</text>
+  <line class="edge" x1="700" y1="462" x2="645" y2="502"/>
+  <line class="edge" x1="700" y1="462" x2="772" y2="502"/>
+  <line class="edge" x1="772" y1="502" x2="808" y2="564"/>
+  <line class="edge" x1="808" y1="564" x2="840" y2="626"/>
+  <circle class="bk" cx="700" cy="440" r="18"/>
+  <text class="nt" x="700" y="441">p</text>
+  <rect class="bk" x="623" y="495" width="30" height="30" rx="5"/>
+  <rect class="ring" x="619" y="491" width="38" height="38" rx="7"/>
+  <text class="nt" x="638" y="511" font-size="13">x</text>
+  <circle class="bk" cx="772" cy="510" r="18"/>
+  <text class="nt" x="772" y="511">c</text>
+  <circle class="rd" cx="808" cy="572" r="18"/>
+  <text class="nt" x="808" y="573">w</text>
+  <circle class="bk" cx="840" cy="634" r="18"/>
+  <text class="nt" x="840" y="635">d</text>
+  <text class="row" x="30" y="630">情况 4</text>
+  <text class="note" x="490" y="810">w 顶替 p 的位置和颜色，p、d 染黑，绕 p 旋转，双重黑消失，修复结束</text>
+  <line class="edge" x1="235" y1="652" x2="180" y2="692"/>
+  <line class="edge" x1="235" y1="652" x2="323" y2="692"/>
+  <line class="edge" x1="323" y1="692" x2="280" y2="754"/>
+  <line class="edge" x1="323" y1="692" x2="365" y2="754"/>
+  <circle class="bk" cx="235" cy="630" r="18"/>
+  <text class="nt" x="235" y="631">p</text>
+  <rect class="bk" x="158" y="685" width="30" height="30" rx="5"/>
+  <rect class="ring" x="154" y="681" width="38" height="38" rx="7"/>
+  <text class="nt" x="173" y="701" font-size="13">x</text>
+  <circle class="bk" cx="323" cy="700" r="18"/>
+  <text class="nt" x="323" y="701">w</text>
+  <circle class="bk" cx="280" cy="762" r="18"/>
+  <text class="nt" x="280" y="763">c</text>
+  <circle class="rd" cx="365" cy="762" r="18"/>
+  <text class="nt" x="365" y="763">d</text>
+  <line class="edge" x1="700" y1="630" x2="642" y2="692"/>
+  <line class="edge" x1="700" y1="630" x2="758" y2="692"/>
+  <line class="edge" x1="642" y1="692" x2="592" y2="754"/>
+  <line class="edge" x1="642" y1="692" x2="672" y2="754"/>
+  <circle class="bk" cx="700" cy="630" r="18"/>
+  <text class="nt" x="700" y="631">w</text>
+  <circle class="bk" cx="642" cy="700" r="18"/>
+  <text class="nt" x="642" y="701">p</text>
+  <circle class="bk" cx="758" cy="700" r="18"/>
+  <text class="nt" x="758" y="701">d</text>
+  <rect class="bk" x="577" y="747" width="30" height="30" rx="5"/>
+  <text class="nt" x="592" y="763" font-size="13">x</text>
+  <circle class="bk" cx="672" cy="762" r="18"/>
+  <text class="nt" x="672" y="763">c</text>
+</svg>

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560" role="img" aria-label="B+ 树删除时的两种处理">
+  <style>
+    .edge{stroke:#5f6368;stroke-width:1.6;fill:none}
+    .link{stroke:#9aa0a6;stroke-width:1.4;fill:none}
+    .bk{fill:#37474f;stroke:#263238;stroke-width:1.6}
+    .rd{fill:#d84343;stroke:#b71c1c;stroke-width:1.6}
+    .ring{fill:none;stroke:#263238;stroke-width:1.6}
+    .nt{fill:#ffffff;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .box{fill:#f4f5f7;stroke:#9aa0a6;stroke-width:1.4}
+    .hl{fill:#dbe4ff;stroke:#3f51b5;stroke-width:1.6}
+    .key{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:12.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
+    .lbl{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:14px;font-weight:500}
+    .row{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600}
+    .note{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:13px;text-anchor:middle}
+    .mk{fill:#5f6368}
+    @media (prefers-color-scheme: dark){
+      .edge{stroke:#9aa0a6}
+      .link{stroke:#7a7f8f}
+      .bk{fill:#455a64;stroke:#90a4ae}
+      .rd{fill:#c62828;stroke:#ef9a9a}
+      .ring{stroke:#90a4ae}
+      .box{fill:#262a3a;stroke:#7a7f8f}
+      .hl{fill:#33406b;stroke:#9fa8da}
+      .key{fill:#e8eaf6}
+      .cap{fill:#9fa8da}
+      .lbl{fill:#c7cad6}
+      .row{fill:#9fa8da}
+      .note{fill:#c7cad6}
+      .mk{fill:#9aa0a6}
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path class="mk" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+  </defs>
+  <text class="row" x="30" y="45">情况 1：兄弟有富余，借一个 key（M = 3）</text>
+  <rect class="box" x="115.0" y="80" width="70" height="30" rx="5"/>
+  <text class="key" x="132.5" y="96">3</text>
+  <line class="edge" x1="150.0" y1="80" x2="150.0" y2="110" stroke-width="1"/>
+  <text class="key" x="167.5" y="96">6</text>
+
+  <line class="edge" x1="150" y1="110" x2="60" y2="175"/>
+  <rect class="box" x="25.0" y="175" width="70" height="30" rx="5"/>
+  <text class="key" x="60.0" y="191">1,2</text>
+
+  <line class="edge" x1="150" y1="110" x2="150" y2="175"/>
+  <rect class="box" x="115.0" y="175" width="70" height="30" rx="5"/>
+  <text class="key" x="150.0" y="191">3,4,5</text>
+
+  <line class="edge" x1="150" y1="110" x2="240" y2="175"/>
+  <rect class="box" x="205.0" y="175" width="70" height="30" rx="5"/>
+  <text class="key" x="240.0" y="191">6,7</text>
+
+  <line class="link" x1="95" y1="190" x2="115" y2="190" marker-end="url(#arrow)"/>
+  <line class="link" x1="185" y1="190" x2="205" y2="190" marker-end="url(#arrow)"/>
+  <line class="edge" x1="300" y1="140" x2="350" y2="140" marker-end="url(#arrow)"/>
+  <text class="lbl" x="318" y="120" text-anchor="middle">删除 1</text>
+  <rect class="box" x="435.0" y="80" width="70" height="30" rx="5"/>
+  <text class="key" x="452.5" y="96">4</text>
+  <line class="edge" x1="470.0" y1="80" x2="470.0" y2="110" stroke-width="1"/>
+  <text class="key" x="487.5" y="96">6</text>
+
+  <line class="edge" x1="470" y1="110" x2="380" y2="175"/>
+  <rect class="hl" x="345.0" y="175" width="70" height="30" rx="5"/>
+  <text class="key" x="380.0" y="191">2,3</text>
+
+  <line class="edge" x1="470" y1="110" x2="470" y2="175"/>
+  <rect class="hl" x="435.0" y="175" width="70" height="30" rx="5"/>
+  <text class="key" x="470.0" y="191">4,5</text>
+
+  <line class="edge" x1="470" y1="110" x2="560" y2="175"/>
+  <rect class="box" x="525.0" y="175" width="70" height="30" rx="5"/>
+  <text class="key" x="560.0" y="191">6,7</text>
+
+  <line class="link" x1="415" y1="190" x2="435" y2="190" marker-end="url(#arrow)"/>
+  <line class="link" x1="505" y1="190" x2="525" y2="190" marker-end="url(#arrow)"/>
+  <text class="note" x="470" y="245">叶子 {1,2} 只剩一个 key，向右兄弟借来 3，</text>
+  <text class="note" x="470" y="263">父节点里的分隔 key 从 3 改成 4</text>
+  <text class="row" x="30" y="330">情况 2：兄弟也紧张，合并；根只剩一个孩子就删掉</text>
+  <rect class="box" x="130.0" y="360" width="40" height="30" rx="5"/>
+  <text class="key" x="150.0" y="376">5</text>
+
+  <line class="edge" x1="150" y1="390" x2="100" y2="455"/>
+  <rect class="box" x="65.0" y="455" width="70" height="30" rx="5"/>
+  <text class="key" x="100.0" y="471">2,3</text>
+
+  <line class="edge" x1="150" y1="390" x2="200" y2="455"/>
+  <rect class="box" x="165.0" y="455" width="70" height="30" rx="5"/>
+  <text class="key" x="200.0" y="471">5,6</text>
+
+  <line class="link" x1="135" y1="470" x2="145" y2="470" marker-end="url(#arrow)"/>
+  <line class="edge" x1="290" y1="420" x2="345" y2="420" marker-end="url(#arrow)"/>
+  <text class="lbl" x="318" y="400" text-anchor="middle">删除 2</text>
+  <rect class="hl" x="430.0" y="455" width="80" height="30" rx="5"/>
+  <text class="key" x="470.0" y="471">3,5,6</text>
+
+  <text class="note" x="470" y="415">两个叶子合并成 {3,5,6}，根没有 key 了</text>
+  <text class="note" x="470" y="433">直接删掉，树高减 1</text>
+</svg>

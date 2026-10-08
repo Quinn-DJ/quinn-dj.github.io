@@ -8,7 +8,7 @@
 
 ### 1.1 定义与性质
 
-红黑树的目标和 AVL 树一样，也是一棵平衡的二叉搜索树，只是判平衡的标准从"高度差"换成了"颜色"。每个节点多存一个 `color` 字段（RED 或 BLACK），节点结构大致是 `parent / color / key / left / right`，空指针统一看作 NIL 节点。
+红黑树的目标和 AVL 树一样，也是一棵平衡的二叉搜索树，只是判平衡的标准从"高度差"换成了"颜色"。每个节点多存一个 `color` 字段（RED 或 BLACK），节点结构大致是 `parent / color / key / left / right`，**空指针统一看作 NIL 节点**。
 
 > [!NOTE]
 > **定义：红黑性质（red-black properties）**
@@ -19,7 +19,9 @@
 > 4. 红节点的两个孩子都是黑的；
 > 5. 从任一节点出发，到它所有后代叶子的简单路径上，黑节点数目相同。
 
-前四条好理解，第五条才是重点：它保证了从根到任何叶子的路径长度不会相差太多。带 key 的节点叫内部节点（internal node），NIL 叫外部节点（external node）。
+第五条保证了从根到任何叶子的路径长度不会相差太多。
+
+对带 key 的节点叫内部节点（internal node），NIL 叫外部节点（external node）。
 
 ![一棵合法的红黑树](figures/rbtree-example.svg)
 
@@ -27,12 +29,14 @@
 
 ### 1.2 黑高与树高上界
 
+AVL 树考虑的是字面意义的高度平衡，那么红黑树考虑的则是黑色节点的数量的平衡，也被称为**黑高**。
+
 > [!NOTE]
 > **黑高（black-height）**
 >
 > $bh(x)$ 是从节点 $x$ 出发（不含 $x$ 自己）到叶子的任意一条简单路径上的黑节点数目。整棵树的黑高就取根的黑高，$bh(\text{Tree}) = bh(\text{root})$。
 
-引理：有 $N$ 个内部节点的红黑树，高度不超过 $2\log(N+1)$。
+*引理* 有 $N$ 个内部节点的红黑树，高度不超过 $2\log(N+1)$。
 
 证明分两步：
 
@@ -43,15 +47,15 @@
 
 $$h \le 2\log(N+1) = O(\log N)$$
 
-所以红黑树的查找、插入、删除都是 $O(\log N)$。这里的树高常数比 AVL 的 $1.44\log N$ 大一截，换来的是插入删除时旋转次数少得多。
+所以红黑树的查找、插入、删除都是 $O(\log N)$。虽然这里的树高上界 $2 \log (N+1)$ 比 AVL 的 $1.44\log N$ 大一些，但是换来的是插入删除时更少的旋转次数。
 
 ### 1.3 插入
 
-插入的套路是：新节点先按 BST 的规则挂到叶子上，然后染成红色。染红的好处是不改变任何路径上的黑节点数目（性质 5 不受影响），只可能违反性质 4，也就是出现"红节点带了个红孩子"。接下来的修复就是围绕这一条来的。
+插入的套路是：新节点先按 BST 的规则挂到叶子上，然后染成红色。染红的好处是不改变任何路径上的黑节点数目，也就是不影响性质 5，只可能违反性质 4，也就是出现"红节点有一个红孩子"。接下来的修复就是围绕这一条来的。
 
 设新节点为 $N$，父节点 $P$、祖父节点 $G$、叔节点 $U$（$P$ 的兄弟）。从 $N$ 出发往上处理，按 $P$ 和 $U$ 的颜色分三种情况：
 
-- 情况 1：$P$ 和 $U$ 都是红的。把 $P$、$U$ 染黑、$G$ 染红，然后把 $G$ 当作新的 $N$ 继续往上处理（染红 $G$ 可能让 $G$ 和它的父亲又构成红色对）。
+- 情况 1：$P$ 和 $U$ 都是红的。把 $P$、$U$ 染黑、$G$ 染红，然后把 $G$ 当作新的 $N$ 继续往上处理（染红 $G$ 可能让 $G$ 和它的父亲违反性质 4）。
 - 情况 2：$P$ 红、$U$ 黑，且 $N$ 是 $P$ 的"内侧"孩子（$P$ 是左孩子而 $N$ 是右孩子，或者镜像）。先旋转 $P$，把它变成情况 3 的形状。
 - 情况 3：$P$ 红、$U$ 黑，且 $N$ 是 $P$ 的"外侧"孩子。旋转 $G$，再把 $P$ 和 $G$ 的颜色对调。这一步之后子树的黑高不变，红红冲突也解决了，可以直接收工。
 
@@ -63,13 +67,15 @@ $$h \le 2\log(N+1) = O(\log N)$$
 
 删除分两步：先按 BST 的规则把节点摘掉，再修复颜色。
 
-摘节点有三种情形：
-
 - 删的是叶子：把父节点指向它的指针改成 NIL；
 - 删的节点只有一个孩子：用这个孩子顶替它的位置；
 - 删的节点有两个孩子：用左子树里最大的节点（前驱）或右子树里最小的节点（后继）顶替它，颜色保持不变，然后回到前两种情形，去删掉那个顶替上来的节点。
 
-如果最后被摘掉的是黑节点，这条路径上的黑节点就少了一个，需要"补一个黑"。把顶替上来的节点（可能是 NIL）看成带了一重额外的黑，记作 $x$，它的兄弟记作 $w$，然后按 $w$ 的情况分四种：
+我们考虑被摘掉的节点的颜色。如果是红色的，会发现 5 条性质以及黑高限制都不会违反；但是如果这个节点是黑节点，那么这条路径上的黑节点就少了一个，需要"补一个黑"。把顶替上来的节点（可能是 NIL）看成带了一重额外的黑，记作 $x$，它的兄弟记作 $w$，然后按 $w$ 的情况分四种：
+
+下面四张示意图里，带双边框的 $x$ 就是带了一重额外黑的节点，左边是处理前，右边是处理后：
+
+![红黑树删除的四种修复情况](figures/rbtree-delete-cases.svg)
 
 | 情况 | 条件 | 做法 |
 |------|------|------|
@@ -91,9 +97,11 @@ $$h \le 2\log(N+1) = O(\log N)$$
 | 查找 | 树更矮，稍快 | 稍慢 |
 | 插入删除 | 旋转多，调整慢 | 旋转少，调整快 |
 
-AVL 树把高度压得更低，适合查找远多于修改的场景；红黑树牺牲一点高度换更少的旋转，插入删除更稳，所以标准库里的有序容器（`std::map`、Java 的 `TreeMap`）基本都用它。
+AVL 树把高度压得更低，适合查找远多于修改的场景；红黑树牺牲一点高度换更少的旋转，插入删除等等维护成本更低，所以标准库里的有序容器（`std::map`、Java 的 `TreeMap`）基本都用它。
 
 ### 1.6 代码实现
+
+#### 插入
 
 插入部分不长，关键是 `insertFixup` 里的三种情况。这里用空指针表示 NIL，根节点始终染黑。
 
@@ -200,9 +208,146 @@ void insert(Node *&root, int key) {
 }
 ```
 
-拿 $1$ 到 $20$ 随机插几轮，再检查这几条就能确认没写错：中序遍历递增、根是黑的、红节点的孩子都是黑的、从根到每个 NIL 的黑节点数一样。
+#### 删除
 
-删除的修复更长，四种情况照着 1.4 的表写就行。OI Wiki 的 [红黑树](https://oi-wiki.org/ds/rbtree/) 页面有一份完整的 [rbtree.hpp](https://github.com/OI-wiki/OI-wiki/blob/master/docs/ds/code/rbtree/rbtree.hpp)，插入删除都写全了，需要的时候可以直接对照。
+删除同样分两步：先按 BST 的规则把节点摘掉，如果摘掉的是黑节点，再修复颜色。按照 1.4 的四种情况，把每种情况写成一个单独的函数，`deleteFixup` 只负责判断当前该走哪一条：
+
+```cpp
+bool isBlack(Node *x) { return !isRed(x); }              // NIL 也算黑
+bool onLeft(Node *x, Node *p) { return p->left == x; }
+Node *sibling(Node *x, Node *p) { return onLeft(x, p) ? p->right : p->left; }
+Node *innerChild(Node *x, Node *p) {
+    Node *w = sibling(x, p);
+    return onLeft(x, p) ? w->left : w->right;
+}
+Node *outerChild(Node *x, Node *p) {
+    Node *w = sibling(x, p);
+    return onLeft(x, p) ? w->right : w->left;
+}
+
+// 情况 1：兄弟 w 是红的。w 染黑、p 染红，绕 p 旋转，把问题变成情况 2、3 或 4
+void deleteCase1(Node *&root, Node *x, Node *p) {
+    Node *w = sibling(x, p);
+    w->color = BLACK;
+    p->color = RED;
+    if (onLeft(x, p))
+        rotateLeft(root, p);
+    else
+        rotateRight(root, p);
+}
+
+// 情况 2：兄弟 w 黑，且 w 的两个孩子都是黑的。w 染红，多出来的一重黑上移给 p
+void deleteCase2(Node *x, Node *p) { sibling(x, p)->color = RED; }
+
+// 情况 3：兄弟 w 黑，内侧孩子红、外侧孩子黑。先把内侧的红孩子转到外侧，变成情况 4
+void deleteCase3(Node *&root, Node *x, Node *p) {
+    Node *w = sibling(x, p), *c = innerChild(x, p);
+    c->color = BLACK;
+    w->color = RED;
+    if (onLeft(x, p))
+        rotateRight(root, w);
+    else
+        rotateLeft(root, w);
+}
+
+// 情况 4：兄弟 w 黑，外侧孩子 d 是红的。绕 p 旋转让 w 顶上来，重新分配颜色，修复结束
+void deleteCase4(Node *&root, Node *x, Node *p) {
+    Node *w = sibling(x, p), *d = outerChild(x, p);
+    w->color = p->color;
+    p->color = BLACK;
+    d->color = BLACK;
+    if (onLeft(x, p))
+        rotateLeft(root, p);
+    else
+        rotateRight(root, p);
+}
+
+// x 是带了一重额外黑的节点（可能是 nullptr），p 是它的父节点
+void deleteFixup(Node *&root, Node *x, Node *p) {
+    while (x != root && isBlack(x)) {
+        Node *w = sibling(x, p);
+        if (isRed(w)) {                                      // 情况 1
+            deleteCase1(root, x, p);
+            w = sibling(x, p);                               // 兄弟换人了，重新取
+        }
+        if (isBlack(w->left) && isBlack(w->right)) {          // 情况 2
+            deleteCase2(x, p);
+            x = p;                                           // 额外的一重黑上移，继续往上
+            p = x->parent;
+        } else {
+            if (isBlack(outerChild(x, p)))                    // 情况 3
+                deleteCase3(root, x, p);
+            deleteCase4(root, x, p);                          // 情况 4，修复结束
+            return;
+        }
+    }
+    if (x) x->color = BLACK;                                  // 根节点或者红节点，直接染黑
+}
+```
+
+剩下的就是把节点摘掉。摘的时候只需要记住两件事：真正离开这棵树的节点是什么颜色，以及顶替上来的节点（可能是 NIL）和它的父节点是谁。
+
+```cpp
+Node *minimum(Node *x) {
+    while (x->left) x = x->left;
+    return x;
+}
+
+// 用 v 顶替 u 的位置，v 可以是 nullptr
+void transplant(Node *&root, Node *u, Node *v) {
+    if (!u->parent)
+        root = v;
+    else if (u->parent->left == u)
+        u->parent->left = v;
+    else
+        u->parent->right = v;
+    if (v) v->parent = u->parent;
+}
+
+bool erase(Node *&root, int key) {
+    Node *z = root;
+    while (z && z->key != key) z = (key < z->key) ? z->left : z->right;
+    if (!z) return false;
+
+    Node *x = nullptr, *p = nullptr;      // 顶替上来的节点和它的父节点
+    Color gone = z->color;                // 真正离开这棵树的节点的颜色
+    if (!z->left) {
+        x = z->right;
+        p = z->parent;
+        transplant(root, z, z->right);
+    } else if (!z->right) {
+        x = z->left;
+        p = z->parent;
+        transplant(root, z, z->left);
+    } else {
+        Node *y = minimum(z->right);      // 用后继顶替
+        gone = y->color;
+        x = y->right;
+        if (y->parent == z) {
+            p = y;
+        } else {
+            p = y->parent;
+            transplant(root, y, y->right);
+            y->right = z->right;
+            y->right->parent = y;
+        }
+        transplant(root, z, y);
+        y->left = z->left;
+        y->left->parent = y;
+        y->color = z->color;
+    }
+    if (gone == BLACK) {
+        if (isRed(x))
+            x->color = BLACK;             // 顶上来的是红节点，直接染黑就补上了
+        else
+            deleteFixup(root, x, p);
+    }
+    delete z;
+    return true;
+}
+```
+
+删除部分的组织方式参照课程材料，OI Wiki 的实现用来对照细节。想确认四种情况没写漏、没写反，可以拿随机序列插删几百轮，每一步检查这几条：中序遍历递增、父指针正确、根节点是黑的、红节点的孩子都是黑的、从根到每个 NIL 的黑节点数一样。
 
 ---
 
@@ -271,6 +416,13 @@ Btree Insert(ElementType X, Btree T)
 ### 2.4 删除
 
 删除和插入是对称的：从叶子里去掉 key 之后，如果这个节点的 key 太少（少于 $\lceil M/2 \rceil$），先看兄弟有没有富余，有就从兄弟借一个过来（必要时顺带改一下父节点里的分隔 key）；兄弟也紧张就把两个节点合并。合并会让父节点少一个 key，可能继续向上传播。根节点只剩一个孩子的时候直接删掉，树高减 1。
+
+用 $M = 3$ 的树看两个例子：
+
+![B+ 树删除：借一个 key 和合并后删掉根](figures/bplus-delete.svg)
+
+- 借：叶子 `{1,2}` 删掉 1 之后只剩一个 key，向右兄弟 `{3,4,5}` 借来最小的 3，两个叶子变成 `{2,3}` 和 `{4,5}`，父节点里的分隔 key 也从 3 改成 4；
+- 合并：叶子 `{2,3}` 删掉 2 之后只剩一个 key，而兄弟 `{5,6}` 也同样没有富余，只能把两个叶子合并成 `{3,5,6}`；根节点因此没有 key 了，直接删掉，树高减 1。
 
 ### 2.5 复杂度
 

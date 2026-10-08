@@ -18,23 +18,29 @@ const STYLE = `
     .link{stroke:#9aa0a6;stroke-width:1.4;fill:none}
     .bk{fill:#37474f;stroke:#263238;stroke-width:1.6}
     .rd{fill:#d84343;stroke:#b71c1c;stroke-width:1.6}
+    .ring{fill:none;stroke:#263238;stroke-width:1.6}
     .nt{fill:#ffffff;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
     .box{fill:#f4f5f7;stroke:#9aa0a6;stroke-width:1.4}
     .hl{fill:#dbe4ff;stroke:#3f51b5;stroke-width:1.6}
     .key{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:12.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
     .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
     .lbl{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:14px;font-weight:500}
+    .row{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600}
+    .note{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:13px;text-anchor:middle}
     .mk{fill:#5f6368}
     @media (prefers-color-scheme: dark){
       .edge{stroke:#9aa0a6}
       .link{stroke:#7a7f8f}
       .bk{fill:#455a64;stroke:#90a4ae}
       .rd{fill:#c62828;stroke:#ef9a9a}
+      .ring{stroke:#90a4ae}
       .box{fill:#262a3a;stroke:#7a7f8f}
       .hl{fill:#33406b;stroke:#9fa8da}
       .key{fill:#e8eaf6}
       .cap{fill:#9fa8da}
       .lbl{fill:#c7cad6}
+      .row{fill:#9fa8da}
+      .note{fill:#c7cad6}
       .mk{fill:#9aa0a6}
     }`;
 
@@ -243,8 +249,172 @@ function insertSplit() {
   return save('bplus-insert-split.svg', s);
 }
 
+// ---------------------------------------------------- 5. 红黑树删除的四种情况
+function rbtreeDeleteCases() {
+  const w = 980, h = 860;
+  let s = header(w, h, '红黑树删除后的四种修复情况');
+
+  // 双重黑节点（可能是 NIL）画成带双边框的方块
+  const nilNode = (x, y, label = 'x') =>
+    `  <rect class="bk" x="${x - 15}" y="${y - 15}" width="30" height="30" rx="5"/>\n` +
+    `  <rect class="ring" x="${x - 19}" y="${y - 19}" width="38" height="38" rx="7"/>\n` +
+    `  <text class="nt" x="${x}" y="${y + 1}" font-size="13">${label}</text>`;
+  // 普通黑节点（NIL），只剩一重黑
+  const plainNil = (x, y, label = 'x') =>
+    `  <rect class="bk" x="${x - 15}" y="${y - 15}" width="30" height="30" rx="5"/>\n` +
+    `  <text class="nt" x="${x}" y="${y + 1}" font-size="13">${label}</text>`;
+  const doubleNode = (x, y, label) =>
+    rbNode(x, y, label, 'black', 16) + '\n' +
+    `  <circle class="ring" cx="${x}" cy="${y}" r="20"/>`;
+
+  const rows = [
+    {title: '情况 1', note: 'w 染黑、p 染红，绕 p 旋转，问题变成情况 2、3 或 4'},
+    {title: '情况 2', note: 'w 染红，多出来的一重黑上移给 p，p 变成新的 x，继续往上处理'},
+    {title: '情况 3', note: 'c 染黑、w 染红，绕 w 旋转，转成情况 4'},
+    {title: '情况 4', note: 'w 顶替 p 的位置和颜色，p、d 染黑，绕 p 旋转，双重黑消失，修复结束'},
+  ];
+
+  rows.forEach((row, i) => {
+    const y0 = 60 + i * 190;
+    s += `  <text class="row" x="30" y="${y0}">${row.title}</text>\n`;
+    s += `  <text class="note" x="490" y="${y0 + 180}">${row.note}</text>\n`;
+    const bx = 235, ax = 700;        // 左边是处理前，右边是处理后
+
+    if (i === 0) {
+      // 情况 1：w 红
+      s += edge(bx, y0 + 22, bx - 55, y0 + 62) + '\n';
+      s += edge(bx, y0 + 22, bx + 88, y0 + 62) + '\n';
+      s += edge(bx + 88, y0 + 62, bx + 45, y0 + 124) + '\n';
+      s += edge(bx + 88, y0 + 62, bx + 130, y0 + 124) + '\n';
+      s += rbNode(bx, y0, 'p', 'black') + '\n';
+      s += nilNode(bx - 62, y0 + 70) + '\n';
+      s += rbNode(bx + 88, y0 + 70, 'w', 'red') + '\n';
+      s += rbNode(bx + 45, y0 + 132, 'c', 'black') + '\n';
+      s += rbNode(bx + 130, y0 + 132, 'd', 'black') + '\n';
+
+      s += edge(ax, y0, ax - 58, y0 + 62) + '\n';
+      s += edge(ax, y0, ax + 58, y0 + 62) + '\n';
+      s += edge(ax - 58, y0 + 62, ax - 108, y0 + 124) + '\n';
+      s += edge(ax - 58, y0 + 62, ax - 28, y0 + 124) + '\n';
+      s += rbNode(ax, y0, 'w', 'black') + '\n';
+      s += rbNode(ax - 58, y0 + 70, 'p', 'red') + '\n';
+      s += rbNode(ax + 58, y0 + 70, 'd', 'black') + '\n';
+      s += nilNode(ax - 115, y0 + 132, 'x') + '\n';
+      s += rbNode(ax - 28, y0 + 132, 'c', 'black') + '\n';
+    } else if (i === 1) {
+      // 情况 2：w 黑，两个孩子都黑
+      s += edge(bx, y0 + 22, bx - 55, y0 + 62) + '\n';
+      s += edge(bx, y0 + 22, bx + 88, y0 + 62) + '\n';
+      s += edge(bx + 88, y0 + 62, bx + 45, y0 + 124) + '\n';
+      s += edge(bx + 88, y0 + 62, bx + 130, y0 + 124) + '\n';
+      s += rbNode(bx, y0, 'p', 'black') + '\n';
+      s += nilNode(bx - 62, y0 + 70) + '\n';
+      s += rbNode(bx + 88, y0 + 70, 'w', 'black') + '\n';
+      s += rbNode(bx + 45, y0 + 132, 'c', 'black') + '\n';
+      s += rbNode(bx + 130, y0 + 132, 'd', 'black') + '\n';
+
+      s += edge(ax, y0 + 22, ax - 62, y0 + 62) + '\n';
+      s += edge(ax, y0 + 22, ax + 88, y0 + 62) + '\n';
+      s += edge(ax + 88, y0 + 62, ax + 45, y0 + 124) + '\n';
+      s += edge(ax + 88, y0 + 62, ax + 130, y0 + 124) + '\n';
+      s += doubleNode(ax, y0, 'p') + '\n';
+      s += plainNil(ax - 70, y0 + 70, 'x') + '\n';
+      s += rbNode(ax + 88, y0 + 70, 'w', 'red') + '\n';
+      s += rbNode(ax + 45, y0 + 132, 'c', 'black') + '\n';
+      s += rbNode(ax + 130, y0 + 132, 'd', 'black') + '\n';
+    } else if (i === 2) {
+      // 情况 3：w 黑，内侧 c 红
+      s += edge(bx, y0 + 22, bx - 55, y0 + 62) + '\n';
+      s += edge(bx, y0 + 22, bx + 88, y0 + 62) + '\n';
+      s += edge(bx + 88, y0 + 62, bx + 45, y0 + 124) + '\n';
+      s += edge(bx + 88, y0 + 62, bx + 130, y0 + 124) + '\n';
+      s += rbNode(bx, y0, 'p', 'black') + '\n';
+      s += nilNode(bx - 62, y0 + 70) + '\n';
+      s += rbNode(bx + 88, y0 + 70, 'w', 'black') + '\n';
+      s += rbNode(bx + 45, y0 + 132, 'c', 'red') + '\n';
+      s += rbNode(bx + 130, y0 + 132, 'd', 'black') + '\n';
+
+      s += edge(ax, y0 + 22, ax - 55, y0 + 62) + '\n';
+      s += edge(ax, y0 + 22, ax + 72, y0 + 62) + '\n';
+      s += edge(ax + 72, y0 + 62, ax + 108, y0 + 124) + '\n';
+      s += edge(ax + 108, y0 + 124, ax + 140, y0 + 186) + '\n';
+      s += rbNode(ax, y0, 'p', 'black') + '\n';
+      s += nilNode(ax - 62, y0 + 70, 'x') + '\n';
+      s += rbNode(ax + 72, y0 + 70, 'c', 'black') + '\n';
+      s += rbNode(ax + 108, y0 + 132, 'w', 'red') + '\n';
+      s += rbNode(ax + 140, y0 + 194, 'd', 'black') + '\n';
+    } else {
+      // 情况 4：w 黑，外侧 d 红
+      s += edge(bx, y0 + 22, bx - 55, y0 + 62) + '\n';
+      s += edge(bx, y0 + 22, bx + 88, y0 + 62) + '\n';
+      s += edge(bx + 88, y0 + 62, bx + 45, y0 + 124) + '\n';
+      s += edge(bx + 88, y0 + 62, bx + 130, y0 + 124) + '\n';
+      s += rbNode(bx, y0, 'p', 'black') + '\n';
+      s += nilNode(bx - 62, y0 + 70) + '\n';
+      s += rbNode(bx + 88, y0 + 70, 'w', 'black') + '\n';
+      s += rbNode(bx + 45, y0 + 132, 'c', 'black') + '\n';
+      s += rbNode(bx + 130, y0 + 132, 'd', 'red') + '\n';
+
+      s += edge(ax, y0, ax - 58, y0 + 62) + '\n';
+      s += edge(ax, y0, ax + 58, y0 + 62) + '\n';
+      s += edge(ax - 58, y0 + 62, ax - 108, y0 + 124) + '\n';
+      s += edge(ax - 58, y0 + 62, ax - 28, y0 + 124) + '\n';
+      s += rbNode(ax, y0, 'w', 'black') + '\n';
+      s += rbNode(ax - 58, y0 + 70, 'p', 'black') + '\n';
+      s += rbNode(ax + 58, y0 + 70, 'd', 'black') + '\n';
+      s += plainNil(ax - 108, y0 + 132, 'x') + '\n';
+      s += rbNode(ax - 28, y0 + 132, 'c', 'black') + '\n';
+    }
+  });
+  return save('rbtree-delete-cases.svg', s);
+}
+
+// ------------------------------------------- 6. B+ 树删除：借一个 key / 合并后删根
+function bplusDelete() {
+  const w = 980, h = 560;
+  let s = header(w, h, 'B+ 树删除时的两种处理');
+
+  // ---- 情况 1：向兄弟借 ----
+  s += `  <text class="row" x="30" y="45">情况 1：兄弟有富余，借一个 key（M = 3）</text>\n`;
+  s += bplusBox(150, 95, '3|6', {w: 70, h: 30}) + '\n';
+  [['1,2', 60], ['3,4,5', 150], ['6,7', 240]].forEach(([k, x]) => {
+    s += edge(150, 110, x, 175) + '\n';
+    s += bplusBox(x, 190, k, {w: 70, h: 30}) + '\n';
+  });
+  s += link(95, 190, 115, 190) + '\n';
+  s += link(185, 190, 205, 190) + '\n';
+  s += `  <line class="edge" x1="300" y1="140" x2="350" y2="140" marker-end="url(#arrow)"/>\n`;
+  s += `  <text class="lbl" x="318" y="120" text-anchor="middle">删除 1</text>\n`;
+  s += bplusBox(470, 95, '4|6', {w: 70, h: 30}) + '\n';
+  [['2,3', 380, 'hl'], ['4,5', 470, 'hl'], ['6,7', 560, 'box']].forEach(([k, x, cls]) => {
+    s += edge(470, 110, x, 175) + '\n';
+    s += bplusBox(x, 190, k, {w: 70, h: 30, cls}) + '\n';
+  });
+  s += link(415, 190, 435, 190) + '\n';
+  s += link(505, 190, 525, 190) + '\n';
+  s += `  <text class="note" x="470" y="245">叶子 {1,2} 只剩一个 key，向右兄弟借来 3，</text>\n`;
+  s += `  <text class="note" x="470" y="263">父节点里的分隔 key 从 3 改成 4</text>\n`;
+
+  // ---- 情况 2：合并，根只剩一个孩子就删掉 ----
+  s += `  <text class="row" x="30" y="330">情况 2：兄弟也紧张，合并；根只剩一个孩子就删掉</text>\n`;
+  s += bplusBox(150, 375, '5', {w: 40, h: 30}) + '\n';
+  [['2,3', 100], ['5,6', 200]].forEach(([k, x]) => {
+    s += edge(150, 390, x, 455) + '\n';
+    s += bplusBox(x, 470, k, {w: 70, h: 30}) + '\n';
+  });
+  s += link(135, 470, 145, 470) + '\n';
+  s += `  <line class="edge" x1="290" y1="420" x2="345" y2="420" marker-end="url(#arrow)"/>\n`;
+  s += `  <text class="lbl" x="318" y="400" text-anchor="middle">删除 2</text>\n`;
+  s += bplusBox(470, 470, '3,5,6', {w: 80, h: 30, cls: 'hl'}) + '\n';
+  s += `  <text class="note" x="470" y="415">两个叶子合并成 {3,5,6}，根没有 key 了</text>\n`;
+  s += `  <text class="note" x="470" y="433">直接删掉，树高减 1</text>\n`;
+  return save('bplus-delete.svg', s);
+}
+
 console.log('已生成：');
 console.log('  ' + rbtreeExample());
 console.log('  ' + insertCases());
 console.log('  ' + bplusExample());
 console.log('  ' + insertSplit());
+console.log('  ' + rbtreeDeleteCases());
+console.log('  ' + bplusDelete());

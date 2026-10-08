@@ -52,7 +52,7 @@ AND    ---------
 
 ### 1.3 方案二：倒排索引
 
-只记非零的位置，就得到倒排索引：
+参考稀疏矩阵的实现方式，我们只记非零的位置，就得到倒排索引：
 
 - 词典（dictionary / vocabulary）：所有出现过的词；
 - 倒排记录表（posting list）：这个词出现过的文档编号，通常还带上词频。
@@ -75,7 +75,7 @@ AND    ---------
 
 ![词典与倒排记录表](figures/inverted-index-example.svg)
 
-`silver` 那行表示：文档 1 里出现 1 次，文档 3 里出现 2 次，一共 3 次。
+*例如：* `silver` 那行表示：文档 1 里出现 1 次，文档 3 里出现 2 次，一共 3 次。
 
 两个常见问题：
 
@@ -110,7 +110,7 @@ while (读入一篇文档 D) {
 
 ### 2.2 词干化与停用词
 
-词干化只保留词根，`says`、`said`、`saying` 归到 `say`，`process`、`processing`、`processed`、`processes` 归到 `process`。这样同一个词的不同形态只占一条 posting，检索时也不会因为换了时态就漏掉。
+词干化只保留词根，`says`、`said`、`saying` 归到 `say`；`process`、`processing`、`processed`、`processes` 归到 `process`。这样同一个词的不同形态只占一条 posting，检索时也不会因为换了时态就漏掉。
 
 停用词（stop words）是另一类省事的地方：`a`、`the`、`it` 这类词几乎每篇文档都有，索引它们既占空间又拉长 posting list，直接丢掉。代价是查 `to be or not to be` 这种查询会失真，所以停用词表要按场景挑。
 
