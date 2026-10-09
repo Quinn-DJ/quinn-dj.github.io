@@ -57,6 +57,22 @@ const header = (w, h, label) =>
   </style>
 ${ARROW}`;
 
+/** NIL：黑节点，画成小方块 */
+const nilBox = (x, y, side = 14) =>
+  `  <rect class="bk" x="${(x - side / 2).toFixed(1)}" y="${(y - side / 2).toFixed(1)}" width="${side}" height="${side}" rx="2"/>`;
+
+/** 给一个节点补上缺失的左/右孩子 NIL，返回边和小方块 */
+const nilKids = (x, y, hasLeft, hasRight, dx = 26, dy = 34, side = 14) => {
+  let out = '';
+  if (!hasLeft) {
+    out += edge(x, y + 17, x - dx, y + dy - side / 2) + '\n' + nilBox(x - dx, y + dy, side) + '\n';
+  }
+  if (!hasRight) {
+    out += edge(x, y + 17, x + dx, y + dy - side / 2) + '\n' + nilBox(x + dx, y + dy, side) + '\n';
+  }
+  return out;
+};
+
 const edge = (x1, y1, x2, y2, cls = 'edge') =>
   `  <line class="${cls}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
 
@@ -91,24 +107,37 @@ const save = (name, svg) => {
 
 // ---------------------------------------------------------------- 1. 红黑树示例
 function rbtreeExample() {
-  const w = 860;
-  const h = 400;
+  const w = 880;
+  const h = 540;
   let s = header(w, h, '一棵合法的红黑树');
-  const P = {7: [430, 70], 2: [230, 165], 11: [630, 165], 1: [150, 260], 5: [310, 260], 8: [550, 260], 14: [710, 260], 4: [380, 355], 15: [780, 355]};
+  const P = {7: [440, 70], 2: [240, 165], 11: [640, 165], 1: [160, 260], 5: [320, 260], 8: [560, 260], 14: [720, 260], 4: [390, 355], 15: [790, 355]};
+  const kind = {7: 'black', 2: 'red', 11: 'red', 1: 'black', 5: 'black', 8: 'black', 14: 'black', 4: 'red', 15: 'red'};
   const E = [[7, 2], [7, 11], [2, 1], [2, 5], [5, 4], [11, 8], [11, 14], [14, 15]];
   E.forEach(([a, b]) => { s += edge(P[a][0], P[a][1] + 18, P[b][0], P[b][1] - 18) + '\n'; });
-  const kind = {7: 'black', 2: 'red', 11: 'red', 1: 'black', 5: 'black', 8: 'black', 14: 'black', 4: 'red', 15: 'red'};
+  // 每个空指针都补一个 NIL 方块
+  const NILS = [
+    [1, 118, 350], [1, 202, 350],
+    [5, 282, 350],
+    [4, 352, 445], [4, 428, 445],
+    [8, 522, 350], [8, 598, 350],
+    [14, 682, 350],
+    [15, 752, 445], [15, 828, 445],
+  ];
+  NILS.forEach(([p, x, y]) => {
+    s += edge(P[p][0], P[p][1] + 18, x, y - 9) + '\n';
+    s += nilBox(x, y, 18) + '\n';
+  });
   Object.keys(P).forEach((k) => { s += rbNode(P[k][0], P[k][1], k, kind[k]) + '\n'; });
-  s += `  <text class="lbl" x="430" y="390" text-anchor="middle">红节点：2、11、4、15；NIL 叶子没有画出来，空指针都当黑色的 NIL</text>\n`;
+  s += `  <text class="lbl" x="440" y="505" text-anchor="middle">小方块是 NIL（黑），每个空指针都有一个；红节点是 2、11、4、15</text>\n`;
   return save('rbtree-example.svg', s);
 }
 
 // ------------------------------------------------------- 2. 红黑树插入的三种情况
 function insertCases() {
   const w = 900;
-  const h = 560;
+  const h = 780;
   let s = header(w, h, '红黑树插入后的三种修复情况');
-  const rows = [70, 240, 410];
+  const rows = [80, 300, 520];
 
   const arrow = (x, y) => `  <line class="edge" x1="${x}" y1="${y}" x2="${x + 70}" y2="${y}" marker-end="url(#arrow)"/>\n`;
   const label = (x, y, t) => `  <text class="cap" x="${x}" y="${y}" text-anchor="end">${t}</text>\n`;
@@ -122,6 +151,8 @@ function insertCases() {
   s += rbNode(200, rows[0] + 30, 'P', 'red') + '\n';
   s += rbNode(320, rows[0] + 30, 'U', 'red') + '\n';
   s += rbNode(170, rows[0] + 90, 'N', 'red') + '\n';
+  s += nilKids(200, rows[0] + 30, true, false) + nilKids(320, rows[0] + 30, false, false) +
+       nilKids(170, rows[0] + 90, false, false);
   s += arrow(400, rows[0] + 10);
   s += edge(680, rows[0] - 30, 620, rows[0] + 30) + '\n';
   s += edge(680, rows[0] - 30, 740, rows[0] + 30) + '\n';
@@ -130,6 +161,8 @@ function insertCases() {
   s += rbNode(620, rows[0] + 30, 'P', 'black') + '\n';
   s += rbNode(740, rows[0] + 30, 'U', 'black') + '\n';
   s += rbNode(590, rows[0] + 90, 'N', 'red') + '\n';
+  s += nilKids(620, rows[0] + 30, true, false) + nilKids(740, rows[0] + 30, false, false) +
+       nilKids(590, rows[0] + 90, false, false);
 
   // 情况 2：P 红、U 黑，N 在内侧
   s += label(120, rows[1], '情况 2');
@@ -140,6 +173,8 @@ function insertCases() {
   s += rbNode(200, rows[1] + 30, 'P', 'red') + '\n';
   s += rbNode(320, rows[1] + 30, 'U', 'black') + '\n';
   s += rbNode(235, rows[1] + 90, 'N', 'red') + '\n';
+  s += nilKids(200, rows[1] + 30, false, true) + nilKids(320, rows[1] + 30, false, false) +
+       nilKids(235, rows[1] + 90, false, false);
   s += arrow(400, rows[1] + 10);
   s += edge(680, rows[1] - 30, 620, rows[1] + 30) + '\n';
   s += edge(680, rows[1] - 30, 740, rows[1] + 30) + '\n';
@@ -148,6 +183,8 @@ function insertCases() {
   s += rbNode(620, rows[1] + 30, 'N', 'red') + '\n';
   s += rbNode(740, rows[1] + 30, 'U', 'black') + '\n';
   s += rbNode(585, rows[1] + 90, 'P', 'red') + '\n';
+  s += nilKids(620, rows[1] + 30, true, false) + nilKids(740, rows[1] + 30, false, false) +
+       nilKids(585, rows[1] + 90, false, false);
 
   // 情况 3：P 红、U 黑，N 在外侧
   s += label(120, rows[2], '情况 3');
@@ -158,6 +195,8 @@ function insertCases() {
   s += rbNode(200, rows[2] + 30, 'P', 'red') + '\n';
   s += rbNode(320, rows[2] + 30, 'U', 'black') + '\n';
   s += rbNode(165, rows[2] + 90, 'N', 'red') + '\n';
+  s += nilKids(200, rows[2] + 30, true, false) + nilKids(320, rows[2] + 30, false, false) +
+       nilKids(165, rows[2] + 90, false, false);
   s += arrow(400, rows[2] + 10);
   s += edge(680, rows[2] - 30, 620, rows[2] + 30) + '\n';
   s += edge(680, rows[2] - 30, 760, rows[2] + 30) + '\n';
@@ -166,8 +205,11 @@ function insertCases() {
   s += rbNode(620, rows[2] + 30, 'N', 'red') + '\n';
   s += rbNode(760, rows[2] + 30, 'G', 'red') + '\n';
   s += rbNode(800, rows[2] + 90, 'U', 'black') + '\n';
+  s += nilKids(620, rows[2] + 30, false, false) + nilKids(760, rows[2] + 30, false, true) +
+       nilKids(800, rows[2] + 90, false, false);
 
-  s += `  <text class="lbl" x="450" y="545" text-anchor="middle">G 是祖父、P 是父节点、U 是叔叔；情况 2 转完就变成情况 3 的形状，情况 3 做完这棵子树就平衡了</text>\n`;
+  s += `  <text class="lbl" x="450" y="735" text-anchor="middle">G 是祖父、P 是父节点、U 是叔叔；情况 2 转完就变成情况 3 的形状，情况 3 做完这棵子树就平衡了</text>\n`;
+  s += `  <text class="lbl" x="450" y="757" text-anchor="middle">小方块是 NIL（黑），每个空指针都有一个</text>\n`;
   return save('rbtree-insert-cases.svg', s);
 }
 
@@ -251,121 +293,104 @@ function insertSplit() {
 
 // ---------------------------------------------------- 5. 红黑树删除的四种情况
 function rbtreeDeleteCases() {
-  const w = 980, h = 860;
+  const w = 980, h = 1040;
   let s = header(w, h, '红黑树删除后的四种修复情况');
 
-  // 双重黑节点（可能是 NIL）画成带双边框的方块
-  const nilNode = (x, y, label = 'x') =>
+  // NIL 画成方块；带了一重额外黑（双重黑）时再加一圈边框
+  const dblNil = (x, y, label = 'x') =>
     `  <rect class="bk" x="${x - 15}" y="${y - 15}" width="30" height="30" rx="5"/>\n` +
     `  <rect class="ring" x="${x - 19}" y="${y - 19}" width="38" height="38" rx="7"/>\n` +
     `  <text class="nt" x="${x}" y="${y + 1}" font-size="13">${label}</text>`;
-  // 普通黑节点（NIL），只剩一重黑
   const plainNil = (x, y, label = 'x') =>
     `  <rect class="bk" x="${x - 15}" y="${y - 15}" width="30" height="30" rx="5"/>\n` +
     `  <text class="nt" x="${x}" y="${y + 1}" font-size="13">${label}</text>`;
-  const doubleNode = (x, y, label) =>
+  const dblCircle = (x, y, label) =>
     rbNode(x, y, label, 'black', 16) + '\n' +
     `  <circle class="ring" cx="${x}" cy="${y}" r="20"/>`;
 
+  // 画一个面板：nodes 里带 kids 的节点会补上缺失孩子的 NIL
+  const panel = (nodes, edges) => {
+    let out = '';
+    const half = (n) => (n.type === 'circle' ? 17 : 7);
+    edges.forEach(([i, j]) => {
+      const A = nodes[i], B = nodes[j];
+      out += edge(A.x, A.y + half(A), B.x, B.y - half(B)) + '\n';
+    });
+    nodes.forEach((n) => {
+      if (n.kids) out += nilKids(n.x, n.y, n.kids[0], n.kids[1]);
+    });
+    nodes.forEach((n) => {
+      if (n.type === 'dblnil') out += dblNil(n.x, n.y, n.label) + '\n';
+      else if (n.type === 'nil') out += plainNil(n.x, n.y, n.label) + '\n';
+      else if (n.type === 'dblcircle') out += dblCircle(n.x, n.y, n.label) + '\n';
+      else out += rbNode(n.x, n.y, n.label, n.color) + '\n';
+    });
+    return out;
+  };
+
+  const bx = 235, ax = 700;
   const rows = [
-    {title: '情况 1', note: 'w 染黑、p 染红，绕 p 旋转，问题变成情况 2、3 或 4'},
-    {title: '情况 2', note: 'w 染红，多出来的一重黑上移给 p，p 变成新的 x，继续往上处理'},
-    {title: '情况 3', note: 'c 染黑、w 染红，绕 w 旋转，转成情况 4'},
-    {title: '情况 4', note: 'w 顶替 p 的位置和颜色，p、d 染黑，绕 p 旋转，双重黑消失，修复结束'},
+    {title: '情况 1', note: 'w 染黑、p 染红，绕 p 旋转，问题变成情况 2、3 或 4', y: 55},
+    {title: '情况 2', note: 'w 染红，多出来的一重黑上移给 p，p 变成新的 x，继续往上处理', y: 265},
+    {title: '情况 3', note: 'c 染黑、w 染红，绕 w 旋转，转成情况 4', y: 475},
+    {title: '情况 4', note: 'w 顶替 p 的位置和颜色，p、d 染黑，绕 p 旋转，双重黑消失，修复结束', y: 760},
   ];
+  const NIL4 = [false, false];        // 叶子节点：两个孩子都是 NIL
+  const NIL_L = [false, true];        // 只有右孩子
 
   rows.forEach((row, i) => {
-    const y0 = 60 + i * 190;
+    const y0 = row.y;
     s += `  <text class="row" x="30" y="${y0}">${row.title}</text>\n`;
-    s += `  <text class="note" x="490" y="${y0 + 180}">${row.note}</text>\n`;
-    const bx = 235, ax = 700;        // 左边是处理前，右边是处理后
+    s += `  <text class="note" x="490" y="${y0 + (i === 2 ? 240 : 205)}">${row.note}</text>\n`;
+
+    // 处理前：p 下面挂着双黑的 x 和兄弟 w，w 的孩子是 c、d
+    const beforeCore = (wColor, cColor, dColor) => panel([
+      {x: bx, y: y0, label: 'p', color: 'black', type: 'circle'},
+      {x: bx - 62, y: y0 + 70, label: 'x', type: 'dblnil'},
+      {x: bx + 88, y: y0 + 70, label: 'w', color: wColor, type: 'circle'},
+      {x: bx + 45, y: y0 + 132, label: 'c', color: cColor, type: 'circle', kids: NIL4},
+      {x: bx + 130, y: y0 + 132, label: 'd', color: dColor, type: 'circle', kids: NIL4},
+    ], [[0, 1], [0, 2], [2, 3], [2, 4]]);
 
     if (i === 0) {
-      // 情况 1：w 红
-      s += edge(bx, y0 + 22, bx - 55, y0 + 62) + '\n';
-      s += edge(bx, y0 + 22, bx + 88, y0 + 62) + '\n';
-      s += edge(bx + 88, y0 + 62, bx + 45, y0 + 124) + '\n';
-      s += edge(bx + 88, y0 + 62, bx + 130, y0 + 124) + '\n';
-      s += rbNode(bx, y0, 'p', 'black') + '\n';
-      s += nilNode(bx - 62, y0 + 70) + '\n';
-      s += rbNode(bx + 88, y0 + 70, 'w', 'red') + '\n';
-      s += rbNode(bx + 45, y0 + 132, 'c', 'black') + '\n';
-      s += rbNode(bx + 130, y0 + 132, 'd', 'black') + '\n';
-
-      s += edge(ax, y0, ax - 58, y0 + 62) + '\n';
-      s += edge(ax, y0, ax + 58, y0 + 62) + '\n';
-      s += edge(ax - 58, y0 + 62, ax - 108, y0 + 124) + '\n';
-      s += edge(ax - 58, y0 + 62, ax - 28, y0 + 124) + '\n';
-      s += rbNode(ax, y0, 'w', 'black') + '\n';
-      s += rbNode(ax - 58, y0 + 70, 'p', 'red') + '\n';
-      s += rbNode(ax + 58, y0 + 70, 'd', 'black') + '\n';
-      s += nilNode(ax - 115, y0 + 132, 'x') + '\n';
-      s += rbNode(ax - 28, y0 + 132, 'c', 'black') + '\n';
+      s += beforeCore('red', 'black', 'black');
+      s += panel([
+        {x: ax, y: y0, label: 'w', color: 'black', type: 'circle'},
+        {x: ax - 58, y: y0 + 70, label: 'p', color: 'red', type: 'circle'},
+        {x: ax + 58, y: y0 + 70, label: 'd', color: 'black', type: 'circle', kids: NIL4},
+        {x: ax - 115, y: y0 + 132, label: 'x', type: 'dblnil'},
+        {x: ax - 28, y: y0 + 132, label: 'c', color: 'black', type: 'circle', kids: NIL4},
+      ], [[0, 1], [0, 2], [1, 3], [1, 4]]);
     } else if (i === 1) {
-      // 情况 2：w 黑，两个孩子都黑
-      s += edge(bx, y0 + 22, bx - 55, y0 + 62) + '\n';
-      s += edge(bx, y0 + 22, bx + 88, y0 + 62) + '\n';
-      s += edge(bx + 88, y0 + 62, bx + 45, y0 + 124) + '\n';
-      s += edge(bx + 88, y0 + 62, bx + 130, y0 + 124) + '\n';
-      s += rbNode(bx, y0, 'p', 'black') + '\n';
-      s += nilNode(bx - 62, y0 + 70) + '\n';
-      s += rbNode(bx + 88, y0 + 70, 'w', 'black') + '\n';
-      s += rbNode(bx + 45, y0 + 132, 'c', 'black') + '\n';
-      s += rbNode(bx + 130, y0 + 132, 'd', 'black') + '\n';
-
-      s += edge(ax, y0 + 22, ax - 62, y0 + 62) + '\n';
-      s += edge(ax, y0 + 22, ax + 88, y0 + 62) + '\n';
-      s += edge(ax + 88, y0 + 62, ax + 45, y0 + 124) + '\n';
-      s += edge(ax + 88, y0 + 62, ax + 130, y0 + 124) + '\n';
-      s += doubleNode(ax, y0, 'p') + '\n';
-      s += plainNil(ax - 70, y0 + 70, 'x') + '\n';
-      s += rbNode(ax + 88, y0 + 70, 'w', 'red') + '\n';
-      s += rbNode(ax + 45, y0 + 132, 'c', 'black') + '\n';
-      s += rbNode(ax + 130, y0 + 132, 'd', 'black') + '\n';
+      s += beforeCore('black', 'black', 'black');
+      s += panel([
+        {x: ax, y: y0, label: 'p', type: 'dblcircle'},
+        {x: ax - 70, y: y0 + 70, label: 'x', type: 'nil'},
+        {x: ax + 88, y: y0 + 70, label: 'w', color: 'red', type: 'circle'},
+        {x: ax + 45, y: y0 + 132, label: 'c', color: 'black', type: 'circle', kids: NIL4},
+        {x: ax + 130, y: y0 + 132, label: 'd', color: 'black', type: 'circle', kids: NIL4},
+      ], [[0, 1], [0, 2], [2, 3], [2, 4]]);
     } else if (i === 2) {
-      // 情况 3：w 黑，内侧 c 红
-      s += edge(bx, y0 + 22, bx - 55, y0 + 62) + '\n';
-      s += edge(bx, y0 + 22, bx + 88, y0 + 62) + '\n';
-      s += edge(bx + 88, y0 + 62, bx + 45, y0 + 124) + '\n';
-      s += edge(bx + 88, y0 + 62, bx + 130, y0 + 124) + '\n';
-      s += rbNode(bx, y0, 'p', 'black') + '\n';
-      s += nilNode(bx - 62, y0 + 70) + '\n';
-      s += rbNode(bx + 88, y0 + 70, 'w', 'black') + '\n';
-      s += rbNode(bx + 45, y0 + 132, 'c', 'red') + '\n';
-      s += rbNode(bx + 130, y0 + 132, 'd', 'black') + '\n';
-
-      s += edge(ax, y0 + 22, ax - 55, y0 + 62) + '\n';
-      s += edge(ax, y0 + 22, ax + 72, y0 + 62) + '\n';
-      s += edge(ax + 72, y0 + 62, ax + 108, y0 + 124) + '\n';
-      s += edge(ax + 108, y0 + 124, ax + 140, y0 + 186) + '\n';
-      s += rbNode(ax, y0, 'p', 'black') + '\n';
-      s += nilNode(ax - 62, y0 + 70, 'x') + '\n';
-      s += rbNode(ax + 72, y0 + 70, 'c', 'black') + '\n';
-      s += rbNode(ax + 108, y0 + 132, 'w', 'red') + '\n';
-      s += rbNode(ax + 140, y0 + 194, 'd', 'black') + '\n';
+      s += beforeCore('black', 'red', 'black');
+      s += panel([
+        {x: ax, y: y0, label: 'p', color: 'black', type: 'circle'},
+        {x: ax - 62, y: y0 + 70, label: 'x', type: 'dblnil'},
+        {x: ax + 72, y: y0 + 70, label: 'c', color: 'black', type: 'circle', kids: NIL_L},
+        {x: ax + 108, y: y0 + 132, label: 'w', color: 'red', type: 'circle', kids: NIL_L},
+        {x: ax + 140, y: y0 + 194, label: 'd', color: 'black', type: 'circle', kids: NIL4},
+      ], [[0, 1], [0, 2], [2, 3], [3, 4]]);
     } else {
-      // 情况 4：w 黑，外侧 d 红
-      s += edge(bx, y0 + 22, bx - 55, y0 + 62) + '\n';
-      s += edge(bx, y0 + 22, bx + 88, y0 + 62) + '\n';
-      s += edge(bx + 88, y0 + 62, bx + 45, y0 + 124) + '\n';
-      s += edge(bx + 88, y0 + 62, bx + 130, y0 + 124) + '\n';
-      s += rbNode(bx, y0, 'p', 'black') + '\n';
-      s += nilNode(bx - 62, y0 + 70) + '\n';
-      s += rbNode(bx + 88, y0 + 70, 'w', 'black') + '\n';
-      s += rbNode(bx + 45, y0 + 132, 'c', 'black') + '\n';
-      s += rbNode(bx + 130, y0 + 132, 'd', 'red') + '\n';
-
-      s += edge(ax, y0, ax - 58, y0 + 62) + '\n';
-      s += edge(ax, y0, ax + 58, y0 + 62) + '\n';
-      s += edge(ax - 58, y0 + 62, ax - 108, y0 + 124) + '\n';
-      s += edge(ax - 58, y0 + 62, ax - 28, y0 + 124) + '\n';
-      s += rbNode(ax, y0, 'w', 'black') + '\n';
-      s += rbNode(ax - 58, y0 + 70, 'p', 'black') + '\n';
-      s += rbNode(ax + 58, y0 + 70, 'd', 'black') + '\n';
-      s += plainNil(ax - 108, y0 + 132, 'x') + '\n';
-      s += rbNode(ax - 28, y0 + 132, 'c', 'black') + '\n';
+      s += beforeCore('black', 'black', 'red');
+      s += panel([
+        {x: ax, y: y0, label: 'w', color: 'black', type: 'circle'},
+        {x: ax - 58, y: y0 + 70, label: 'p', color: 'black', type: 'circle'},
+        {x: ax + 58, y: y0 + 70, label: 'd', color: 'black', type: 'circle', kids: NIL4},
+        {x: ax - 108, y: y0 + 132, label: 'x', type: 'nil'},
+        {x: ax - 28, y: y0 + 132, label: 'c', color: 'black', type: 'circle', kids: NIL4},
+      ], [[0, 1], [0, 2], [1, 3], [1, 4]]);
     }
   });
+  s += `  <text class="note" x="490" y="1005">小方块是 NIL（黑），带双边框的 x 表示带了一重额外黑的 NIL</text>\n`;
   return save('rbtree-delete-cases.svg', s);
 }
 
