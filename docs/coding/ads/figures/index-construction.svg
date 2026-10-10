@@ -5,11 +5,11 @@
     .step{fill:#eef1ff;stroke:#3f51b5;stroke-width:1.6}
     .cell{fill:#ffffff;stroke:#9aa0a6;stroke-width:1.2}
     .blk{fill:#fdf0e6;stroke:#c98a4b;stroke-width:1.4}
-    .txt{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:13.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
-    .hd{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:14px;font-weight:600;text-anchor:middle}
-    .term{fill:#1f2330;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central}
-    .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
-    .lbl{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:13.5px;font-weight:500}
+    .txt{fill:#1f2330;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:13.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .hd{fill:#3c4043;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:14px;font-weight:600;text-anchor:middle}
+    .term{fill:#1f2330;font-family:'LXGW WenKai Mono','LXGW WenKai',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
+    .lbl{fill:#3c4043;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:13.5px;font-weight:500}
     .axis{stroke:#5f6368;stroke-width:1.6;fill:none}
     .curve{stroke:#3f51b5;stroke-width:2.4;fill:none}
     .mk{fill:#5f6368}

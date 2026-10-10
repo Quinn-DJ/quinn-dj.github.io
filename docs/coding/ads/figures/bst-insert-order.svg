@@ -1,9 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="530" viewBox="0 0 880 530" role="img" aria-label="同一组数字用两种插入顺序得到的二叉搜索树">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="880" height="530" viewBox="0 0 880 530" role="img" aria-label="同一组数字用两种插入顺序得到的二叉搜索树">
   <style>
     .edge{stroke:#5f6368;stroke-width:1.6;fill:none}
     .n{fill:#eef1ff;stroke:#3f51b5;stroke-width:2}
-    .t{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central}
-    .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:16px;font-weight:600;text-anchor:middle}
+    .t{fill:#1f2330;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:16px;font-weight:600;text-anchor:middle}
+    .mj{color:#3c4043}
     @media (prefers-color-scheme: dark){
       .edge{stroke:#9aa0a6}
       .n{fill:#2a2f4a;stroke:#9fa8da}

@@ -4,11 +4,11 @@
     .n{fill:#eef1ff;stroke:#3f51b5;stroke-width:2}
     .box{fill:#f4f5f7;stroke:#9aa0a6;stroke-width:1.6}
     .hi{fill:#dbe4ff;stroke:#3f51b5}
-    .t{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:19px;font-weight:600;text-anchor:middle;dominant-baseline:central}
-    .bf{fill:#2e7d32;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:17px;font-weight:600;text-anchor:middle}
+    .t{fill:#1f2330;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:19px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .bf{fill:#2e7d32;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:17px;font-weight:600;text-anchor:middle}
     .bfbad{fill:#c62828}
     .arr{stroke:#3f51b5;stroke-width:2.4;fill:none}
-    .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:16px;font-weight:600;text-anchor:middle}
+    .cap{fill:#3f51b5;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:16px;font-weight:600;text-anchor:middle}
     .mk{fill:#3f51b5}
     .mj{color:#3c4043}
     @media (prefers-color-scheme: dark){

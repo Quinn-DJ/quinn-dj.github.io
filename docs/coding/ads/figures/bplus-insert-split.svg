@@ -5,14 +5,14 @@
     .bk{fill:#37474f;stroke:#263238;stroke-width:1.6}
     .rd{fill:#d84343;stroke:#b71c1c;stroke-width:1.6}
     .ring{fill:none;stroke:#263238;stroke-width:1.6}
-    .nt{fill:#ffffff;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .nt{fill:#ffffff;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
     .box{fill:#f4f5f7;stroke:#9aa0a6;stroke-width:1.4}
     .hl{fill:#dbe4ff;stroke:#3f51b5;stroke-width:1.6}
-    .key{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:12.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
-    .cap{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
-    .lbl{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:14px;font-weight:500}
-    .row{fill:#3f51b5;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:600}
-    .note{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:13px;text-anchor:middle}
+    .key{fill:#1f2330;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:12.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
+    .lbl{fill:#3c4043;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:14px;font-weight:500}
+    .row{fill:#3f51b5;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:15px;font-weight:600}
+    .note{fill:#3c4043;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:13px;text-anchor:middle}
     .mk{fill:#5f6368}
     @media (prefers-color-scheme: dark){
       .edge{stroke:#9aa0a6}

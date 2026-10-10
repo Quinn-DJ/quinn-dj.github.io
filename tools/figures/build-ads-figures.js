@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 /**
- * 生成 docs/coding/ads/figures 里带公式的 SVG 图。
+ * 生成 docs/coding/ads/figures 里带公式的 SVG 图，并把图内字体统一成 LXGW WenKai。
  *
  *   - avl-min-nodes.svg：整张图重画，公式用 MathJax 预渲染成矢量路径
  *   - avl-{rr,ll,lr,rl}-rotation.svg：把方框标签 A_L / B_R 换成排版好的公式
  *   - splay-{zig,zig-zag,zig-zig}.svg：把方框里的子树字母换成数学斜体
+ *   - bst-insert-order.svg：只统一字体，图里没有公式
  *
  * 依赖 mathjax-full（离线把 TeX 渲染成 SVG 路径，图里不带任何运行时脚本）。
  * 任选一种装法：
@@ -25,6 +26,10 @@ const FIG_DIR = path.join(__dirname, '../../docs/coding/ads/figures');
 const EX = 7;        // 1ex = 7px，公式字号约 16px
 const CJK = 15;      // 中文标签字号，全角字宽等于 1em
 const GAP = 4;       // 中文与公式之间的间距
+
+/** 图内统一字体：LXGW WenKai 优先，缺失时按后备栈回退 */
+const FONT_OLD = "ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif";
+const FONT_NEW = "'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif";
 
 function mathjaxRoot() {
   const tries = [
@@ -114,8 +119,8 @@ function buildMinNodes() {
   <style>
     .edge{stroke:#5f6368;stroke-width:1.8;fill:none}
     .n{fill:#eef1ff;stroke:#3f51b5;stroke-width:2}
-    .t{fill:#1f2330;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:19px;font-weight:600;text-anchor:middle;dominant-baseline:central}
-    .lb{fill:#3c4043;font-family:ui-sans-serif,-apple-system,'PingFang SC','Noto Sans SC',Arial,sans-serif;font-size:15px;font-weight:500}
+    .t{fill:#1f2330;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:19px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .lb{fill:#3c4043;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:15px;font-weight:500}
     .box{fill:#f4f5f7;stroke:#9aa0a6;stroke-width:1.6}
     .mj{color:#3c4043}
     .mjcap{color:#3f51b5}
@@ -175,6 +180,11 @@ function ensureSvgBits(svg) {
   return svg;
 }
 
+/** 把历史图里残留的旧字体栈换成 LXGW WenKai */
+function ensureFont(svg) {
+  return svg.split(FONT_OLD).join(FONT_NEW);
+}
+
 function mathifyFigure(name) {
   const file = path.join(FIG_DIR, name);
   let svg = fs.readFileSync(file, 'utf8');
@@ -190,6 +200,7 @@ function mathifyFigure(name) {
     return place(m, parseFloat(xs) - m.width / 2, parseFloat(ys));
   });
   svg = ensureSvgBits(svg);
+  svg = ensureFont(svg);
   fs.writeFileSync(file, svg);
   return `${name}（替换 ${n} 个标签，${(svg.length / 1024).toFixed(1)} KB）`;
 }
@@ -199,6 +210,7 @@ console.log('  ' + buildMinNodes());
 for (const f of [
   'avl-rr-rotation.svg', 'avl-ll-rotation.svg', 'avl-lr-rotation.svg', 'avl-rl-rotation.svg',
   'splay-zig.svg', 'splay-zig-zag.svg', 'splay-zig-zig.svg',
+  'bst-insert-order.svg',
 ]) {
   console.log('  ' + mathifyFigure(f));
 }
