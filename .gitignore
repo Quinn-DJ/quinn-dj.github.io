@@ -1,7 +1,6 @@
 .DS_Store
 site/
 .venv
-.pilotdeck
 *.pptx
 *.ppt
 *.zip
