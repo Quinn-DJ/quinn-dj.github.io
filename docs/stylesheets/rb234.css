@@ -1,0 +1,194 @@
+/* ------------------------------------------------------------------
+   红黑树 ↔ 2-3-4 树（4 阶 B 树）交互插图
+   用在 docs/coding/ads/class02.md 第 3 节，脚本见 javascripts/rb234.js
+   ------------------------------------------------------------------ */
+
+.rb234 {
+  --rb-black: #37474f;
+  --rb-black-fg: #ffffff;
+  --rb-red: #d84343;
+  --rb-red-fill: rgba(216, 67, 67, 0.16);
+  --rb-edge: var(--md-default-fg-color--light);
+  --rb-muted: var(--md-default-fg-color--light);
+  --rb-faint: var(--md-default-fg-color--lighter);
+  --rb-box-bg: var(--md-code-bg-color);
+  --rb-accent: #3f51b5;
+  --rb-font: "LXGW WenKai", "LXGW WenKai Screen", "PingFang SC", "Noto Sans SC", ui-sans-serif, -apple-system, Arial, sans-serif;
+  margin: 1.2rem 0 1.4rem;
+}
+
+[data-md-color-scheme="slate"] .rb234 {
+  --rb-black: #455a64;
+  --rb-black-fg: #eceff1;
+  --rb-red: #ef9a9a;
+  --rb-red-fill: rgba(239, 154, 154, 0.16);
+  --rb-accent: #9fa8da;
+}
+
+.rb234__hint {
+  margin: 0 0 0.5rem;
+  color: var(--rb-muted);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.rb234__legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 1.1rem;
+  margin-bottom: 0.4rem;
+  color: var(--rb-muted);
+  font-size: 0.7rem;
+}
+
+.rb234__legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.rb234__sw {
+  flex: none;
+  display: inline-block;
+}
+
+.rb234__sw--red-edge {
+  width: 1.1rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--rb-red);
+}
+
+.rb234__sw--black-edge {
+  width: 1.1rem;
+  height: 1.5px;
+  background: var(--rb-edge);
+}
+
+.rb234__sw--black-node {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--rb-black);
+}
+
+.rb234__sw--red-node {
+  box-sizing: border-box;
+  width: 0.6rem;
+  height: 0.6rem;
+  border: 1.5px solid var(--rb-red);
+  border-radius: 50%;
+  background: var(--rb-red-fill);
+}
+
+.rb234__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.rb234__status {
+  margin: 0.5rem 0 0;
+  color: var(--rb-muted);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+/* ---------- SVG 元素 ---------- */
+
+.rb234__cap {
+  fill: var(--md-default-fg-color);
+  font-family: var(--rb-font);
+}
+
+.rb234__lbl {
+  fill: var(--rb-muted);
+  font-family: var(--rb-font);
+}
+
+.rb234__key {
+  fill: var(--md-default-fg-color);
+  font-family: var(--rb-font);
+  font-variant-numeric: tabular-nums;
+}
+
+.rb234__key--inv {
+  fill: var(--rb-black-fg);
+  font-family: var(--rb-font);
+  font-variant-numeric: tabular-nums;
+}
+
+.rb234__dot--b {
+  fill: var(--rb-black);
+}
+
+.rb234__dot--r {
+  fill: var(--rb-red-fill);
+  stroke: var(--rb-red);
+  stroke-width: 1.75;
+}
+
+.rb234__edge--b {
+  stroke: var(--rb-edge);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.rb234__edge--r {
+  stroke: var(--rb-red);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+
+.rb234__nil {
+  stroke: var(--rb-faint);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.rb234__bed {
+  stroke: var(--rb-edge);
+  stroke-width: 1.5;
+}
+
+.rb234__box {
+  fill: var(--rb-box-bg);
+  stroke: var(--rb-faint);
+  stroke-width: 1.5;
+}
+
+.rb234__cell {
+  stroke: var(--rb-faint);
+  stroke-width: 1;
+}
+
+.rb234__ring {
+  fill: none;
+  stroke: var(--rb-accent);
+  stroke-width: 2.5;
+  opacity: 0;
+}
+
+.rb234__mark {
+  cursor: pointer;
+}
+
+.rb234__mark.is-active .rb234__ring {
+  opacity: 1;
+}
+
+.rb234__mark.is-active .rb234__box {
+  fill: var(--rb-accent);
+  fill-opacity: 0.12;
+  stroke: var(--rb-accent);
+  stroke-width: 2.5;
+}
+
+.rb234__mark:focus {
+  outline: none;
+}
+
+.rb234__mark:focus-visible .rb234__ring {
+  opacity: 1;
+}
