@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="520" viewBox="0 0 940 520" role="img" aria-label="二项树 B0 到 B3 的结构">
+  <style>
+    .edge{stroke:#5f6368;stroke-width:1.6;fill:none}
+    .sib{stroke:#d84343;stroke-width:1.8;fill:none;stroke-dasharray:5 4}
+    .n{fill:#ffffff;stroke:#3f51b5;stroke-width:1.8}
+    .key{fill:#1f2330;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:13px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
+    .lbl{fill:#3c4043;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:13.5px;font-weight:500}
+    .mono{fill:#3f51b5;font-family:'LXGW WenKai Mono','LXGW WenKai',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .mk{fill:#5f6368}
+    @media (prefers-color-scheme: dark){
+      .edge{stroke:#9aa0a6}
+      .sib{stroke:#ef9a9a}
+      .n{fill:#262a3a;stroke:#9fa8da}
+      .key{fill:#e8eaf6}
+      .cap{fill:#9fa8da}
+      .lbl{fill:#c7cad6}
+      .mono{fill:#9fa8da}
+      .mk{fill:#9aa0a6}
+    }
+    .sibmk{fill:#d84343}
+    @media (prefers-color-scheme: dark){ .sibmk{fill:#ef9a9a} }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path class="mk" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path class="sibmk" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+  </defs>
+  <text class="cap" x="130" y="68" text-anchor="middle">B₀</text>
+  <text class="lbl" x="130" y="92" text-anchor="middle">1 个节点</text>
+  <circle class="n" cx="130" cy="120" r="18"/>
+  <text class="key" x="130" y="121">B₀</text>
+  <text class="cap" x="330" y="68" text-anchor="middle">B₁</text>
+  <text class="lbl" x="330" y="92" text-anchor="middle">2 个节点</text>
+  <line class="edge" x1="330" y1="137" x2="330" y2="165"/>
+  <circle class="n" cx="330" cy="120" r="18"/>
+  <text class="key" x="330" y="121">B₁</text>
+  <circle class="n" cx="330" cy="182" r="18"/>
+  <text class="key" x="330" y="183">B₀</text>
+  <text class="cap" x="620" y="68" text-anchor="middle">B₂</text>
+  <text class="lbl" x="620" y="92" text-anchor="middle">4 个节点</text>
+  <line class="edge" x1="620" y1="137" x2="594" y2="165"/>
+  <line class="edge" x1="594" y1="199" x2="594" y2="227"/>
+  <line class="edge" x1="620" y1="137" x2="646" y2="165"/>
+  <circle class="n" cx="620" cy="120" r="18"/>
+  <text class="key" x="620" y="121">B₂</text>
+  <circle class="n" cx="594" cy="182" r="18"/>
+  <text class="key" x="594" y="183">B₁</text>
+  <circle class="n" cx="594" cy="244" r="18"/>
+  <text class="key" x="594" y="245">B₀</text>
+  <circle class="n" cx="646" cy="182" r="18"/>
+  <text class="key" x="646" y="183">B₀</text>
+  <text class="cap" x="240" y="268" text-anchor="middle">B₃</text>
+  <text class="lbl" x="240" y="292" text-anchor="middle">8 个节点</text>
+  <line class="edge" x1="240" y1="337" x2="188" y2="365"/>
+  <line class="edge" x1="188" y1="399" x2="162" y2="427"/>
+  <line class="edge" x1="162" y1="461" x2="162" y2="489"/>
+  <line class="edge" x1="188" y1="399" x2="214" y2="427"/>
+  <line class="edge" x1="240" y1="337" x2="266" y2="365"/>
+  <line class="edge" x1="266" y1="399" x2="266" y2="427"/>
+  <line class="edge" x1="240" y1="337" x2="318" y2="365"/>
+  <circle class="n" cx="240" cy="320" r="18"/>
+  <text class="key" x="240" y="321">B₃</text>
+  <circle class="n" cx="188" cy="382" r="18"/>
+  <text class="key" x="188" y="383">B₂</text>
+  <circle class="n" cx="162" cy="444" r="18"/>
+  <text class="key" x="162" y="445">B₁</text>
+  <circle class="n" cx="162" cy="506" r="18"/>
+  <text class="key" x="162" y="507">B₀</text>
+  <circle class="n" cx="214" cy="444" r="18"/>
+  <text class="key" x="214" y="445">B₀</text>
+  <circle class="n" cx="266" cy="382" r="18"/>
+  <text class="key" x="266" y="383">B₁</text>
+  <circle class="n" cx="266" cy="444" r="18"/>
+  <text class="key" x="266" y="445">B₀</text>
+  <circle class="n" cx="318" cy="382" r="18"/>
+  <text class="key" x="318" y="383">B₀</text>
+  <text class="mono" x="700" y="330">B_k 的根有 k 个孩子：B_0, B_1, …, B_{k-1}</text>
+  <text class="mono" x="700" y="362">B_k 有 2^k 个节点</text>
+  <text class="mono" x="700" y="394">第 d 层有 C(k, d) 个节点（二项式系数）</text>
+</svg>

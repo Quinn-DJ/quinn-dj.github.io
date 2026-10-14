@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480" viewBox="0 0 960 480" role="img" aria-label="13 个元素的二项队列：B3 + B2 + B0">
+  <style>
+    .edge{stroke:#5f6368;stroke-width:1.6;fill:none}
+    .sib{stroke:#d84343;stroke-width:1.8;fill:none;stroke-dasharray:5 4}
+    .n{fill:#ffffff;stroke:#3f51b5;stroke-width:1.8}
+    .key{fill:#1f2330;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:13px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:15px;font-weight:600;text-anchor:middle}
+    .lbl{fill:#3c4043;font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif;font-size:13.5px;font-weight:500}
+    .mono{fill:#3f51b5;font-family:'LXGW WenKai Mono','LXGW WenKai',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .mk{fill:#5f6368}
+    @media (prefers-color-scheme: dark){
+      .edge{stroke:#9aa0a6}
+      .sib{stroke:#ef9a9a}
+      .n{fill:#262a3a;stroke:#9fa8da}
+      .key{fill:#e8eaf6}
+      .cap{fill:#9fa8da}
+      .lbl{fill:#c7cad6}
+      .mono{fill:#9fa8da}
+      .mk{fill:#9aa0a6}
+    }
+    .sibmk{fill:#d84343}
+    @media (prefers-color-scheme: dark){ .sibmk{fill:#ef9a9a} }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path class="mk" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path class="sibmk" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+  </defs>
+  <text class="mono" x="480" y="42">13 = 1101₂ = 2³ + 2² + 2⁰  →  B₃ + B₂ + B₀</text>
+  <line class="edge" x1="250" y1="137" x2="198" y2="165"/>
+  <line class="edge" x1="198" y1="199" x2="172" y2="227"/>
+  <line class="edge" x1="172" y1="261" x2="172" y2="289"/>
+  <line class="edge" x1="198" y1="199" x2="224" y2="227"/>
+  <line class="edge" x1="250" y1="137" x2="276" y2="165"/>
+  <line class="edge" x1="276" y1="199" x2="276" y2="227"/>
+  <line class="edge" x1="250" y1="137" x2="328" y2="165"/>
+  <circle class="n" cx="250" cy="120" r="18"/>
+  <text class="key" x="250" y="121">1</text>
+  <circle class="n" cx="198" cy="182" r="18"/>
+  <text class="key" x="198" y="183">5</text>
+  <circle class="n" cx="172" cy="244" r="18"/>
+  <text class="key" x="172" y="245">7</text>
+  <circle class="n" cx="172" cy="306" r="18"/>
+  <text class="key" x="172" y="307">8</text>
+  <circle class="n" cx="224" cy="244" r="18"/>
+  <text class="key" x="224" y="245">6</text>
+  <circle class="n" cx="276" cy="182" r="18"/>
+  <text class="key" x="276" y="183">3</text>
+  <circle class="n" cx="276" cy="244" r="18"/>
+  <text class="key" x="276" y="245">4</text>
+  <circle class="n" cx="328" cy="182" r="18"/>
+  <text class="key" x="328" y="183">2</text>
+  <text class="cap" x="250" y="380" text-anchor="middle">B₃（8 个节点）</text>
+  <line class="edge" x1="620" y1="137" x2="594" y2="165"/>
+  <line class="edge" x1="594" y1="199" x2="594" y2="227"/>
+  <line class="edge" x1="620" y1="137" x2="646" y2="165"/>
+  <circle class="n" cx="620" cy="120" r="18"/>
+  <text class="key" x="620" y="121">9</text>
+  <circle class="n" cx="594" cy="182" r="18"/>
+  <text class="key" x="594" y="183">11</text>
+  <circle class="n" cx="594" cy="244" r="18"/>
+  <text class="key" x="594" y="245">12</text>
+  <circle class="n" cx="646" cy="182" r="18"/>
+  <text class="key" x="646" y="183">10</text>
+  <text class="cap" x="620" y="380" text-anchor="middle">B₂（4 个节点）</text>
+  <circle class="n" cx="860" cy="120" r="18"/>
+  <text class="key" x="860" y="121">13</text>
+  <text class="cap" x="860" y="380" text-anchor="middle">B₀（1 个节点）</text>
+  <text class="lbl" x="480" y="440" text-anchor="middle">每棵树都是堆序的（根比孩子小）；树的大小是 2 的幂，所以 N 的二进制表示唯一决定用哪几棵树</text>
+</svg>
