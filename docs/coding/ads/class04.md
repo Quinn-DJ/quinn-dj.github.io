@@ -10,7 +10,7 @@
 
 堆（heap）靠两个性质撑着：结构性质（structure property）是"完全二叉树，可以用数组存"，堆序性质（order property）是"父节点的 key 不大于孩子"。这两个性质让插入和删除最小元都是 O(log N)，但合并很难看：两个数组形式的完全二叉树没法直接拼起来，只能把所有元素取出来重新建堆，代价 O(N)。
 
-所以有一个自然的问题：如果沿用二叉堆的结构，合并两个堆最快能多快？答案是 O(N)。原因就在结构性质上，两个完全二叉树的元素集合合起来一般不再是一棵完全二叉树，只能重建。
+如果坚持用完全二叉树来存，合并还能不能快一点？不能。两组元素合在一起一般又不再是一棵完全二叉树，只能重建，所以 O(N) 绕不开。
 
 ### 1.2 目标：把合并变成 O(log N)
 
@@ -63,16 +63,20 @@
 
 证明分两步：
 
-1. 先证一个更强的说法：如果 $\mathrm{Npl}(X) = n$，那么以 $X$ 为根的子树至少有 $2^{n+1} - 1$ 个节点。$n = 0$ 时子树至少有 $X$ 自己，$2^1 - 1 = 1$ 成立；假设对 $n - 1$ 成立，$\mathrm{Npl}(X) = n$ 说明右孩子的 Npl 是 $n - 1$，而左孩子的 Npl 不小于它，两棵子树都至少有 $2^n - 1$ 个节点，加上 $X$ 自己就是 $2^{n+1} - 1$。
-2. 右路径有 $r$ 个节点，说明根的 Npl 是 $r - 1$（每往右走一步 Npl 减一，最后一个节点的 Npl 为 0），代入上一条就得到节点数 $N \ge 2^r - 1$。
+1. 先证明一个更强的定理：**如果 $\mathrm{Npl}(X) = n$，那么以 $X$ 为根的子树至少有 $2^{n+1} - 1$ 个节点。**$n = 0$ 时子树至少有 $X$ 自己，$2^1 - 1 = 1$ 成立；假设对 $n - 1$ 成立，$\mathrm{Npl}(X) = n$ 说明右孩子的 Npl 是 $n - 1$，而左孩子的 Npl 不小于它，两棵子树都至少有 $2^n - 1$ 个节点，加上 $X$ 自己就是 $2^{n+1} - 1$。
+2. 右路径有 $r$ 个节点，说明根的 Npl 是 $r - 1$（每往右走一步 Npl 减一，最后一个节点的 Npl 为 0），代入 1 的结论得到节点数 $N \ge 2^{n+1} - 1 \ge 2^r - 1$。
 
-把不等式反过来解：$r \le \log_2(N + 1)$。也就是说，$N$ 个节点的左倾堆，右路径长度是 $O(\log N)$。合并只沿着右路径走，这就是它能做到 $O(\log N)$ 的原因。
+反解不等式得到 $r \le \log_2(N + 1)$。$N$ 个节点的左倾堆，右路径因此始终是 $O(\log N)$；合并只沿这条路径走，复杂度也跟着降下来。
 
 ### 2.4 合并（Merge）
 
-合并的思路：两个根先比大小，小的那个当新根；然后把"另一个堆"和"小根堆的右子树"合并，结果挂回小根的右边；从递归里回来的时候，如果左孩子的 Npl 比右孩子小，就交换两个孩子，最后更新 Npl。
+合并的思路如下：
 
-设 $H_1$ 的根比 $H_2$ 小，三步走：
+1. 两个根先比大小，小的那个当新根；
+2. 把*另一个堆*和*小根堆的右子树*合并，结果挂回小根的右边；
+3. 递归返回时，如果左孩子的 Npl 比右孩子小，就交换两个孩子（及其子树），最后更新 Npl。
+
+设 $H_1$ 的根比 $H_2$ 小，那么合并操作如下：
 
 1. 递归合并 $H_1$ 的右子树和 $H_2$：`H1->Right = Merge(H1->Right, H2)`；
 2. 如果 $\mathrm{Npl}(\text{左孩子}) < \mathrm{Npl}(\text{右孩子})$，交换两个孩子；
@@ -105,38 +109,11 @@ merge(3 的右子树 = 21, 6)
 
 ### 2.6 代码
 
-合并的递归写法很短，注意 `Merge1` 里的两种情况：`H1` 只有一个孩子（`H1->Left == NULL`，这时 `H1->Right` 一定是 NULL）时直接把 `H2` 挂到左边；否则先递归合并右子树，再决定要不要交换。
+把 `Merge` 和 `Merge1` 合成一个递归函数。空堆判断和根比较都放在函数开头，`Npl(NULL) = -1` 让空孩子也能直接参与比较和更新。
 
 ```cpp
 typedef struct TreeNode *PriorityQueue;
 
-PriorityQueue Merge( PriorityQueue H1, PriorityQueue H2 )
-{
-    if ( H1 == NULL ) return H2;
-    if ( H2 == NULL ) return H1;
-    if ( H1->Element < H2->Element )
-        return Merge1( H1, H2 );
-    else
-        return Merge1( H2, H1 );
-}
-
-static PriorityQueue Merge1( PriorityQueue H1, PriorityQueue H2 )
-{
-    if ( H1->Left == NULL )          /* 单节点：右孩子和 Npl 都已经是 0 */
-        H1->Left = H2;
-    else {
-        H1->Right = Merge( H1->Right, H2 );      /* 第 1、2 步 */
-        if ( H1->Left->Npl < H1->Right->Npl )
-            SwapChildren( H1 );                  /* 第 3 步 */
-        H1->Npl = H1->Right->Npl + 1;
-    }
-    return H1;
-}
-```
-
-节点里多存一个 `Npl` 字段：
-
-```cpp
 struct TreeNode
 {
     ElementType   Element;
@@ -144,6 +121,36 @@ struct TreeNode
     PriorityQueue Right;
     int           Npl;
 };
+
+static int Npl( PriorityQueue H )
+{
+    return H == NULL ? -1 : H->Npl;
+}
+
+static void SwapChildren( PriorityQueue H )
+{
+    PriorityQueue Tmp = H->Left;
+    H->Left = H->Right;
+    H->Right = Tmp;
+}
+
+PriorityQueue Merge( PriorityQueue H1, PriorityQueue H2 )
+{
+    if ( H1 == NULL ) return H2;
+    if ( H2 == NULL ) return H1;
+
+    if ( H1->Element > H2->Element ) {
+        PriorityQueue Tmp = H1;
+        H1 = H2;
+        H2 = Tmp;
+    }
+
+    H1->Right = Merge( H1->Right, H2 );
+    if ( Npl( H1->Left ) < Npl( H1->Right ) )
+        SwapChildren( H1 );
+    H1->Npl = Npl( H1->Right ) + 1;
+    return H1;
+}
 ```
 
 > [!WARNING]
@@ -153,12 +160,46 @@ struct TreeNode
 
 ### 2.7 迭代版
 
-同样的事情也可以自底向上做，幻灯片给了这个视角：
+同一件事也能自底向上做：
 
 1. 沿着两条右路径往下，把它们按 key 大小"排"成一条新的右路径，路过的节点左孩子都不动；
 2. 自底向上走回来，逐个比较左右孩子的 Npl，需要就交换，并更新 Npl。
 
-两种写法结果一样，递归版代码短，迭代版不占递归栈。
+实现沿用 2.6 节的类型和辅助函数：
+
+```cpp
+PriorityQueue MergeIterative( PriorityQueue H1, PriorityQueue H2 )
+{
+    std::vector<PriorityQueue> Path;
+
+    while ( H1 != NULL && H2 != NULL ) {
+        if ( H1->Element > H2->Element ) {
+            PriorityQueue Tmp = H1;
+            H1 = H2;
+            H2 = Tmp;
+        }
+        Path.push_back( H1 );
+        H1 = H1->Right;
+    }
+
+    PriorityQueue Merged = H1 != NULL ? H1 : H2;
+    while ( !Path.empty() ) {
+        PriorityQueue Current = Path.back();
+        Path.pop_back();
+
+        Current->Right = Merged;
+        if ( Npl( Current->Left ) < Npl( Current->Right ) )
+            SwapChildren( Current );
+        Current->Npl = Npl( Current->Right ) + 1;
+        Merged = Current;
+    }
+    return Merged;
+}
+```
+
+`Path` 里存的是向下阶段选出的节点。第一条右路径走完时，另一个堆剩下的部分直接接在后面。倒着弹出 `Path`，每个节点的右孩子都改成已经修好的 `Merged`，然后按递归版同样的规则交换并更新 Npl。
+
+递归版代码短，但是需要递归调用栈；迭代版不占用递归调用栈，但显式保存路径仍要 $O(\log N)$ 的额外空间。
 
 ---
 
@@ -166,7 +207,7 @@ struct TreeNode
 
 ### 3.1 合并规则
 
-斜堆是左倾堆的简化版：不要 Npl，也不要"要不要交换"的判断。合并时沿着右路径往下走，回来的时候每次都交换左右孩子，唯一的例外是两条右路径上最大的那个节点，它是递归的终点，不交换。
+斜堆是左倾堆的简化版：不要 Npl，也不要“要不要交换”的判断。合并时沿着右路径往下走，回来的时候每次都交换左右孩子，唯一的例外是两条右路径上最大的那个节点，它是递归的终点，不交换。
 
 还是用 2.4 节那两个堆：$H_1 = 3(10(14, 23), 21)$，$H_2 = 6(7(18, 24), 12(37, 33))$。斜堆合并后是
 
@@ -183,7 +224,7 @@ struct TreeNode
 - 每个节点不用存 Npl，少一个字段；
 - 不用比较 Npl 决定是否交换，代码更短。
 
-代价是树不再保证"左倾"，单次操作的右路径可能很长，最坏情况到 $O(N)$。所以它的复杂度是均摊的：
+但树不再保证"左倾"，单次操作的右路径可能很长，最坏情况到 $O(N)$。它的复杂度只能在均摊意义下给：
 
 > [!NOTE]
 > **目标**
@@ -223,7 +264,7 @@ $$\Phi(D_N) - \Phi(D_0) \le l_1 + l_2 - h_1 - h_2$$
 
 $$\hat c = c + \Phi(D_N) - \Phi(D_0) \le 2(l_1 + l_2)$$
 
-最后看轻节点的性质：轻意味着右子树的节点数不到一半，所以沿着右路径每遇到一个轻节点，子树大小至少减半，右路径上的轻节点数不超过 $\log N$。于是
+轻节点的右子树不到一半，所以沿着右路径每遇到一个轻节点，所在子树至少减半。这样的节点最多 $\log N$ 个，于是
 
 $$\hat c \le 2(l_1 + l_2) = O(\log N_1 + \log N_2)$$
 

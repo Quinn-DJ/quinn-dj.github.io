@@ -80,7 +80,8 @@ nav = [
         { "02. 红黑树与 B+ 树" = "coding/ads/class02.md" },
         { "03. 倒排索引" = "coding/ads/class03.md" },
         { "04. 左倾堆与斜堆" = "coding/ads/class04.md" },
-        { "05. 二项队列" = "coding/ads/class05.md" }
+        { "05. 二项队列" = "coding/ads/class05.md" },
+        { "06. 回溯" = "coding/ads/class06.md" }
       ] }
     ] },
     { "自己研究的小东西" = [

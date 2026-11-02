@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="710" viewBox="0 0 780 710" role="img" aria-label="八皇后问题的一个合法摆法，每一行、每一列和两条对角线都不冲突">
+  <style>
+    text{font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif}
+    .panel{fill:#f7f8fb;stroke:#d9dde7;stroke-width:1}
+    .edge{stroke:#667085;stroke-width:1.8;fill:none}
+    .edge-good{stroke:#2e7d32;stroke-width:2.4;fill:none}
+    .edge-bad{stroke:#c75252;stroke-width:1.7;fill:none;stroke-dasharray:5 5}
+    .node{fill:#ffffff;stroke:#667085;stroke-width:1.8}
+    .node-root{fill:#e8eefc;stroke:#3f51b5;stroke-width:2}
+    .node-good{fill:#e7f4e8;stroke:#2e7d32;stroke-width:2.2}
+    .node-bad{fill:#f9eded;stroke:#c75252;stroke-width:1.8}
+    .node-max{fill:#e8eefc;stroke:#3f51b5;stroke-width:2}
+    .node-min{fill:#f9eded;stroke:#c75252;stroke-width:2}
+    .pruned{fill:#34384a;stroke:#202431;stroke-width:2}
+    .txt{fill:#1f2330;font-size:17px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .txt-light{fill:#ffffff;font-size:17px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-size:20px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .lbl{fill:#3c4043;font-size:15px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .lbl-left{fill:#3c4043;font-size:15px;font-weight:500;dominant-baseline:central}
+    .small{fill:#5f6673;font-size:13px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .good{fill:#2e7d32;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .bad{fill:#b63c3c;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .bound{fill:#b23a3a;font-size:22px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .board-edge{stroke:#4c5260;stroke-width:2;fill:none}
+    .cell-a{fill:#fbfbf7}
+    .cell-b{fill:#e7e3d8}
+    .cell-q{fill:#dce5ff;stroke:#3f51b5;stroke-width:2}
+    .queen{fill:#243b84;font-size:27px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .axis{stroke:#667085;stroke-width:2;fill:none}
+    .tick{stroke:#9aa1ad;stroke-width:1.2;fill:none}
+    .point{fill:#3f51b5;stroke:#243b84;stroke-width:1.5}
+    .distance{fill:#dce5ff;stroke:#8798d8;stroke-width:1.2}
+    .distance-t{fill:#243b84;font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .chip{fill:#ffffff;stroke:#9aa1ad;stroke-width:1.3}
+    @media (prefers-color-scheme: dark){
+      .panel{fill:#222635;stroke:#41485c}
+      .edge{stroke:#9aa0ae}
+      .edge-good{stroke:#81c784}
+      .edge-bad{stroke:#ef9a9a}
+      .node{fill:#292e3d;stroke:#9aa0ae}
+      .node-root{fill:#303a64;stroke:#9fa8da}
+      .node-good{fill:#24452f;stroke:#81c784}
+      .node-bad{fill:#4a292b;stroke:#ef9a9a}
+      .node-max{fill:#303a64;stroke:#9fa8da}
+      .node-min{fill:#4a292b;stroke:#ef9a9a}
+      .pruned{fill:#11131b;stroke:#e0e3eb}
+      .txt{fill:#eef0f6}
+      .txt-light{fill:#f7f8fb}
+      .cap{fill:#aeb8ff}
+      .lbl{fill:#d6d9e2}
+      .lbl-left{fill:#d6d9e2}
+      .small{fill:#b7bcc9}
+      .good{fill:#a5d6a7}
+      .bad{fill:#ef9a9a}
+      .bound{fill:#ff9e9e}
+      .board-edge{stroke:#d6d9e2}
+      .cell-a{fill:#2a2f3d}
+      .cell-b{fill:#373d4d}
+      .cell-q{fill:#374579;stroke:#aeb8ff}
+      .queen{fill:#eef1ff}
+      .axis{stroke:#aeb4c2}
+      .tick{stroke:#737b8d}
+      .point{fill:#9fa8da;stroke:#e8eaf6}
+      .distance{fill:#303a64;stroke:#7d8bc8}
+      .distance-t{fill:#eef0ff}
+      .chip{fill:#2b3040;stroke:#858da0}
+    }
+  </style>  <rect class="panel" x="24" y="24" width="732" height="650" rx="16"/>
+  <text class="cap" x="145" y="51">1</text>
+  <text class="cap" x="215" y="51">2</text>
+  <text class="cap" x="285" y="51">3</text>
+  <text class="cap" x="355" y="51">4</text>
+  <text class="cap" x="425" y="51">5</text>
+  <text class="cap" x="495" y="51">6</text>
+  <text class="cap" x="565" y="51">7</text>
+  <text class="cap" x="635" y="51">8</text>
+  <text class="cap" x="86" y="107">1</text>
+  <text class="cap" x="86" y="177">2</text>
+  <text class="cap" x="86" y="247">3</text>
+  <text class="cap" x="86" y="317">4</text>
+  <text class="cap" x="86" y="387">5</text>
+  <text class="cap" x="86" y="457">6</text>
+  <text class="cap" x="86" y="527">7</text>
+  <text class="cap" x="86" y="597">8</text>
+  <rect class="cell-a" x="110" y="72" width="70" height="70"/>
+  <rect class="cell-b" x="180" y="72" width="70" height="70"/>
+  <rect class="cell-a" x="250" y="72" width="70" height="70"/>
+  <rect class="cell-b" x="320" y="72" width="70" height="70"/>
+  <rect class="cell-a" x="390" y="72" width="70" height="70"/>
+  <rect class="cell-b" x="460" y="72" width="70" height="70"/>
+  <rect class="cell-a" x="530" y="72" width="70" height="70"/>
+  <rect class="cell-b" x="600" y="72" width="70" height="70"/>
+  <rect class="cell-b" x="110" y="142" width="70" height="70"/>
+  <rect class="cell-a" x="180" y="142" width="70" height="70"/>
+  <rect class="cell-b" x="250" y="142" width="70" height="70"/>
+  <rect class="cell-a" x="320" y="142" width="70" height="70"/>
+  <rect class="cell-b" x="390" y="142" width="70" height="70"/>
+  <rect class="cell-a" x="460" y="142" width="70" height="70"/>
+  <rect class="cell-b" x="530" y="142" width="70" height="70"/>
+  <rect class="cell-a" x="600" y="142" width="70" height="70"/>
+  <rect class="cell-a" x="110" y="212" width="70" height="70"/>
+  <rect class="cell-b" x="180" y="212" width="70" height="70"/>
+  <rect class="cell-a" x="250" y="212" width="70" height="70"/>
+  <rect class="cell-b" x="320" y="212" width="70" height="70"/>
+  <rect class="cell-a" x="390" y="212" width="70" height="70"/>
+  <rect class="cell-b" x="460" y="212" width="70" height="70"/>
+  <rect class="cell-a" x="530" y="212" width="70" height="70"/>
+  <rect class="cell-b" x="600" y="212" width="70" height="70"/>
+  <rect class="cell-b" x="110" y="282" width="70" height="70"/>
+  <rect class="cell-a" x="180" y="282" width="70" height="70"/>
+  <rect class="cell-b" x="250" y="282" width="70" height="70"/>
+  <rect class="cell-a" x="320" y="282" width="70" height="70"/>
+  <rect class="cell-b" x="390" y="282" width="70" height="70"/>
+  <rect class="cell-a" x="460" y="282" width="70" height="70"/>
+  <rect class="cell-b" x="530" y="282" width="70" height="70"/>
+  <rect class="cell-a" x="600" y="282" width="70" height="70"/>
+  <rect class="cell-a" x="110" y="352" width="70" height="70"/>
+  <rect class="cell-b" x="180" y="352" width="70" height="70"/>
+  <rect class="cell-a" x="250" y="352" width="70" height="70"/>
+  <rect class="cell-b" x="320" y="352" width="70" height="70"/>
+  <rect class="cell-a" x="390" y="352" width="70" height="70"/>
+  <rect class="cell-b" x="460" y="352" width="70" height="70"/>
+  <rect class="cell-a" x="530" y="352" width="70" height="70"/>
+  <rect class="cell-b" x="600" y="352" width="70" height="70"/>
+  <rect class="cell-b" x="110" y="422" width="70" height="70"/>
+  <rect class="cell-a" x="180" y="422" width="70" height="70"/>
+  <rect class="cell-b" x="250" y="422" width="70" height="70"/>
+  <rect class="cell-a" x="320" y="422" width="70" height="70"/>
+  <rect class="cell-b" x="390" y="422" width="70" height="70"/>
+  <rect class="cell-a" x="460" y="422" width="70" height="70"/>
+  <rect class="cell-b" x="530" y="422" width="70" height="70"/>
+  <rect class="cell-a" x="600" y="422" width="70" height="70"/>
+  <rect class="cell-a" x="110" y="492" width="70" height="70"/>
+  <rect class="cell-b" x="180" y="492" width="70" height="70"/>
+  <rect class="cell-a" x="250" y="492" width="70" height="70"/>
+  <rect class="cell-b" x="320" y="492" width="70" height="70"/>
+  <rect class="cell-a" x="390" y="492" width="70" height="70"/>
+  <rect class="cell-b" x="460" y="492" width="70" height="70"/>
+  <rect class="cell-a" x="530" y="492" width="70" height="70"/>
+  <rect class="cell-b" x="600" y="492" width="70" height="70"/>
+  <rect class="cell-b" x="110" y="562" width="70" height="70"/>
+  <rect class="cell-a" x="180" y="562" width="70" height="70"/>
+  <rect class="cell-b" x="250" y="562" width="70" height="70"/>
+  <rect class="cell-a" x="320" y="562" width="70" height="70"/>
+  <rect class="cell-b" x="390" y="562" width="70" height="70"/>
+  <rect class="cell-a" x="460" y="562" width="70" height="70"/>
+  <rect class="cell-b" x="530" y="562" width="70" height="70"/>
+  <rect class="cell-a" x="600" y="562" width="70" height="70"/>
+  <rect class="cell-q" x="320" y="72" width="70" height="70"/>
+  <text class="queen" x="355" y="108">Q</text>
+  <rect class="cell-q" x="460" y="142" width="70" height="70"/>
+  <text class="queen" x="495" y="178">Q</text>
+  <rect class="cell-q" x="600" y="212" width="70" height="70"/>
+  <text class="queen" x="635" y="248">Q</text>
+  <rect class="cell-q" x="180" y="282" width="70" height="70"/>
+  <text class="queen" x="215" y="318">Q</text>
+  <rect class="cell-q" x="530" y="352" width="70" height="70"/>
+  <text class="queen" x="565" y="388">Q</text>
+  <rect class="cell-q" x="110" y="422" width="70" height="70"/>
+  <text class="queen" x="145" y="458">Q</text>
+  <rect class="cell-q" x="250" y="492" width="70" height="70"/>
+  <text class="queen" x="285" y="528">Q</text>
+  <rect class="cell-q" x="390" y="562" width="70" height="70"/>
+  <text class="queen" x="425" y="598">Q</text>
+  <rect class="board-edge" x="110" y="72" width="560" height="560"/>
+  <text class="cap" x="390" y="650">x = (4, 6, 8, 2, 7, 1, 3, 5)</text>
+  <text class="small" x="390" y="678">第 i 行的皇后放在第 xᵢ 列；行号在左，列号在上</text>
+</svg>
