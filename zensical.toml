@@ -94,7 +94,8 @@ nav = [
 
   { "随笔" = [
     { "index" = "blog/index.md" },
-    { "A interesting Problem" = "blog/posts/26-03-09.md" }
+    { "A interesting Problem" = "blog/posts/26-03-09.md" },
+    { "Werewolf 狼人杀：递归剪枝题解" = "blog/posts/26-11-02.md" }
   ] },
 
   { "标签" = "tags.md" },
