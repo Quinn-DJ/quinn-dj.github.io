@@ -1,8 +1,7 @@
-# Static site generator (wraps mkdocs)
-zensical
+# Static site generator
+zensical==0.0.74
 
-# Theme and markdown extensions used by zensical config
-mkdocs-material
+# Markdown extensions and build-time code execution
 pymdown-extensions
 markdown-exec[ansi]
 
@@ -10,4 +9,3 @@ markdown-exec[ansi]
 numpy
 matplotlib
 Pillow
-material

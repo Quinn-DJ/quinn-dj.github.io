@@ -5,11 +5,6 @@ hide:
 ---
 
 <style>
-/*消除页面右上角的查看与编辑按钮*/
-.md-content__button {
-    display: none !important;
-}
-
 /* 增加权重并强制隐藏锚点链接 */
 .md-typeset .headerlink {
   display: none !important;
