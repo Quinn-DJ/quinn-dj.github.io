@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="430" viewBox="0 0 980 430" role="img" aria-label="斐波那契递归树中的重复子问题，以及从小到大填表的一次计算顺序">
+  <style>
+    text{font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif}
+    .panel{fill:#f7f8fb;stroke:#d9dde7;stroke-width:1.2}
+    .edge{stroke:#667085;stroke-width:1.7;fill:none}
+    .edge-good{stroke:#2e7d32;stroke-width:2.5;fill:none}
+    .edge-move{stroke:#8a90a0;stroke-width:1.5;fill:none;stroke-dasharray:5 5}
+    .box{fill:#ffffff;stroke:#667085;stroke-width:1.6}
+    .box-good{fill:#e7f4e8;stroke:#2e7d32;stroke-width:2.3}
+    .dot{fill:#eef1ff;stroke:#3f51b5;stroke-width:1.8}
+    .dot-repeat{fill:#fdecec;stroke:#c75252;stroke-width:2}
+    .dot-good{fill:#e7f4e8;stroke:#2e7d32;stroke-width:2}
+    .txt{fill:#1f2330;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .txt-good{fill:#1f4f24;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .txt-repeat{fill:#8f2929;font-size:15px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .term{fill:#243b84;font-size:16px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .cap{fill:#3f51b5;font-size:18px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .lbl{fill:#3c4043;font-size:13.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .small{fill:#5f6673;font-size:12.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .good{fill:#2e7d32;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .repeat{fill:#b63c3c;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    @media (prefers-color-scheme: dark){
+      .panel{fill:#222635;stroke:#41485c}
+      .edge{stroke:#a6acba}
+      .edge-good{stroke:#81c784}
+      .edge-move{stroke:#737b8d}
+      .box{fill:#292e3d;stroke:#a6acba}
+      .box-good{fill:#24452f;stroke:#81c784}
+      .dot{fill:#303a64;stroke:#9fa8da}
+      .dot-repeat{fill:#4a292b;stroke:#ef9a9a}
+      .dot-good{fill:#24452f;stroke:#81c784}
+      .txt{fill:#eef0f6}
+      .txt-good{fill:#c8e6c9}
+      .txt-repeat{fill:#ffcdd2}
+      .term{fill:#c5caff}
+      .cap{fill:#aeb8ff}
+      .lbl{fill:#d6d9e2}
+      .small{fill:#b7bcc9}
+      .good{fill:#a5d6a7}
+      .repeat{fill:#ef9a9a}
+    }
+  </style>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path fill="#667085" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+    <marker id="arrow-good" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path fill="#2e7d32" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+    <marker id="arrow-move" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path fill="#8a90a0" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+    <style>
+      @media (prefers-color-scheme: dark){
+        marker#arrow path{fill:#a6acba}
+        marker#arrow-good path{fill:#81c784}
+        marker#arrow-move path{fill:#737b8d}
+      }
+    </style>
+  </defs>  <rect class="panel" x="24" y="24" width="600" height="382" rx="16"/>
+  <rect class="panel" x="650" y="24" width="306" height="382" rx="16"/>
+  <text class="cap" x="324" y="55">递归树：同一个子问题被反复展开</text>
+  <text class="cap" x="803" y="55">填表：从小到大只算一次</text>
+  <line class="edge" x1="304" y1="126" x2="221" y2="176" marker-end="url(#arrow)"/>
+  <line class="edge" x1="336" y1="126" x2="419" y2="176" marker-end="url(#arrow)"/>
+  <line class="edge" x1="186" y1="220" x2="137" y2="282" marker-end="url(#arrow)"/>
+  <line class="edge" x1="224" y1="220" x2="258" y2="282" marker-end="url(#arrow)"/>
+  <line class="edge" x1="416" y1="220" x2="382" y2="282" marker-end="url(#arrow)"/>
+  <line class="edge" x1="454" y1="220" x2="498" y2="282" marker-end="url(#arrow)"/>
+  <circle class="dot" cx="320" cy="105" r="28"/>
+  <text class="term" x="320" y="106">F6</text>
+  <circle class="dot" cx="205" cy="200" r="25"/>
+  <text class="term" x="205" y="201">F5</text>
+  <circle class="dot" cx="435" cy="200" r="25"/>
+  <text class="term" x="435" y="201">F4</text>
+  <circle class="dot" cx="120" cy="305" r="23"/>
+  <text class="term" x="120" y="306">F4</text>
+  <circle class="dot-repeat" cx="275" cy="305" r="23"/>
+  <text class="txt-repeat" x="275" y="306">F3</text>
+  <circle class="dot-repeat" cx="365" cy="305" r="23"/>
+  <text class="txt-repeat" x="365" y="306">F3</text>
+  <circle class="dot" cx="515" cy="305" r="23"/>
+  <text class="term" x="515" y="306">F2</text>
+  <text class="repeat" x="210" y="275">也重复</text>
+  <text class="repeat" x="340" y="352">两个分支都要计算 F3</text>
+  <text class="lbl" x="324" y="386">朴素递归的调用次数满足 T(N) ≥ T(N−1) + T(N−2)</text>
+  <rect class="box" x="696" y="90" width="118" height="30" rx="6"/>
+  <text class="txt" x="735" y="106">F0</text>
+  <text class="txt-good" x="782" y="106">1</text>
+  <text class="small" x="885" y="106">起点</text>
+  <rect class="box" x="696" y="132" width="118" height="30" rx="6"/>
+  <text class="txt" x="735" y="148">F1</text>
+  <text class="txt-good" x="782" y="148">1</text>
+  <text class="small" x="885" y="148">由前两项得到</text>
+  <line class="edge-move" x1="755" y1="120" x2="755" y2="132"/>
+  <rect class="box" x="696" y="174" width="118" height="30" rx="6"/>
+  <text class="txt" x="735" y="190">F2</text>
+  <text class="txt-good" x="782" y="190">2</text>
+  <text class="small" x="885" y="190">由前两项得到</text>
+  <line class="edge-move" x1="755" y1="162" x2="755" y2="174"/>
+  <rect class="box" x="696" y="216" width="118" height="30" rx="6"/>
+  <text class="txt" x="735" y="232">F3</text>
+  <text class="txt-good" x="782" y="232">3</text>
+  <text class="small" x="885" y="232">由前两项得到</text>
+  <line class="edge-move" x1="755" y1="204" x2="755" y2="216"/>
+  <rect class="box" x="696" y="258" width="118" height="30" rx="6"/>
+  <text class="txt" x="735" y="274">F4</text>
+  <text class="txt-good" x="782" y="274">5</text>
+  <text class="small" x="885" y="274">由前两项得到</text>
+  <line class="edge-move" x1="755" y1="246" x2="755" y2="258"/>
+  <rect class="box-good" x="696" y="300" width="118" height="30" rx="6"/>
+  <text class="txt" x="735" y="316">F5</text>
+  <text class="txt-good" x="782" y="316">8</text>
+  <text class="small" x="885" y="316">由前两项得到</text>
+  <line class="edge-move" x1="755" y1="288" x2="755" y2="300"/>
+  <rect class="box-good" x="696" y="342" width="118" height="30" rx="6"/>
+  <text class="txt" x="735" y="358">F6</text>
+  <text class="txt-good" x="782" y="358">13</text>
+  <text class="small" x="885" y="358">由前两项得到</text>
+  <line class="edge-move" x1="755" y1="330" x2="755" y2="342"/>
+  <text class="lbl" x="803" y="386">保存最近两个值即可，不必保留整张表</text>
+</svg>
