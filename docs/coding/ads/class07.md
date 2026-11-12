@@ -1,799 +1,823 @@
-# 第七讲：动态规划（Dynamic Programming）
+# 第七讲：分治、最近点对与递归式（Divide and Conquer and Recurrences）
 
-> 递归把问题拆小以后，常常会重复计算同一棵子树。动态规划（dynamic programming, DP）要解决的就是这件事：把每个不同的子问题只算一次，把结果存起来，再按依赖顺序拼出原问题。这一讲用斐波那契数列、矩阵链乘法、最优二叉搜索树、Floyd-Warshall 和装配线调度串起同一套设计步骤。
+> 分治看起来只是“把问题砍成两半”，真正决定复杂度的是递归以后怎么合并。最近点对问题会把这一点摆得很清楚：左右两半分别算完之后，还要在线性的时间内检查跨中线的一窄条，整体才能做到 $O(N\log N)$。后半讲接着处理所有分治算法都绕不开的递归式，包括代入法、递归树和主定理。
 
 ---
 
-## 1. 基本思路（Dynamic Programming）
+## 1. 分治框架（Divide and Conquer）
 
-### 1.1 从重复递归说起
+### 1.1 分、治、合
 
-斐波那契数列（Fibonacci numbers）定义为
+分治（divide and conquer）处理一个问题时，把它拆成若干个规模更小的同类问题，递归求这些子问题，再把结果合成原问题的答案。规模小到可以直接处理时到达基本情况（base case）。
+
+三个动作分别是：
+
+- 分解（divide）：把输入切成若干子问题。
+- 解决（conquer）：递归求解子问题。
+- 合并（combine）：把子问题的答案拼成当前问题的答案。
+
+如果每层都切成 $b$ 份，只递归其中 $a$ 份，合并代价记作 $f(N)$，就得到最常见的递归式（recurrence）
 
 $$
-F(0)=F(1)=1,
-\qquad
-F(N)=F(N-1)+F(N-2)\quad(N\ge 2).
+T(N)=aT(N/b)+f(N).
 $$
 
-照着定义写成递归，代码很短：
+这里的 $a,b$ 不一定相等，子问题也不一定严格等大。归并排序恰好分成两个 $N/2$ 的子问题，`closest pair` 也采用左右各一半的划分。快速排序的切分点由枢轴（pivot）决定，两个子问题的大小就随输入变化；它的平均分析会得到类似的分治结构，最坏情况却退化成 $O(N^2)$。
 
-```cpp
-#include <iostream>
+课件用下面几类问题说明分治的适用范围：
 
-long long Fib(int N) {
-    if (N <= 1) {
-        return 1;
-    }
-    return Fib(N - 1) + Fib(N - 2);
-}
+| 问题 | 分解方式 | 合并工作 | 典型时间 |
+|------|----------|----------|----------|
+| 最大连续子序列和 | 左右两半，另查跨中线的一段 | $O(N)$ | $O(N\log N)$ |
+| 树的遍历 | 根和若干子树 | 每个结点常数次 | $O(N)$ |
+| 归并排序 | 左右两半 | 线性归并 | $O(N\log N)$ |
+| 快速排序 | 按枢轴切分 | 线性划分 | 平均 $O(N\log N)$，最坏 $O(N^2)$ |
+| 最近点对 | 按 $x$ 坐标分左右 | 检查窄带 | $O(N\log N)$ |
 
-int main() {
-    std::cout << Fib(6) << '\n';  // 13
-}
-```
+能把问题切开，不代表分治一定更快。如果合并要枚举左右两边所有组合，分治的代价可能退回到平方级。最近点对的难点正好在合并：直接检查左右之间所有点仍然是 $O(N^2)$，必须证明窄带里只需要看很少几个邻居。
 
-问题出在调用树。计算 `Fib(6)` 要算 `Fib(5)` 和 `Fib(4)`，而 `Fib(5)` 又要把 `Fib(4)` 算一遍；再往下，`Fib(3)` 会出现在好几个分支里。
+### 1.2 先分清“切得动”和“合得回来”
+
+一个分治算法至少要有两个条件：
+
+1. 子问题和原问题是同一种问题，可以继续递归。
+2. 子问题的答案足以组成原问题的答案，并且组合过程比穷举全部候选便宜。
+
+第二个条件经常被忽略。子问题内部即使都求到了最优值，如果合并时漏掉了跨越边界的可能性，答案还是错的。最近点对的最终答案可能在左半区，也可能在右半区，还可能一边取一个点。前两类交给递归，第三类必须在合并阶段补上。
+
+分治也要求子问题之间的处理相对独立。如果两个子问题大量共享状态、反复计算相同结果，动态规划（dynamic programming）通常更合适；这部分放到第八讲。
+
+---
+
+## 2. 最近点对（Closest Pair of Points）
+
+### 2.1 问题与朴素做法
+
+给定平面上的 $N$ 个点，找出距离最近的一对点。点 $P_i=(x_i,y_i)$ 和 $P_j=(x_j,y_j)$ 的欧氏距离（Euclidean distance）是
+
+$$
+d(P_i,P_j)
+=
+\sqrt{(x_i-x_j)^2+(y_i-y_j)^2}.
+$$
+
+如果两个点位置完全相同，最近距离就是 0，而且不必再找别的点对。
+
+枚举所有点对一共有
+
+$$
+\binom N2=\frac{N(N-1)}2
+$$
+
+对，每一对做一次常数时间的距离计算，因此时间复杂度是 $\Theta(N^2)$，额外空间只需要保存当前最优值。
+
+### 2.2 左右递归与跨中线检查
+
+先把所有点按 $x$ 坐标排序，再按排序后的位置从中间切成左右两半。设左半区递归求出的最近距离为 $d_L$，右半区为 $d_R$，记
+
+$$
+\delta=\min(d_L,d_R).
+$$
+
+左半区内部和右半区内部不可能再有比 $\delta$ 更近的点对，否则递归会返回更小的值。真正没检查过的只剩一边一个点的点对。
+
+如果跨中线的两点距离小于 $\delta$，它们的 $x$ 坐标都离中线不到 $\delta$。于是只需检查宽度为 $2\delta$ 的窄带（strip）：
+
+$$
+\lvert x-\text{中线}\rvert<\delta.
+$$
+
+窄带里的点再按 $y$ 坐标排序。对某个点 $P_i$，后续点只要满足
+
+$$
+y_j-y_i\ge\delta,
+$$
+
+它和后面所有点的纵向差都更大，就可以直接停止这一轮比较。
+
+这一步看起来仍有风险。如果 $N$ 个点全挤在窄带里，双重循环不是又要比较 $O(N^2)$ 对吗？
+
+### 2.3 每个点最多比较 7 个后续点
+
+对窄带中的任意点 $P_i$，只考虑纵坐标位于 $[y_i,y_i+\delta)$ 内的点。这些点同时落在宽度为 $2\delta$ 的区间里，因此都被装进一个宽 $2\delta$、高 $\delta$ 的矩形。
+
+把这个矩形切成 8 个边长为 $\delta/2$ 的小正方形，每半边两列。任何一个正方形里的两个点都在同一个半区，距离至多为对角线长度
+
+$$
+\sqrt{\left(\frac\delta2\right)^2+\left(\frac\delta2\right)^2}
+=
+\frac{\delta}{\sqrt2}
+<
+\delta.
+$$
+
+这与“同一半区里任意两点距离都不小于 $\delta$”矛盾。所以每个小正方形最多有一个点，整个矩形最多有 8 个点。这里已经包含 $P_i$，它后面最多只剩 7 个点需要比较。
 
 <div style="overflow-x:auto; padding-bottom:0.5rem;">
-  <img src="figures/dp-overlap.svg"
-       alt="朴素递归里的重复子问题，以及从小到大填表"
-       style="display:block; width:100%; min-width:720px; height:auto;">
+  <img src="figures/closest-pair-strip.svg"
+       alt="最近点对的窄带检查与 8 个小方格的打包证明"
+       style="display:block; width:100%; min-width:820px; height:auto;">
 </div>
 
-窄屏时左右滑动看图：左边是重复的递归树，右边是从小到大填表。
+窄屏时左右滑动看图。左图是划分后的点集。左右两半先各自递归，窄带里的红色点对才需要额外检查。右图把“最多再看 7 个点”变成了一个打包问题：宽 $2\delta$、高 $\delta$ 的矩形正好分成 $4\times2$ 个小格，每个小格最多放一个点。绿点是被扫描的 $P_i$，同一行后面最多还有 7 个候选。
 
-图中的两个 `F3` 不是不同的子问题，输入完全相同，答案也完全相同。把 `F3` 算一次、记下来，后续分支直接取结果，重复工作就没了。
+这条结论成立的关键是 $\delta$ 来自左右两半内部的最小距离。如果拿一个随便的宽度去切矩形，小格里的两点距离可能小于参考值，打包引理就不成立了。
 
-朴素递归满足
+课件还提到过一种容易误判的情况：如果已经知道 `NumPointInStrip = O(sqrt(N))`，直接枚举窄带点对也只要 $O(N)$；但最坏情况下窄带里可以有 $N$ 个点，所以必须利用按 $y$ 排序后的 7 点上界。
 
-$$
-T(N)\ge T(N-1)+T(N-2),
-$$
+### 2.4 为什么最终是 $O(N\log N)$
 
-所以调用次数至少和斐波那契数一样快地增长。它的精确量级是对数底为黄金比的指数，写代码时看到的递归树会很快翻倍。
+窄带扫描本身是线性的，但每个递归结点还需要得到按 $y$ 排序的窄带。实现方式不同，复杂度也不同。
 
-> [!NOTE]
-> **定义：动态规划**
->
-> 用若干参数描述一个子问题，把每个不同状态的结果保存下来；状态转移只依赖已经算好的较小状态，最后从边界状态推到目标状态。
-
-动态规划不要求原问题一定是“求最小值”或“求最大值”。斐波那契是计数，矩阵链是优化，Floyd-Warshall 是求距离，三者都可以用同一个框架。
-
-### 1.2 两个关键性质
-
-能用动态规划的问题通常要有两个性质：
-
-- 最优子结构（optimal substructure）：原问题的最优解包含了某个子问题的最优解。矩阵链最优地切开以后，左右两段也必须按各自最优方式相乘，否则替换成更便宜的做法就能改进全局。
-- 重叠子问题（overlapping subproblems）：不同递归分支会落到同一个状态。没有重叠时，普通分治即可；有重叠却不缓存，重复计算就会失控。
-
-“子问题重叠”只是省时间的机会。要让状态转移合法，当前状态还必须包含影响后续决策的全部信息。这常被叫作无后效性：一旦走到某个状态，后面只看这个状态，不再关心它是从哪条具体路径来的。
-
-比如装配线调度里，只知道“已经完成前 $s$ 站”还不够；还要知道最后停在哪条线上，因为下一步换线的时间不一样。状态少了这一维，转移式就写不出来。
-
-### 1.3 四件事
-
-一个动态规划解法通常可以拆成四件事：
-
-| 要写清楚的内容 | 常见形式 | 检查点 |
-|----------------|----------|--------|
-| 状态 | `dp[i]`、`dp[i][j]`、`dp[l][s]` | 参数够不够，会不会把不同子问题混在一起 |
-| 转移 | 从前一个状态取最大、最小，或枚举一个切分点 | 是否覆盖了所有决策，是否重复计数 |
-| 边界与计算顺序 | 初值、空区间、从前到后、按区间长度 | 算当前状态时，依赖是否已经全部就绪 |
-| 答案与还原 | `dp[1][N]`、`min(dp[0][N], dp[1][N])` | 只输出数值够不够，要不要保存决策 |
-
-实现时有两条路：
-
-- 记忆化递归（memoization）：按原递归写法，只把算过的状态存进数组或哈希表。适合状态稀疏、递推顺序不明显的情况。
-- 填表（tabulation）：按拓扑顺序从小到大算。没有递归栈开销，也更容易做空间压缩。
-
-两者算的是同一张状态图。填表的关键是顺序，不是把递归硬翻成一个三重循环。
-
-### 1.4 和分治、贪心的区别
-
-分治把问题拆成互不相交或可以独立处理的子问题，例如归并排序的左右两半。合并时只做一次。动态规划面对的是一张有汇合边的状态图，同一个子问题会从多条路径到达。
-
-贪心每一步选当前看起来最好的候选，通常不会保留所有可能的前缀。局部最好不一定通向全局最好。最优二叉搜索树里按最高概率递归选根，得到 2.43 的期望访问时间；取中位数构造一棵高度平衡树，得到 2.70；真正的最佳值是 2.15。两个看起来合理的贪心思路都输给了保留多个子结构再比较。
-
----
-
-## 2. 斐波那契数列（Fibonacci Numbers）
-
-### 2.1 迭代填表
-
-斐波那契的状态只有一个下标：
+如果在每一层都重新排序窄带：
 
 $$
-F[i]=F[i-1]+F[i-2].
+T(N)=2T(N/2)+O(N\log N),
 $$
 
-转移只依赖前两项，所以不必保留整张表。保存 `F[i-1]` 和 `F[i-2]` 就够了。
+递归树每一层大约增加 $N\log N$ 的工作，总时间是 $O(N\log^2 N)$。
 
-```cpp
-#include <iostream>
-
-long long Fibonacci(int N) {
-    if (N <= 1) {
-        return 1;
-    }
-
-    long long last = 1;        // F(1)
-    long long nextToLast = 1;  // F(0)
-    for (int i = 2; i <= N; ++i) {
-        long long answer = last + nextToLast;
-        nextToLast = last;
-        last = answer;
-    }
-    return last;
-}
-
-int main() {
-    std::cout << Fibonacci(6) << '\n';  // 13
-}
-```
-
-时间复杂度是 $O(N)$，额外空间是 $O(1)$。如果只做一次查询，这已经足够；如果后面还要多次取不同的 $F(N)$，保留整张表反而省得重复扫描。
-
-### 2.2 为什么不能只写递推式
-
-递归式说明“当前值由谁得到”，还没有说明“按什么顺序算”。`F[i]` 依赖 `i-1` 和 `i-2`，下标小的先算就满足依赖。把循环写成从大到小，读到的是尚未初始化的值。
-
-动态规划题目里经常出现这类顺序错误。转移式看起来没问题，程序偶尔能跑，只是因为数组恰好被置了零。检查方法很直接：把每个状态的依赖箭头画出来，确认计算当前点时，所有箭头都指向已经完成的状态。
-
----
-
-## 3. 矩阵链乘法（Matrix-Chain Multiplication）
-
-### 3.1 括号不同，代价不同
-
-矩阵乘法满足结合律，但不同的计算顺序会产生不同的标量乘法次数。若有四个矩阵
+如果在递归前先按 $x$ 排一次、按 $y$ 排一次，再把按 $y$ 排好的点列沿左右两边分给子递归，当前层只需要线性扫描。递归式变成
 
 $$
-M_1[10\times 20],
-\,
-M_2[20\times 50],
-\,
-M_3[50\times 1],
-\,
-M_4[1\times 100],
+T(N)=2T(N/2)+O(N),
 $$
 
-先算右边：
+由主定理第二类得到
 
 $$
-\begin{aligned}
-M_1(M_2(M_3M_4))
-&=50\cdot1\cdot100
-+20\cdot50\cdot100
-+10\cdot20\cdot100\\
-&=125000.
-\end{aligned}
+T(N)=\Theta(N\log N).
 $$
 
-换一种括号：
-
-$$
-\begin{aligned}
-((M_1(M_2M_3))M_4)
-&=20\cdot50\cdot1
-+10\cdot20\cdot1
-+10\cdot1\cdot100\\
-&=2200.
-\end{aligned}
-$$
-
-矩阵没有变，结果矩阵也没有变，运算量差了五十多倍。
-
-### 3.2 状态与转移
-
-令 $M_{ij}=M_iM_{i+1}\cdots M_j$，$m_{ij}$ 表示算出这段矩阵乘积所需的最少标量乘法次数。单个矩阵不需要相乘：
-
-$$
-m_{ii}=0.
-$$
-
-当 $i<j$ 时，最后一次乘法一定把区间切成
-
-$$
-M_{ij}=M_{i\ell}M_{\ell+1,j},
-\qquad i\le \ell<j.
-$$
-
-左边乘积的尺寸是 $r_{i-1}\times r_\ell$，右边是 $r_\ell\times r_j$，最后一次相乘需要 $r_{i-1}r_\ell r_j$ 次标量乘法。于是
-
-$$
-m_{ij}
-=
-\min_{i\le \ell<j}
-\left\{
-m_{i\ell}+m_{\ell+1,j}+r_{i-1}r_\ell r_j
-\right\}.
-$$
-
-保存
-
-$$
-s_{ij}
-=
-\arg\min_{i\le\ell<j}
-\left\{
-m_{i\ell}+m_{\ell+1,j}+r_{i-1}r_\ell r_j
-\right\}
-$$
-
-就能还原括号方案。
-
-为什么左右两段可以直接取各自的最优值？假设某个最优切分把左边写成更便宜但不等价的非最优方案，整个乘积的代价会下降，与原方案最优矛盾。两段内部的乘法互不影响，这就是矩阵链问题的最优子结构。
-
-### 3.3 按长度填表
-
-$m_{ij}$ 依赖更短的区间，所以先算长度 2，再算长度 3，一直到长度 $N$。不能按 $i$ 从 1 扫到 $N$、$j$ 也从 1 扫到 $N$，因为长区间的依赖可能还没算。
-
-上面四个矩阵的最小代价表如下：
-
-| $i\backslash j$ | 1 | 2 | 3 | 4 |
-|-----------------|---|---|---|---|
-| 1 | 0 | 10000 | 1200 | 2200 |
-| 2 |  | 0 | 1000 | 3000 |
-| 3 |  |  | 0 | 5000 |
-| 4 |  |  |  | 0 |
-
-例如 $m_{14}$ 在 $\ell=1,2,3$ 中取最小值。最优切分是 $\ell=3$，所以
-
-$$
-M_{14}=M_{13}M_{44},
-$$
-
-而 $M_{13}$ 又要在 $\ell=1$ 处切开，最终得到 $((M_1(M_2M_3))M_4)$。
-
-### 3.4 实现
-
-下面用 0 基下标存矩阵尺寸。`r[i]` 是第 `i` 个矩阵的行数，`r[i + 1]` 是它的列数，相邻矩阵可以相乘。
-
-```cpp
-#include <iostream>
-#include <limits>
-#include <string>
-#include <vector>
-using namespace std;
-
-string Parenthesize(int i, int j, const vector<vector<int>>& split) {
-    if (i == j) {
-        return "M" + to_string(i + 1);
-    }
-    int k = split[i][j];
-    return "(" + Parenthesize(i, k, split) + " "
-               + Parenthesize(k + 1, j, split) + ")";
-}
-
-int main() {
-    vector<long long> r = {10, 20, 50, 1, 100};
-    int n = static_cast<int>(r.size()) - 1;
-
-    vector<vector<long long>> cost(n, vector<long long>(n, 0));
-    vector<vector<int>> split(n, vector<int>(n, -1));
-
-    for (int len = 2; len <= n; ++len) {
-        for (int i = 0; i + len <= n; ++i) {
-            int j = i + len - 1;
-            cost[i][j] = numeric_limits<long long>::max();
-
-            for (int k = i; k < j; ++k) {
-                long long candidate =
-                    cost[i][k] + cost[k + 1][j]
-                    + r[i] * r[k + 1] * r[j + 1];
-
-                if (candidate < cost[i][j]) {
-                    cost[i][j] = candidate;
-                    split[i][j] = k;
-                }
-            }
-        }
-    }
-
-    cout << cost[0][n - 1] << '\n';              // 2200
-    cout << Parenthesize(0, n - 1, split) << '\n';
-    // ((M1 (M2 M3)) M4)
-}
-```
-
-状态数是 $O(N^2)$。每个状态枚举 $O(N)$ 个切分点，总时间是 $O(N^3)$，空间是 $O(N^2)$。保存 `split` 不改变这个量级，不加它就只能输出最小代价，没法说明“按什么顺序乘”。
-
----
-
-## 4. 最优二叉搜索树（Optimal Binary Search Tree）
-
-### 4.1 问题
-
-给定有序关键字
-
-$$
-w_1<w_2<\cdots<w_N,
-$$
-
-以及每个关键字的查找概率 $p_i$。如果 $w_i$ 的深度是 $d_i$，根结点深度为 0，那么一次查找的期望比较次数是
-
-$$
-T(N)=\sum_{i=1}^{N}p_i(1+d_i).
-$$
-
-要把高频词放浅，又不能破坏二叉搜索树（binary search tree, BST）的中序顺序，所以深度和顺序会一起限制树形。
-
-本讲先不考虑查找失败的情况。失败查找还要求每隔两个相邻关键字放一个外部叶结点，转移式需要再加一层；思路相同，只是状态和边界更多。
-
-课件给出的概率如下：
-
-| word | break | case | char | do | return | switch | void |
-|------|-------|------|------|----|--------|--------|------|
-| probability | 0.22 | 0.18 | 0.20 | 0.05 | 0.25 | 0.02 | 0.08 |
-
-概率之和为 1。
-
-### 4.2 子问题与递推
-
-设 $T_{ij}$ 是由 $w_i,\dots,w_j$ 构成的二叉搜索树，$c_{ij}$ 是它的最小期望访问代价，$r_{ij}$ 是选出的根。空树的代价规定为
-
-$$
-c_{i,i-1}=0.
-$$
-
-再记区间权重
-
-$$
-W_{ij}=\sum_{k=i}^{j}p_k.
-$$
-
-若根取 $w_\ell$，左子树是 $T_{i,\ell-1}$，右子树是 $T_{\ell+1,j}$。左右子树里的每个结点都往下移动一层，所以它们各自多贡献一次自己的概率；根本身贡献 $p_\ell$。这些新增项合起来正好是 $W_{ij}$，于是
-
-$$
-c_{ij}
-=
-W_{ij}
-+
-\min_{i\le \ell\le j}
-\left(
-c_{i,\ell-1}+c_{\ell+1,j}
-\right).
-$$
-
-取到最小值的 $\ell$ 就是 $r_{ij}$。
-
-这里最容易写错的是权重项。只在根结点加 $p_\ell$ 会漏掉“左右子树整体加深一层”的代价；更简单的看法是，当前区间内所有关键字都在当前子树里，各自至少被访问到一次，所以先加上区间总权重 $W_{ij}$，再递归选择左右子树。
-
-### 4.3 填表
-
-表中每个格子写成 `代价 / 根`。第一行按单词顺序排列，下方只填上三角。
-
-| 起点 | break | case | char | do | return | switch | void |
-|------|-------|------|------|----|--------|--------|------|
-| break | 0.22 / break | 0.58 / break | 1.02 / case | 1.17 / case | 1.83 / char | 1.89 / char | 2.15 / char |
-| case |  | 0.18 / case | 0.56 / char | 0.66 / char | 1.21 / char | 1.27 / char | 1.53 / char |
-| char |  |  | 0.20 / char | 0.30 / char | 0.80 / return | 0.84 / return | 1.02 / return |
-| do |  |  |  | 0.05 / do | 0.35 / return | 0.39 / return | 0.57 / return |
-| return |  |  |  |  | 0.25 / return | 0.29 / return | 0.47 / return |
-| switch |  |  |  |  |  | 0.02 / switch | 0.12 / void |
-| void |  |  |  |  |  |  | 0.08 / void |
-
-最终根是 `char`，最优树为
-
-```text
-char
-├─ break
-│  └─ case
-└─ return
-   ├─ do
-   └─ void
-      └─ switch
-```
-
-直接按概率从高到低递归选根，会先把 `return` 放上去，算出的期望访问时间是 2.43。取中位数作根得到的平衡树是 2.70。最优值 2.15 落在两者之间，左右子树的组合比单个结点的概率更重要。
-
-### 4.4 实现要点
-
-填表顺序仍然是区间长度从小到大：
-
-```text
-for len = 1 .. N:
-    for i = 1 .. N - len + 1:
-        j = i + len - 1
-        W = prefix[j] - prefix[i - 1]
-        c[i][j] = +infinity
-
-        for root = i .. j:
-            candidate = W
-                      + cost(i, root - 1)
-                      + cost(root + 1, j)
-            if candidate < c[i][j]:
-                c[i][j] = candidate
-                r[i][j] = root
-```
-
-`cost(i, j)` 在 $i>j$ 时返回 0，用来处理空子树。实现时可以用一个多留一格边界的二维数组，或者写一个辅助函数，别让负下标读到别的状态。
-
-朴素填表是 $O(N^3)$ 时间、$O(N^2)$ 空间。课件提到可以做到 $O(N^2)$；它利用最优根随区间扩展而单调的性质，减少每个状态的枚举范围。先把 $O(N^3)$ 版本写对更重要，因为这个问题的边界和权重比循环优化更容易出错。
-
----
-
-## 5. 全源最短路径（All-Pairs Shortest Path）
-
-### 5.1 两类做法
-
-要从每个顶点 $v_i$ 到每个顶点 $v_j$ 求最短路径，一个直接办法是以每个顶点为源点，做一次单源最短路径（single-source shortest path）。
-
-- 非负边权可以用堆优化 Dijkstra，稀疏图上是 $O(VE\log V)$；
-- 有负边但没有负环时，可以用 Bellman-Ford，或者对所有点做 Johnson 算法；
-- 图很稠密、边权可为负、需要一个小常数实现时，Floyd-Warshall 很直接，固定是 $O(V^3)$。
-
-### 5.2 状态表示
-
-把顶点编号为 $0,1,\dots,N-1$。定义 $D^{(k)}[i][j]$ 为从 $i$ 到 $j$、内部允许经过的顶点都在
-
-$$
-\{0,1,\dots,k\}
-$$
-
-中的最短路径长度。内部顶点不包括起点和终点。边界是没有任何内部顶点可用时：
-
-$$
-D^{(-1)}[i][j]=
-\begin{cases}
-\operatorname{cost}(i,j), & i\ne j,\\
-0, & i=j.
-\end{cases}
-$$
-
-如果有多条边，`cost(i, j)` 取最小权重；没有边就是 $+\infty$。
-
-加入顶点 $k$ 后，最短路径只有两类：
-
-- 不经过 $k$，长度仍是 $D^{(k-1)}[i][j]$；
-- 经过 $k$，拆成 $i\to k$ 和 $k\to j$ 两段，内部都不能经过 $k$ 之后再绕回来。
-
-第二类的长度是
-
-$$
-D^{(k-1)}[i][k]+D^{(k-1)}[k][j].
-$$
-
-因此
-
-$$
-D^{(k)}[i][j]
-=
-\min\left\{
-D^{(k-1)}[i][j],
-\,
-D^{(k-1)}[i][k]+D^{(k-1)}[k][j]
-\right\}.
-$$
-
-最终答案是 $D^{(N-1)}[i][j]$。
-
-为什么只拆一次 $k$ 就够？如果最短路径多次经过 $k$，中间形成了一个从 $k$ 回到 $k$ 的环。没有负环时，去掉这个环不会让长度变大，所以总可以取一条只经过 $k$ 一次的最短路径。有负环时最短路径本身没有定义，递推也就失去意义。
-
-### 5.3 原地更新
-
-矩阵维度固定为 $N$，计算 $D^{(k)}$ 时只需要 $D^{(k-1)}$，所以可以原地覆盖。外层循环必须先固定 $k$：
-
-```text
-for (int k = 0; k < N; ++k) {
-    for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < N; ++j) {
-            if (dist[i][k] + dist[k][j] < dist[i][j]) {
-                dist[i][j] = dist[i][k] + dist[k][j];
-            }
-        }
-    }
-}
-```
-
-如果 `dist[i][k]` 或 `dist[k][j]` 是无穷大，不要直接相加，否则可能溢出。常见做法是用 `INF / 4` 之类的有限值，并在相加前判断。
-
-例如有两条路径
-
-$$
-A\to B=7,
-\quad
-A\to C=2,
-\quad
-C\to B=1.
-$$
-
-加入 $C$ 时，$D[A][B]$ 从 7 改为 $2+1=3$。如果还有 $C\to D=10$、$B\to D=3$，处理 $C$ 后先得到 $A\to D=12$，再处理 $B$ 时得到 $A\to B\to D=6$。每一轮只放开一个新的中间顶点，后面还能继续改进。
-
-### 5.4 完整实现与路径还原
-
-下面这段程序同时记录下一跳 `next[i][j]`。更新 `dist[i][j]` 时，新的最优路径先沿 $i\to k$ 走，所以下一跳改成 `next[i][k]`。
+下面的实现采用第二种做法。`px` 始终按 $x$ 排好；每次递归收到的 `py` 是当前区间内按 $y$ 排好的下标。拆成 `leftY` 和 `rightY` 需要线性时间，窄带扫描也是线性时间。
 
 ```cpp
 #include <algorithm>
+#include <cmath>
+#include <iomanip>
 #include <iostream>
 #include <limits>
 #include <vector>
-using namespace std;
 
-int main() {
-    const long long INF = numeric_limits<long long>::max() / 4;
-    const int n = 4;
-
-    vector<vector<long long>> dist(n, vector<long long>(n, INF));
-    vector<vector<int>> next(n, vector<int>(n, -1));
-
-    for (int i = 0; i < n; ++i) {
-        dist[i][i] = 0;
-        next[i][i] = i;
-    }
-
-    auto addEdge = [&](int u, int v, long long w) {
-        if (w < dist[u][v]) {
-            dist[u][v] = w;
-            next[u][v] = v;
-        }
-    };
-
-    addEdge(0, 1, 4);
-    addEdge(0, 2, 1);
-    addEdge(2, 1, 2);
-    addEdge(1, 3, 1);
-    addEdge(2, 3, 10);
-
-    for (int k = 0; k < n; ++k) {
-        for (int i = 0; i < n; ++i) {
-            if (dist[i][k] == INF) {
-                continue;
-            }
-            for (int j = 0; j < n; ++j) {
-                if (dist[k][j] == INF) {
-                    continue;
-                }
-                long long through = dist[i][k] + dist[k][j];
-                if (through < dist[i][j]) {
-                    dist[i][j] = through;
-                    next[i][j] = next[i][k];
-                }
-            }
-        }
-    }
-
-    cout << dist[0][3] << '\n';  // 4
-
-    int target = 3;
-    for (int cur = 0; cur != target; cur = next[cur][target]) {
-        cout << cur << " -> ";
-    }
-    cout << target << '\n';  // 0 -> 2 -> 1 -> 3
-}
-```
-
-如果某个 `dist[i][i] < 0`，说明存在从 $i$ 出发并回到 $i$ 的负权环。此时有些“最短路径”会因为不断绕环而无限变小，Floyd-Warshall 的结果不能再解释为最短距离。
-
-原地版本的空间是 $O(N^2)$，时间是 $O(N^3)$。不能随意交换三个循环的顺序；把 $k$ 放进最内层，状态含义就变了。
-
----
-
-## 6. 装配线调度（Assembly-Line Scheduling）
-
-### 6.1 问题与状态
-
-有一辆车依次经过 $N$ 个装配站。两条装配线都能完成同一组工序，但每条线在每个站的处理时间不同，站与站之间也可以换线。
-
-记
-
-- $a[\ell][s]$：第 $\ell$ 条线在第 $s$ 站的处理时间；
-- $t[\ell][s]$：第 $s$ 站完成后，从第 $\ell$ 条线换到另一条线的转移时间；
-- $f[\ell][s]$：前 $s$ 站全部完成，并且最终停在第 $\ell$ 条线第 $s$ 站时的最早时间。
-
-第一站没有前置状态：
-
-$$
-f[\ell][1]=a[\ell][1].
-$$
-
-到了第 $s$ 站，路径要么上一站就在同一条线上，要么从另一条线换过来：
-
-$$
-f[\ell][s]
-=
-a[\ell][s]
-+
-\min
-\left\{
-f[\ell][s-1],
-\,
-f[1-\ell][s-1]+t[1-\ell][s-1]
-\right\},
-\qquad s\ge 2.
-$$
-
-如果题目还给了进入两条线的准备时间 $e_\ell$ 和离开两条线的收尾时间 $x_\ell$，把初值改成 $e_\ell+a[\ell][1]$，答案再取
-
-$$
-\min
-\left(
-f[0][N]+x_0,
-\,
-f[1][N]+x_1
-\right).
-$$
-
-本讲用零准备、零收尾的版本，方便看清换线比较。
-
-### 6.2 最优子结构
-
-假设某个最优方案在完成第 $s$ 站后停在第 $\ell$ 条线。把前 $s-1$ 站取出来，它必须是到达对应上一站的最快方案。否则把前缀替换成更快的路径，再接上原来的第 $s$ 站，就能得到更短的完整方案，和“原方案最优”矛盾。
-
-这一步只需要比较两个候选：留在原线，或者从另一条线换过来。枚举所有换线序列要 $O(2^N)$；动态规划保留了每个阶段的两条最优前缀，把选择压成了常数个。
-
-<div style="overflow-x:auto; padding-bottom:0.5rem;">
-  <img src="figures/assembly-lines.svg"
-       alt="两条装配线和一条总时间为 13 的最优路径"
-       style="display:block; width:100%; min-width:720px; height:auto;">
-</div>
-
-窄屏时左右滑动看图，才能看到完整的四个工位和终点。
-
-绿线表示这样一个方案：第 1 站在 1 号线，之后换到 0 号线，后面三站都不再换线。
-
-### 6.3 完整例子
-
-设 $N=4$，处理时间如下：
-
-| 线 | 第 1 站 | 第 2 站 | 第 3 站 | 第 4 站 |
-|----|---------|---------|---------|---------|
-| 0 | 4 | 5 | 3 | 2 |
-| 1 | 2 | 6 | 4 | 3 |
-
-换线时间如下，`t[line][s]` 表示第 `s` 站之后从 `line` 换出去的时间：
-
-| 线 | 第 1 站后 | 第 2 站后 | 第 3 站后 |
-|----|-----------|-----------|-----------|
-| 0 | 2 | 1 | 3 |
-| 1 | 1 | 2 | 1 |
-
-按站数推进：
-
-| 已完成到 | 线 0 的时间 / 上一站 | 线 1 的时间 / 上一站 |
-|----------|----------------------|----------------------|
-| 第 1 站 | 4 / 无 | 2 / 无 |
-| 第 2 站 | 8 / 线 1 | 8 / 线 1 |
-| 第 3 站 | 11 / 线 0 | 12 / 线 1 |
-| 第 4 站 | 13 / 线 0 | 15 / 线 1 |
-
-第 4 站结束时取最小值：
-
-$$
-\min(13,15)=13.
-$$
-
-从 $(0,4)$ 沿着“上一站”向回走，得到 $(0,3)\to(0,2)\to(1,1)$，正对应图里的绿色路径。
-
-### 6.4 实现与方案还原
-
-除了保存时间，还要保存每个状态是“留在原线”还是“从另一条线换过来”。只保存时间只能得到最小值，无法说明实际应走哪条线。
-
-```cpp
-#include <array>
-#include <iostream>
-#include <limits>
-#include <vector>
-using namespace std;
-
-struct Result {
-    long long time;
-    vector<int> line;  // line[s - 1] 是第 s 站所在的线
+struct Point {
+    long double x;
+    long double y;
 };
 
-Result Solve(const vector<vector<int>>& processTime,
-             const vector<vector<int>>& transferTime) {
-    const int n = static_cast<int>(processTime[0].size()) - 1;
-    const long long INF = numeric_limits<long long>::max() / 4;
+long double SquaredDistance(const Point& a, const Point& b) {
+    const long double dx = a.x - b.x;
+    const long double dy = a.y - b.y;
+    return dx * dx + dy * dy;
+}
 
-    vector<array<long long, 2>> finish(n + 1, {INF, INF});
-    vector<array<int, 2>> previous(n + 1, {-1, -1});
+long double BruteForce(const std::vector<Point>& px, int left, int right) {
+    long double best = std::numeric_limits<long double>::infinity();
+    for (int i = left; i < right; ++i) {
+        for (int j = i + 1; j < right; ++j) {
+            best = std::min(best, SquaredDistance(px[i], px[j]));
+        }
+    }
+    return best;
+}
 
-    finish[1][0] = processTime[0][1];
-    finish[1][1] = processTime[1][1];
+long double ClosestRecursive(
+    const std::vector<Point>& px,
+    const std::vector<int>& py,
+    int left,
+    int right) {
+    if (right - left <= 3) {
+        return BruteForce(px, left, right);
+    }
 
-    for (int stage = 2; stage <= n; ++stage) {
-        for (int line = 0; line < 2; ++line) {
-            int other = 1 - line;
+    const int middle = (left + right) / 2;
+    std::vector<int> leftY;
+    std::vector<int> rightY;
+    leftY.reserve(middle - left);
+    rightY.reserve(right - middle);
 
-            long long stay =
-                finish[stage - 1][line]
-                + processTime[line][stage];
+    for (int index : py) {
+        if (index < middle) {
+            leftY.push_back(index);
+        } else {
+            rightY.push_back(index);
+        }
+    }
 
-            long long move =
-                finish[stage - 1][other]
-                + transferTime[other][stage - 1]
-                + processTime[line][stage];
+    long double best = std::min(
+        ClosestRecursive(px, leftY, left, middle),
+        ClosestRecursive(px, rightY, middle, right)
+    );
+    if (best == 0.0L) {
+        return 0.0L;
+    }
 
-            if (stay <= move) {
-                finish[stage][line] = stay;
-                previous[stage][line] = line;
-            } else {
-                finish[stage][line] = move;
-                previous[stage][line] = other;
+    const long double delta = std::sqrt(best);
+    const long double middleX = px[middle].x;
+    std::vector<int> strip;
+    strip.reserve(right - left);
+
+    for (int index : py) {
+        if (std::fabs(px[index].x - middleX) < delta) {
+            strip.push_back(index);
+        }
+    }
+
+    for (int i = 0; i < static_cast<int>(strip.size()); ++i) {
+        for (int j = i + 1; j < static_cast<int>(strip.size()); ++j) {
+            const long double dy = px[strip[j]].y - px[strip[i]].y;
+            if (dy * dy >= best) {
+                break;
             }
+            best = std::min(
+                best,
+                SquaredDistance(px[strip[i]], px[strip[j]])
+            );
         }
     }
 
-    int lastLine = finish[n][0] <= finish[n][1] ? 0 : 1;
-    Result answer{finish[n][lastLine], vector<int>(n)};
+    return best;
+}
 
-    int line = lastLine;
-    for (int stage = n; stage >= 1; --stage) {
-        answer.line[stage - 1] = line;
-        if (stage > 1) {
-            line = previous[stage][line];
+long double ClosestPair(std::vector<Point> points) {
+    if (points.size() < 2) {
+        return std::numeric_limits<long double>::infinity();
+    }
+
+    std::sort(points.begin(), points.end(), [](const Point& a, const Point& b) {
+        if (a.x != b.x) {
+            return a.x < b.x;
+        }
+        return a.y < b.y;
+    });
+
+    // 重合点会让最近距离变成 0。先检查，避免递归把 0 当成无穷小宽度。
+    for (int i = 1; i < static_cast<int>(points.size()); ++i) {
+        if (points[i].x == points[i - 1].x && points[i].y == points[i - 1].y) {
+            return 0.0L;
         }
     }
-    return answer;
+
+    const int n = static_cast<int>(points.size());
+    std::vector<int> sortedY(n);
+    for (int i = 0; i < n; ++i) {
+        sortedY[i] = i;
+    }
+    std::sort(sortedY.begin(), sortedY.end(), [&](int i, int j) {
+        return points[i].y < points[j].y;
+    });
+
+    return std::sqrt(ClosestRecursive(points, sortedY, 0, n));
 }
 
 int main() {
-    vector<vector<int>> processTime = {
-        {0, 4, 5, 3, 2},
-        {0, 2, 6, 4, 3},
-    };
-    vector<vector<int>> transferTime = {
-        {0, 2, 1, 3},
-        {0, 1, 2, 1},
+    std::vector<Point> points = {
+        {-3, 4}, {2, 0}, {-3, -1},
+        {3, 0}, {8, 4}, {8, -1}
     };
 
-    Result answer = Solve(processTime, transferTime);
-    cout << answer.time << '\n';  // 13
-    for (int line : answer.line) {
-        cout << line << ' ';
-    }
-    cout << '\n';  // 1 0 0 0
+    std::cout << std::fixed << std::setprecision(3)
+              << ClosestPair(points) << '\n';  // 1.000
 }
 ```
 
-时间推进本身是 $O(N)$，保存两层状态和决策是 $O(N)$ 空间。如果只问最小时间、不还原方案，计算下一站只用到上一站两条结果，可以压到 $O(1)$ 的额外空间。
+样例的左右两半各自最近距离都是 5，跨中线却存在
+
+$$
+d((2,0),(3,0))=1,
+$$
+
+所以只看 $d_L$ 和 $d_R$ 会漏掉正确答案。
+
+### 2.5 正确性
+
+对区间长度做归纳。基本情况直接枚举，显然正确。
+
+递归返回 $\delta$ 后，如果最终最近点对在左半区或右半区，由归纳假设已经找到。如果它跨越中线，那么两个点都在窄带中，并且纵坐标差小于 $\delta$。按 $y$ 排序扫描时，较小纵坐标的点会把它放进候选窗口；由于窗口里最多只有 7 个后续点，不会被提前截断。
+
+因此所有点对都被覆盖，递归返回的正好是全局最小距离。
+
+浮点数上的“重合”和“距离等于 $\delta$”需要提前约定。程序里用严格 `< delta` 判断窄带，用 `>=` 决定截断，和证明里的开闭边界一致。若实际数据是近似坐标，还要先确定重合点是否按误差判定，不能只在最近点对算法里随手加一个 `eps`，否则正确性会依赖输入尺度。
 
 ---
 
-## 7. 五种状态放在一起
+## 3. 递归式怎么读（Recurrences）
 
-| 问题 | 状态 | 决策或转移 | 答案 | 时间复杂度 | 空间复杂度 |
-|------|------|------------|------|------------|------------|
-| 斐波那契 | $F[i]$ | 前两项相加 | $F[N]$ | $O(N)$ | $O(1)$ |
-| 矩阵链 | $m[i][j]$ | 枚举最后切分点 $\ell$ | $m[1][N]$ | $O(N^3)$ | $O(N^2)$ |
-| 最优二叉搜索树 | $c[i][j]$ | 枚举根 $\ell$ | $c[1][N]$ | $O(N^3)$ | $O(N^2)$ |
-| Floyd-Warshall | $D^{(k)}[i][j]$ | 不经过 $k$ 或经过 $k$ | $D^{(N-1)}$ | $O(V^3)$ | $O(V^2)$ |
-| 装配线 | $f[\ell][s]$ | 留线或换线 | $\min_\ell f[\ell][N]$ | $O(N)$ | $O(N)$ |
+递归式描述算法在规模 $N$ 上花的时间。例如
 
-这几题的共同点不是代码长得像，而是都在找一张有向无环的状态图。状态图一旦画对，初值、循环顺序和答案位置都会跟着确定。
+$$
+T(N)=2T(N/2)+cN
+$$
 
-遇到新题时，可以先写一个递归函数，问三个问题：
+表示分成两个半规模子问题，再做 $cN$ 的合并工作。
 
-1. 调用参数里哪些值真正决定当前子问题？
-2. 同一个参数组合会不会从多条路径到达？
-3. 当前状态的结果依赖哪些更小或更早的状态？
+课件列出三种常用方法：
 
-前两个问题决定要不要存表，第三个问题决定按什么顺序填表。如果当前决策还取决于“从哪条路径走来”，说明状态少了信息，先补维度再写转移。
+| 方法 | 主要用途 | 得到答案的方式 |
+|------|----------|----------------|
+| 代入法（substitution method） | 已经猜到形式，需要严格证明 | 数学归纳 |
+| 递归树（recursion-tree method） | 观察每层成本，辅助猜答案 | 展开树并求和 |
+| 主定理（master theorem） | 标准的等比例分治递归式 | 比较合并代价与叶层规模 |
+
+后面统一忽略两件细节：
+
+- $N/b$ 能不能整除，把 $\lfloor N/b\rfloor$ 和 $\lceil N/b\rceil$ 当成 $N/b$。
+- 小规模输入一律假设 $T(n)=\Theta(1)$。
+
+这两种省略在渐近分析里通常安全。前提是分治递归保持正常的常数比例，不能一会儿切掉近乎全部输入，一会儿只减少一个元素。那种不平衡变化需要单独分析。
 
 ---
 
-## 8. 课程项目（Research Project 4）
+## 4. 代入法（Substitution Method）
 
-第四个研究项目叫 Red-black Tree (26)：恰好有 $N$ 个内部结点的不同红黑树（red-black tree）有多少棵。详细要求要在 [Pintia](https://pintia.cn/) 对应题目集里下载，课件本身只给了题目。
+### 4.1 先猜，再用归纳证
 
-这类计数题适合用动态规划做，但只记“结点数 $N$”不够。左右子树都要满足红黑性质，父结点的颜色又限制孩子能不能是红色，所以状态通常至少还要包含黑高（black height）和根的颜色。
+代入法分两步：先猜一个解的形式，再把它代进递归式，用数学归纳法证明。
 
-写递推前先确认三件事：
+以归并排序的递归式为例：
 
-- “不同”是只看树形和颜色，还是也把关键字，或者空叶结点（NIL）的标号算进去；
-- 黑高从根到空叶结点的黑结点数怎么计，根和 NIL 是否计入；
-- 左右子树交换后，是同一个对象还是两个对象。
+$$
+T(N)=2T(\lfloor N/2\rfloor)+N.
+$$
 
-这些问题会改变状态和边界。先把计数口径固定，再写左右子树规模的分拆，否则很容易把同一种树算好几遍。
+猜
+
+$$
+T(N)=O(N\log N).
+$$
+
+严格写出来，要证明存在常数 $c>0$ 和 $N_0$，使得所有 $N\ge N_0$ 都有
+
+$$
+T(N)\le cN\log N.
+$$
+
+假设对所有小于 $N$ 的规模都成立，于是
+
+$$
+\begin{aligned}
+T(N)
+&=2T(\lfloor N/2\rfloor)+N\\
+&\le 2c\lfloor N/2\rfloor\log\lfloor N/2\rfloor+N\\
+&\le cN(\log N-1)+N\\
+&=cN\log N+(1-c)N\\
+&\le cN\log N
+\qquad(c\ge1).
+\end{aligned}
+$$
+
+这和课件里的推导是同一个意思，只是把 $c\ge1$ 的条件留在了最后。
+
+难点通常不在归纳步，而在基本情况。这里的证明从 $N=2$ 和 $N=3$ 开始比较方便，因为 $\log 1=0$，把 $N=1$ 直接代入会得到一个没有信息的不等式。先验证两个小规模，再让常数 $c$ 大到同时覆盖它们，归纳就能从 $2,3$ 往上走。
+
+### 4.2 猜错时，归纳会卡住
+
+对同一个递归式，如果猜
+
+$$
+T(N)=O(N),
+$$
+
+并假设
+
+$$
+T(\lfloor N/2\rfloor)\le c\lfloor N/2\rfloor,
+$$
+
+代入后得到
+
+$$
+\begin{aligned}
+T(N)
+&\le 2c\lfloor N/2\rfloor+N\\
+&\le cN+N\\
+&=(c+1)N.
+$$
+
+这不是
+
+$$
+T(N)\le cN
+$$
+
+所要求的形式。换成另一个常数 $d$，只会得到 $d+1$，差值仍然累积。
+
+这里的错误不是“$c$ 取得不够大”。猜想本身少了 $\log N$ 这一层，递归展开时总会多出一整层的线性成本。
+
+再举一个简单的例子：
+
+$$
+T(N)=T(N/2)+1.
+$$
+
+猜 $T(N)=O(\log N)$。归纳假设 $T(N/2)\le c\log(N/2)$，代入得
+
+$$
+T(N)\le c\log N-c+1\le c\log N
+\qquad(c\ge1).
+$$
+
+这次猜想和每层只增加常数的工作量对得上。
+
+代入法需要把 $O$ 展开成带常数的不等式。只在推导末尾写一个 $O$，再把 $cN+N$ 直接说成 $O(N)$，严格来说证明的是“原式确实是 $O(N)$”这件循环论证，并没有完成归纳。
+
+---
+
+## 5. 递归树（Recursion Tree）
+
+### 5.1 平衡的递归树
+
+考虑
+
+$$
+T(N)=3T(N/4)+\Theta(N^2).
+$$
+
+根结点的代价是 $cN^2$。它有三个孩子，每个规模为 $N/4$，所以第一层内部结点的总代价是
+
+$$
+3c\left(\frac N4\right)^2
+=
+\frac{3}{16}cN^2.
+$$
+
+第 $i$ 层有 $3^i$ 个结点，每个规模是 $N/4^i$，总代价为
+
+$$
+3^i c\left(\frac N{4^i}\right)^2
+=
+\left(\frac{3}{16}\right)^i cN^2.
+$$
+
+每层成本按 $3/16$ 缩小，整个非叶层加起来不超过
+
+$$
+\sum_{i=0}^{\infty}\left(\frac{3}{16}\right)^i cN^2
+=
+\frac{cN^2}{1-3/16}.
+$$
+
+树的深度是 $\log_4 N$，叶子数是
+
+$$
+3^{\log_4 N}=N^{\log_4 3}.
+$$
+
+因为
+
+$$
+\log_4 3\approx0.792<2,
+$$
+
+叶层代价低于 $\Theta(N^2)$。根结点本身已经贡献了 $\Theta(N^2)$，所以
+
+$$
+T(N)=\Theta(N^2).
+$$
+
+递归树给出的直觉是：合并代价从根往下缩得足够快，最上面一层就主导了总和。
+
+### 5.2 不平衡的递归树
+
+课件还分析了
+
+$$
+T(N)=T(N/3)+T(2N/3)+cN.
+$$
+
+这不是标准主定理形式，因为两个子问题的规模不同。树的最短路径一直走 $N/3$ 分支，长度是 $\log_3 N$；最长路径一直走 $2N/3$ 分支，长度是 $\log_{3/2}N$。
+
+先用代入法证明上界。猜
+
+$$
+T(N)\le dN\log N.
+$$
+
+代入可得
+
+$$
+\begin{aligned}
+T(N)
+&\le
+d\frac N3\log\frac N3
++d\frac{2N}3\log\frac{2N}3
++cN\\
+&=
+dN\log N
+-dN\left(\log3-\frac23\log2\right)
++cN.
+\end{aligned}
+$$
+
+其中的系数
+
+$$
+\alpha=\log3-\frac23\log2>0.
+$$
+
+只要取
+
+$$
+d\ge\frac c\alpha,
+$$
+
+就有
+
+$$
+T(N)\le dN\log N.
+$$
+
+所以 $T(N)=O(N\log N)$。
+
+课件到这一步只做了上界，树也标了 “Not complete”。下界可以从树的前几层直接看出来。只要
+
+$$
+j\le\lfloor\log_3 N\rfloor,
+$$
+
+第 $j$ 层每个结点的规模至少是 $N/3^j\ge1$，这棵树还没有触底。此层所有结点的规模之和正好是 $N$，因为每次分裂只是把父结点的规模拆成 $N/3$ 和 $2N/3$。因此前 $\lfloor\log_3N\rfloor$ 层每层的总工作都是 $cN$，单是这些层就有
+
+$$
+\Omega(N\log N)
+$$
+
+的下界。上下界合起来得到
+
+$$
+T(N)=\Theta(N\log N).
+$$
+
+### 5.3 多出一层对数
+
+考虑
+
+$$
+T(N)=2T(N/2)+N\log N.
+$$
+
+为了看清求和，先取 $N=2^m$。根结点代价是 $Nm$。下一层有两个 $N/2$ 规模的结点，每个增加 $(N/2)(m-1)$，合计又是 $N(m-1)$。
+
+第 $i$ 层的总代价是
+
+$$
+N(m-i).
+$$
+
+从 $i=0$ 加到 $i=m-1$，得到
+
+$$
+N(1+2+\cdots+m)
+=
+\Theta(N\log^2 N).
+$$
+
+> [!WARNING]
+> 课件第 12 页在 $a=b=2,\ f(N)=N\log N$ 的例子后面写成了 $O(N\log N)$，第 16 页的简化主定理则给出 $O(N\log^2 N)$。后者是正确的；用递归树逐层求和，或者用代入法猜 $dN\log^2N$，都能得到 $\Theta(N\log^2N)$。这个递归式超出了标准主定理三种情形的边界，所以页面上用了问号，不能把它套进第二类。
+
+---
+
+## 6. 主定理（Master Theorem）
+
+### 6.1 标准形式
+
+设 $a\ge1$、$b>1$ 是常数，递归式为
+
+$$
+T(N)=aT(N/b)+f(N).
+$$
+
+令
+
+$$
+p=\log_b a.
+$$
+
+主定理比较的是 $f(N)$ 和 $N^p$，而不是 $f(N)$ 和 $N$。
+
+> [!NOTE]
+> **主定理（Master Theorem）**
+>
+> 1. 如果存在常数 $\varepsilon>0$，使 $f(N)=O(N^{p-\varepsilon})$，则
+>    $$
+>    T(N)=\Theta(N^p).
+>    $$
+>
+> 2. 如果 $f(N)=\Theta(N^p)$，则
+>    $$
+>    T(N)=\Theta(N^p\log N).
+>    $$
+>
+> 3. 如果存在常数 $\varepsilon>0$，使 $f(N)=\Omega(N^{p+\varepsilon})$，并且存在常数 $c<1$，使对所有足够大的 $N$ 都有
+>    $$
+>    af(N/b)\le cf(N),
+>    $$
+>    则
+>    $$
+>    T(N)=\Theta(f(N)).
+>    $$
+
+第二类里，合并代价和叶层 $N^p$ 同阶，每一层都贡献 $\Theta(N^p)$，一共 $\Theta(\log N)$ 层。
+
+第一类和第三类都要求“多项式级别”的差距。只说 $f(N)$ 比 $N^p$ 小或大，不够。
+
+### 6.2 第一类为什么由根主导
+
+把递归树按层展开。第 $j$ 层有 $a^j$ 个结点，每个规模为 $N/b^j$，总代价为
+
+$$
+a^jf(N/b^j).
+$$
+
+如果
+
+$$
+f(N)=O(N^{p-\varepsilon}),
+$$
+
+那么第 $j$ 层的成本至多为
+
+$$
+\begin{aligned}
+a^j\left(\frac N{b^j}\right)^{p-\varepsilon}
+&=
+N^{p-\varepsilon}
+\left(\frac{a}{b^{p-\varepsilon}}\right)^j\\
+&=
+N^{p-\varepsilon}(b^\varepsilon)^j.
+\end{aligned}
+$$
+
+对各层求和：
+
+$$
+\begin{aligned}
+\sum_{j=0}^{\log_bN-1}O\left(N^{p-\varepsilon}(b^\varepsilon)^j\right)
+&=
+O\left(N^{p-\varepsilon}\cdot N^\varepsilon\right)\\
+&=
+O(N^p).
+$$
+
+叶层一共有
+
+$$
+a^{\log_bN}=N^{\log_ba}=N^p
+$$
+
+个结点，代价也是 $O(N^p)$。根结点又有 $f(N)$ 的代价，而它比 $N^p$ 低一个多项式因子，因此上下合起来仍然是
+
+$$
+T(N)=\Theta(N^p).
+$$
+
+第三类比较直观：如果每层的合并成本按至少 $N^\varepsilon$ 的速度增长，递归树最底下的成本会主导总和。额外的正则条件（regularity condition）
+
+$$
+af(N/b)\le cf(N)
+$$
+
+保证“下一层成本不超过当前层的常数倍”，不会出现某些层突然增长、导致几何级数失效的情况。
+
+### 6.3 简化形式
+
+课程里还给了一个更适合考试的版本：
+
+$$
+T(N)=aT(N/b)+\Theta(N^k\log^pN),
+\qquad
+a\ge1,\ b>1,\ p\ge0.
+$$
+
+令叶层的数量级为
+
+$$
+N^{\log_ba},
+$$
+
+再和合并项里的 $N^k$ 比较：
+
+| 比较结果 | 解 |
+|----------|----|
+| $a>b^k$ | $\Theta(N^{\log_ba})$ |
+| $a=b^k$ | $\Theta(N^k\log^{p+1}N)$ |
+| $a<b^k$ | $\Theta(N^k\log^pN)$ |
+
+几个常考点：
+
+- 归并排序 $a=b=2$，$k=1$，$p=0$，属于 $a=b^k$，得到 $\Theta(N\log N)$。
+- 每次分三份、只递归两份，合并线性，即 $T(N)=3T(N/2)+\Theta(N)$。这里 $3>2^1$，得到 $\Theta(N^{\log_23})\approx\Theta(N^{1.585})$。
+- 同样分三份，但合并要 $\Theta(N^2)$，即 $3<2^2$，得到 $\Theta(N^2)$。
+- $T(N)=2T(N/2)+\Theta(N\log N)$，属于 $a=b^k$ 且 $p=1$，得到 $\Theta(N\log^2N)$。
+
+课件第 15 页还用层成本的比例给出速记：
+
+$$
+a f(N/b)
+\begin{cases}
+<\kappa f(N),& \kappa<1,\\
+>K f(N),& K>1,\\
+=f(N),
+\end{cases}
+$$
+
+分别对应“根主导”“叶层主导”“每层同阶”。这个说法在比例能保持为常数时很好用，但标准主定理给的条件更稳。遇到 $f(N)=N\log N$ 这种刚好夹在多项式级别之间的函数，比例形式可能一直趋近于 1，不能只靠大小关系下结论。
+
+### 6.4 不适用的例子
+
+下面这些递归式不能直接套标准主定理：
+
+- $T(N)=2T(N/2)+N\log N$。合并项只比 $N$ 多一个对数因子，不是多项式级别更大。
+- $T(N)=2T(N/2)+N/\log N$。合并项也只比 $N$ 少一个对数因子。
+- $T(N)=T(N/3)+T(2N/3)+N$。两个子问题的规模不同，不是 $aT(N/b)$ 的形式。
+
+这些式子仍然可以用递归树、代入法，或者更一般的 Akra-Bazzi 方法求解。主定理不是所有递归式的万能公式。
+
+---
+
+## 7. 补充：矩阵乘法的递归展开
+
+这一节来自课件列出的 *Introduction to Algorithms* 第 4 章，用来看看主定理怎样解释一个真实的算法改进。
+
+把两个 $N\times N$ 矩阵按中线分成四个 $N/2\times N/2$ 子矩阵。普通分块乘法需要 8 次子矩阵乘法和常数次子矩阵加法，递归式为
+
+$$
+T_{\mathrm{naive}}(N)
+=
+8T(N/2)+\Theta(N^2).
+$$
+
+因为 $\log_2 8=3$，合并项 $N^2$ 比 $N^3$ 小一个多项式因子，所以
+
+$$
+T_{\mathrm{naive}}(N)=\Theta(N^3).
+$$
+
+Strassen 算法把 8 次子矩阵乘法压到 7 次，代价是增加若干次加减法。加减法每层仍然是 $\Theta(N^2)$，递归式变成
+
+$$
+T_{\mathrm{Strassen}}(N)
+=
+7T(N/2)+\Theta(N^2).
+$$
+
+此时
+
+$$
+T_{\mathrm{Strassen}}(N)
+=
+\Theta(N^{\log_27})
+\approx
+\Theta(N^{2.807}).
+$$
+
+只少了 1 次乘法，指数就从 3 降到了 $\log_27$。递归树里，7 次乘法每次继续展开，叶结点数量是
+
+$$
+7^{\log_2N}=N^{\log_27}.
+$$
+
+这项改进的代价是实现更复杂、常数更大，而且标量加法也要计入。渐近阶更低不代表所有输入规模上一定更快。
+
+---
+
+## 8. 方法对比与检查清单
+
+### 8.1 三种方法放在一起
+
+| 方法 | 什么时候用 | 优点 | 常见错误 |
+|------|------------|------|----------|
+| 代入法 | 已经有合理猜测，或者主定理不适用 | 能证明严格上界、下界 | 猜错形式；漏基本情况；把 $O$ 当成常数 |
+| 递归树 | 需要观察各层成本 | 容易看出主导层 | 只画树不求和；忽略叶层 |
+| 主定理 | 标准等比例分治 | 计算快 | 拿 $f(N)$ 和 $N$ 比；忽略 $\varepsilon$ 和正则条件 |
+
+做题时可以按下面的顺序检查：
+
+1. 先看递归式是不是 $aT(N/b)+f(N)$。规模不按固定比例切时，先别套主定理。
+2. 计算 $p=\log_ba$，把 $f(N)$ 和 $N^p$ 比较，而不是和 $N$ 比较。
+3. 如果恰好是 $N^k\log^pN$，可以直接用简化表。
+4. 如果主定理不适用，画两三层递归树，猜一个形式，再用代入法证明。
+5. 上界和下界都要能说出来。主定理通常直接给 $\Theta$，代入法常常先得到一个方向。
+
+### 8.2 几个快速例子
+
+| 递归式 | 关键比较 | 结果 |
+|--------|----------|------|
+| $T(N)=4T(N/2)+N$ | $4>2^1$ | $\Theta(N^2)$ |
+| $T(N)=4T(N/2)+N^2$ | $4=2^2$ | $\Theta(N^2\log N)$ |
+| $T(N)=4T(N/2)+N^3$ | $4<2^3$ | $\Theta(N^3)$ |
+| $T(N)=2T(N/2)+N$ | $2=2^1$ | $\Theta(N\log N)$ |
+| $T(N)=2T(N/2)+N^2$ | $2<2^2$ | $\Theta(N^2)$ |
+| $T(N)=3T(N/4)+N^2$ | $3<4^2$，递归树也显示根主导 | $\Theta(N^2)$ |
+| $T(N)=T(N/3)+T(2N/3)+N$ | 子问题不均等 | $\Theta(N\log N)$ |
+| $T(N)=2T(N/2)+N\log N$ | 主定理不适用 | $\Theta(N\log^2N)$ |
+
+对数底数不影响渐近结果。$\log_2N$、$\ln N$ 和 $\log_{10}N$ 只差一个常数因子；但 $N^{\log_ba}$ 里的底数 $b$ 会影响指数，不能随便换。
 
 ---
 
 ## 参考资料
 
-1. 课程材料：第七讲动态规划课件，例题数据取自 Fibonacci Numbers、Ordering Matrix Multiplications、Optimal Binary Search Tree、All-Pairs Shortest Path 和 Product Assembly 五组幻灯片。
-2. M. A. Weiss, *Data Structure and Algorithm Analysis in C* (2nd Edition): Ch.10（算法设计技巧，矩阵链乘法、最优二叉搜索树、全源最短路径和动态规划例题）。
-3. T. H. Cormen, C. E. Leiserson, R. L. Rivest, C. Stein, *Introduction to Algorithms* (3rd Edition): Ch.15（p.359–413，动态规划）。
-4. 正文补充：斐波那契迭代写法、五个完整 C++ 程序、贪心与平衡树的期望访问时间比较，以及装配线调度的四站算例。代码和表格数值均已逐项运行或手算核对。
+1. 课程材料：第七讲分治课件。最近点对、三种递归式求解方法、主定理以及课件中的反例均取自该课件。
+2. M. A. Weiss, *Data Structure and Algorithm Analysis in C* (2nd Edition): Ch.10，p.365–372。用于补充分治的递归分析、最近点对的实现细节和 7 点打包证明。
+3. T. H. Cormen, C. E. Leiserson, R. L. Rivest, C. Stein, *Introduction to Algorithms* (3rd Edition): Ch.4，p.65–113。用于补充代入法、递归树、主定理的严格表述和矩阵乘法。
+4. Jeff Erickson, *CS 373: Combinatorial Algorithms*, “Notes on Solving Recurrence Relations”，p.10–13。用于对照主定理和递归式示例。
+5. 正文补充：最近点对的完整 C++ 实现与六点样例、宽 $2\delta$、高 $\delta$ 的打包证明、非平衡递归树的下界推导、矩阵乘法的复杂性比较。代码和样例输出已实际编译运行。
