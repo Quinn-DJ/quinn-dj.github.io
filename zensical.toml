@@ -86,7 +86,8 @@ nav = [
         { "07. 分治、最近点对与递归式" = "coding/ads/class07.md" },
         { "08. 动态规划" = "coding/ads/class08.md" },
         { "09. 贪心算法" = "coding/ads/class09.md" },
-        { "10. NP 完全性" = "coding/ads/class10.md" }
+        { "10. NP 完全性" = "coding/ads/class10.md" },
+        { "11. 近似算法" = "coding/ads/class11.md" }
       ] }
     ] },
     { "自己研究的小东西" = [
