@@ -1,5 +1,5 @@
 # Static site generator
-zensical==0.0.74
+zensical==0.1.3
 
 # Markdown extensions and build-time code execution
 pymdown-extensions
