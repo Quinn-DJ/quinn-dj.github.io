@@ -123,7 +123,7 @@ function panel(s, trees, cx, top, caption, note, gap = 52) {
 
 // ------------------------------------------------------ 1. B_0..B_3 的结构
 function binomialTrees() {
-  const w = 940, h = 520;
+  const w = 940, h = 548;
   let s = header(w, h, '二项树 B0 到 B3 的结构');
   const B0 = {k: 'B₀', c: []};
   const B1 = {k: 'B₁', c: [{k: 'B₀', c: []}]};
