@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="590" viewBox="0 0 1120 590" role="img" aria-label="P、NP 与 NP 完全类的关系图：P 包含于 NP，NP 完全问题也包含于 NP；P 是否等于 NP 仍未知">
+  <style>
+    text{font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif}
+    .panel{fill:#f7f8fb;stroke:#d9dde7;stroke-width:1.2}
+    .panel-alt{fill:#ffffff;stroke:#d9dde7;stroke-width:1.2}
+    .np-region{fill:#eef1ff;stroke:#4b5bb7;stroke-width:2}
+    .p-region{fill:#e7f4e8;stroke:#2e7d32;stroke-width:2}
+    .npc-region{fill:#fdecec;stroke:#b94a48;stroke-width:2}
+    .co-region{fill:#fff4d6;stroke:#9a6700;stroke-width:2}
+    .collapse{fill:#e7f4e8;stroke:#2e7d32;stroke-width:2.4}
+    .box{fill:#ffffff;stroke:#667085;stroke-width:1.7}
+    .box-a{fill:#fdecec;stroke:#b94a48;stroke-width:2.2}
+    .box-b{fill:#eef1ff;stroke:#4b5bb7;stroke-width:2.2}
+    .edge{stroke:#8c95a6;stroke-width:1.5;fill:none}
+    .edge-good{stroke:#2e7d32;stroke-width:2.6;fill:none}
+    .edge-warn{stroke:#c75252;stroke-width:1.7;fill:none;stroke-dasharray:5 5}
+    .arrow{stroke:#667085;stroke-width:2;fill:none}
+    .arrow-warn{stroke:#b94a48;stroke-width:2.2;fill:none}
+    .lit{fill:#ffffff;stroke:#667085;stroke-width:1.7}
+    .lit-good{fill:#e7f4e8;stroke:#2e7d32;stroke-width:2.4}
+    .title{fill:#1f2330;font-size:18px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .txt{fill:#1f2330;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .txt-good{fill:#1f4f24;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .txt-warn{fill:#8f2929;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .lbl{fill:#3c4043;font-size:13.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .small{fill:#5f6673;font-size:12px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .accent{fill:#2e7d32;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .warn{fill:#b63c3c;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .formula{fill:#1f2330;font-size:17px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    @media (prefers-color-scheme: dark){
+      .panel{fill:#222635;stroke:#41485c}
+      .panel-alt{fill:#292e3d;stroke:#41485c}
+      .np-region{fill:#29345f;stroke:#aeb8ff}
+      .p-region{fill:#24452f;stroke:#81c784}
+      .npc-region{fill:#4a292b;stroke:#ef9a9a}
+      .co-region{fill:#493c22;stroke:#e2c26b}
+      .collapse{fill:#24452f;stroke:#81c784}
+      .box{fill:#292e3d;stroke:#a6acba}
+      .box-a{fill:#4a292b;stroke:#ef9a9a}
+      .box-b{fill:#303a64;stroke:#9fa8da}
+      .edge{stroke:#a0a8b8}
+      .edge-good{stroke:#81c784}
+      .edge-warn{stroke:#ef9a9a}
+      .arrow{stroke:#a6acba}
+      .arrow-warn{stroke:#ef9a9a}
+      .lit{fill:#292e3d;stroke:#a6acba}
+      .lit-good{fill:#24452f;stroke:#81c784}
+      .title{fill:#eef0f6}
+      .txt{fill:#eef0f6}
+      .txt-good{fill:#c8e6c9}
+      .txt-warn{fill:#ffcdd2}
+      .lbl{fill:#d6d9e2}
+      .small{fill:#b7bcc9}
+      .accent{fill:#a5d6a7}
+      .warn{fill:#ef9a9a}
+      .formula{fill:#eef0f6}
+    }
+  </style>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path fill="#667085" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+    <marker id="arrow-warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path fill="#b94a48" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+    <style>
+      @media (prefers-color-scheme: dark){
+        marker#arrow path{fill:#a6acba}
+        marker#arrow-warn path{fill:#ef9a9a}
+      }
+    </style>
+  </defs>  <rect class="panel" x="20" y="20" width="520" height="550" rx="16"/>
+  <rect class="panel-alt" x="560" y="20" width="540" height="550" rx="16"/>
+  <text class="title" x="280" y="52">定义给出的包含关系</text>
+  <text class="title" x="830" y="52">两种极端情形</text>
+  <ellipse class="np-region" cx="280" cy="300" rx="225" ry="185"/>
+  <ellipse class="p-region" cx="205" cy="350" rx="118" ry="88"/>
+  <ellipse class="npc-region" cx="370" cy="350" rx="102" ry="88"/>
+  <text class="txt" x="280" y="150">NP：证书可在多项式时间验证</text>
+  <text class="title" x="205" y="350">P</text>
+  <text class="title" x="370" y="350">NPC</text>
+  <text class="lbl" x="287" y="255">两者是否相交取决于 P 与 NP</text>
+  <text class="small" x="280" y="450">图中的相对位置只是示意，交集未知</text>
+  <text class="lbl" x="280" y="492">已知只有 P ⊆ NP 与 NPC ⊆ NP</text>
+  <text class="title" x="830" y="94">常见假设：P ≠ NP</text>
+  <ellipse class="np-region" cx="830" cy="185" rx="225" ry="82"/>
+  <ellipse class="p-region" cx="725" cy="185" rx="90" ry="57"/>
+  <ellipse class="npc-region" cx="935" cy="185" rx="90" ry="57"/>
+  <text class="lbl" x="830" y="116">NP</text>
+  <text class="txt" x="725" y="185">P</text>
+  <text class="txt" x="935" y="185">NPC</text>
+  <text class="small" x="830" y="283">此时两者不交，NP 中可能还有中间问题</text>
+  <text class="title" x="830" y="340">如果 P = NP</text>
+  <ellipse class="collapse" cx="830" cy="450" rx="130" ry="72"/>
+  <text class="title" x="830" y="435">P = NP</text>
+  <text class="txt" x="830" y="467">NPC</text>
+  <text class="small" x="830" y="548">这个等式至今没有被证明，也没有被否定</text>
+</svg>

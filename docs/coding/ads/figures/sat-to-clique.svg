@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" role="img" aria-label="三文字子句可满足性归约到团问题：每个子句一列文字，兼容文字之间连边，选中一个大小为三的团就对应一组满足赋值">
+  <style>
+    text{font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif}
+    .panel{fill:#f7f8fb;stroke:#d9dde7;stroke-width:1.2}
+    .panel-alt{fill:#ffffff;stroke:#d9dde7;stroke-width:1.2}
+    .np-region{fill:#eef1ff;stroke:#4b5bb7;stroke-width:2}
+    .p-region{fill:#e7f4e8;stroke:#2e7d32;stroke-width:2}
+    .npc-region{fill:#fdecec;stroke:#b94a48;stroke-width:2}
+    .co-region{fill:#fff4d6;stroke:#9a6700;stroke-width:2}
+    .collapse{fill:#e7f4e8;stroke:#2e7d32;stroke-width:2.4}
+    .box{fill:#ffffff;stroke:#667085;stroke-width:1.7}
+    .box-a{fill:#fdecec;stroke:#b94a48;stroke-width:2.2}
+    .box-b{fill:#eef1ff;stroke:#4b5bb7;stroke-width:2.2}
+    .edge{stroke:#8c95a6;stroke-width:1.5;fill:none}
+    .edge-good{stroke:#2e7d32;stroke-width:2.6;fill:none}
+    .edge-warn{stroke:#c75252;stroke-width:1.7;fill:none;stroke-dasharray:5 5}
+    .arrow{stroke:#667085;stroke-width:2;fill:none}
+    .arrow-warn{stroke:#b94a48;stroke-width:2.2;fill:none}
+    .lit{fill:#ffffff;stroke:#667085;stroke-width:1.7}
+    .lit-good{fill:#e7f4e8;stroke:#2e7d32;stroke-width:2.4}
+    .title{fill:#1f2330;font-size:18px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .txt{fill:#1f2330;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .txt-good{fill:#1f4f24;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .txt-warn{fill:#8f2929;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .lbl{fill:#3c4043;font-size:13.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .small{fill:#5f6673;font-size:12px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .accent{fill:#2e7d32;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .warn{fill:#b63c3c;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .formula{fill:#1f2330;font-size:17px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    @media (prefers-color-scheme: dark){
+      .panel{fill:#222635;stroke:#41485c}
+      .panel-alt{fill:#292e3d;stroke:#41485c}
+      .np-region{fill:#29345f;stroke:#aeb8ff}
+      .p-region{fill:#24452f;stroke:#81c784}
+      .npc-region{fill:#4a292b;stroke:#ef9a9a}
+      .co-region{fill:#493c22;stroke:#e2c26b}
+      .collapse{fill:#24452f;stroke:#81c784}
+      .box{fill:#292e3d;stroke:#a6acba}
+      .box-a{fill:#4a292b;stroke:#ef9a9a}
+      .box-b{fill:#303a64;stroke:#9fa8da}
+      .edge{stroke:#a0a8b8}
+      .edge-good{stroke:#81c784}
+      .edge-warn{stroke:#ef9a9a}
+      .arrow{stroke:#a6acba}
+      .arrow-warn{stroke:#ef9a9a}
+      .lit{fill:#292e3d;stroke:#a6acba}
+      .lit-good{fill:#24452f;stroke:#81c784}
+      .title{fill:#eef0f6}
+      .txt{fill:#eef0f6}
+      .txt-good{fill:#c8e6c9}
+      .txt-warn{fill:#ffcdd2}
+      .lbl{fill:#d6d9e2}
+      .small{fill:#b7bcc9}
+      .accent{fill:#a5d6a7}
+      .warn{fill:#ef9a9a}
+      .formula{fill:#eef0f6}
+    }
+  </style>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path fill="#667085" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+    <marker id="arrow-warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path fill="#b94a48" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+    <style>
+      @media (prefers-color-scheme: dark){
+        marker#arrow path{fill:#a6acba}
+        marker#arrow-warn path{fill:#ef9a9a}
+      }
+    </style>
+  </defs>  <rect class="panel" x="20" y="20" width="1080" height="580" rx="16"/>
+  <text class="title" x="560" y="53">每个子句选一个文字，兼容的文字之间连边</text>
+  <text class="formula" x="560" y="91">(x₁ ∨ x₂ ∨ x₃) ∧ (¬x₁ ∨ ¬x₂ ∨ x₃) ∧ (¬x₁ ∨ x₂ ∨ ¬x₃)</text>
+  <text class="lbl" x="245" y="165">第 1 个子句</text>
+  <text class="lbl" x="560" y="165">第 2 个子句</text>
+  <text class="lbl" x="875" y="165">第 3 个子句</text>
+  <line class="edge" x1="245" y1="218" x2="560" y2="328"/>
+  <line class="edge" x1="245" y1="218" x2="560" y2="438"/>
+  <line class="edge" x1="245" y1="218" x2="875" y2="328"/>
+  <line class="edge" x1="245" y1="218" x2="875" y2="438"/>
+  <line class="edge" x1="245" y1="328" x2="560" y2="218"/>
+  <line class="edge" x1="245" y1="328" x2="560" y2="438"/>
+  <line class="edge" x1="245" y1="328" x2="875" y2="218"/>
+  <line class="edge" x1="245" y1="328" x2="875" y2="328"/>
+  <line class="edge" x1="245" y1="328" x2="875" y2="438"/>
+  <line class="edge" x1="245" y1="438" x2="560" y2="218"/>
+  <line class="edge" x1="245" y1="438" x2="560" y2="328"/>
+  <line class="edge" x1="245" y1="438" x2="560" y2="438"/>
+  <line class="edge" x1="245" y1="438" x2="875" y2="218"/>
+  <line class="edge" x1="245" y1="438" x2="875" y2="328"/>
+  <line class="edge" x1="560" y1="218" x2="875" y2="218"/>
+  <line class="edge" x1="560" y1="218" x2="875" y2="328"/>
+  <line class="edge" x1="560" y1="218" x2="875" y2="438"/>
+  <line class="edge" x1="560" y1="328" x2="875" y2="218"/>
+  <line class="edge" x1="560" y1="328" x2="875" y2="438"/>
+  <line class="edge" x1="560" y1="438" x2="875" y2="218"/>
+  <line class="edge" x1="560" y1="438" x2="875" y2="328"/>
+  <line class="edge-good" x1="245" y1="438" x2="560" y2="438"/>
+  <line class="edge-good" x1="245" y1="438" x2="875" y2="218"/>
+  <line class="edge-good" x1="560" y1="438" x2="875" y2="218"/>
+  <rect class="lit" x="199" y="193" width="92" height="50" rx="9"/>
+  <text class="txt" x="245" y="218">x₁</text>
+  <rect class="lit" x="199" y="303" width="92" height="50" rx="9"/>
+  <text class="txt" x="245" y="328">x₂</text>
+  <rect class="lit-good" x="199" y="413" width="92" height="50" rx="9"/>
+  <text class="txt-good" x="245" y="438">x₃</text>
+  <rect class="lit" x="514" y="193" width="92" height="50" rx="9"/>
+  <text class="txt" x="560" y="218">¬x₁</text>
+  <rect class="lit" x="514" y="303" width="92" height="50" rx="9"/>
+  <text class="txt" x="560" y="328">¬x₂</text>
+  <rect class="lit-good" x="514" y="413" width="92" height="50" rx="9"/>
+  <text class="txt-good" x="560" y="438">x₃</text>
+  <rect class="lit-good" x="829" y="193" width="92" height="50" rx="9"/>
+  <text class="txt-good" x="875" y="218">¬x₁</text>
+  <rect class="lit" x="829" y="303" width="92" height="50" rx="9"/>
+  <text class="txt" x="875" y="328">x₂</text>
+  <rect class="lit" x="829" y="413" width="92" height="50" rx="9"/>
+  <text class="txt" x="875" y="438">¬x₃</text>
+  <text class="accent" x="560" y="510">绿色三角形：选 x₃、x₃、¬x₁，令 x₁=0、x₃=1 即可满足三个子句</text>
+  <text class="lbl" x="560" y="545">同列不连边，矛文字之间也不连边；大小为 k 的团必须每列恰好选一个</text>
+  <text class="title" x="560" y="575">因此 φ 可满足 ⇔ 构造出的图有大小为 k 的团</text>
+</svg>
