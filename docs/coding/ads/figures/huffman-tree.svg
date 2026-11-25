@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="650" viewBox="0 0 1160 650" role="img" aria-label="Huffman 编码示例：频率 1 和 3 的叶结点先合并，最终所有叶子代价之和为 146">
+  <style>
+    text{font-family:'LXGW WenKai','LXGW WenKai Screen','PingFang SC','Noto Sans SC',ui-sans-serif,-apple-system,Arial,sans-serif}
+    .panel{fill:#f7f8fb;stroke:#d9dde7;stroke-width:1.2}
+    .panel-alt{fill:#ffffff;stroke:#d9dde7;stroke-width:1.2}
+    .axis{stroke:#98a1b2;stroke-width:1.4}
+    .grid{stroke:#d6dbe5;stroke-width:1;stroke-dasharray:3 6}
+    .interval{fill:#e8ebf2;stroke:#697386;stroke-width:1.6}
+    .interval-good{fill:#dff1e1;stroke:#2e7d32;stroke-width:2.3}
+    .edge{stroke:#667085;stroke-width:1.7;fill:none}
+    .edge-good{stroke:#2e7d32;stroke-width:2.2;fill:none}
+    .node{fill:#ffffff;stroke:#4f5d75;stroke-width:1.8}
+    .node-good{fill:#e7f4e8;stroke:#2e7d32;stroke-width:2}
+    .leaf{fill:#ffffff;stroke:#667085;stroke-width:1.7}
+    .leaf-good{fill:#e7f4e8;stroke:#2e7d32;stroke-width:2}
+    .title{fill:#1f2330;font-size:18px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .txt{fill:#1f2330;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .txt-good{fill:#1f4f24;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .leaf-char{fill:#1f2330;font-size:16px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .leaf-freq{fill:#5f6673;font-size:12.5px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .lbl{fill:#3c4043;font-size:13.5px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .small{fill:#5f6673;font-size:12px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+    .accent{fill:#2e7d32;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    .edge-lbl{fill:#7b8494;font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+    .step{fill:#243b84;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    @media (prefers-color-scheme: dark){
+      .panel{fill:#222635;stroke:#41485c}
+      .panel-alt{fill:#292e3d;stroke:#41485c}
+      .axis{stroke:#7a8397}
+      .grid{stroke:#3d4456}
+      .interval{fill:#343a4b;stroke:#9aa3b5}
+      .interval-good{fill:#24452f;stroke:#81c784}
+      .edge{stroke:#a6acba}
+      .edge-good{stroke:#81c784}
+      .node{fill:#292e3d;stroke:#c2c7d2}
+      .node-good{fill:#24452f;stroke:#81c784}
+      .leaf{fill:#292e3d;stroke:#a6acba}
+      .leaf-good{fill:#24452f;stroke:#81c784}
+      .title{fill:#eef0f6}
+      .txt{fill:#eef0f6}
+      .txt-good{fill:#c8e6c9}
+      .leaf-char{fill:#eef0f6}
+      .leaf-freq{fill:#b7bcc9}
+      .lbl{fill:#d6d9e2}
+      .small{fill:#b7bcc9}
+      .accent{fill:#a5d6a7}
+      .edge-lbl{fill:#a6acba}
+      .step{fill:#c5caff}
+    }
+  </style>  <rect class="panel" x="20" y="20" width="820" height="610" rx="16"/>
+  <rect class="panel-alt" x="860" y="20" width="280" height="610" rx="16"/>
+  <text class="title" x="430" y="52">频率越小，合并得越早，离根越远</text>
+  <text class="title" x="1000" y="52">合并顺序</text>
+  <line class="edge" x1="406.4998396158887" y1="124.99242366235742" x2="320.25875895182014" y2="187.35135891176083"/>
+  <text class="edge-lbl" x="371.3792992838544" y="151.1718912870591">0</text>
+  <line class="edge" x1="456.46925584926487" y1="119.84814309443286" x2="617.1816759920131" y2="191.78608353928203"/>
+  <text class="edge-lbl" x="544.825465920639" y="150.81711331685744">1</text>
+  <line class="edge" x1="282.5992149359908" y1="219.95028353971475" x2="221.70475366144882" y2="282.76772780187383"/>
+  <text class="edge-lbl" x="260.1519842987198" y="246.3590056707943">0</text>
+  <line class="edge" x1="315.8094122478065" y1="221.36653000356299" x2="364.82296424210574" y2="281.4081311965795"/>
+  <text class="edge-lbl" x="348.31618824495615" y="246.38733060007127">1</text>
+  <line class="edge" x1="624.1905877521934" y1="221.36653000356299" x2="575.1770357578943" y2="281.4081311965795"/>
+  <text class="edge-lbl" x="607.6838117550438" y="246.38733060007127">0</text>
+  <line class="edge" x1="656.910124989417" y1="220.4132472106985" x2="713.7662800101597" y2="282.3232826777295"/>
+  <text class="edge-lbl" x="693.3382024997884" y="246.368264944214">1</text>
+  <line class="edge" x1="714.2746249480626" y1="318.13043241282196" x2="659.4149271309426" y2="381.3804369549132"/>
+  <text class="edge-lbl" x="694.8447760395027" y="344.7554346838676">0</text>
+  <line class="edge" x1="741.7459852077665" y1="320.9292100065657" x2="773.2540147922335" y2="377.0707899934343"/>
+  <text class="edge-lbl" x="765.5" y="344">1</text>
+  <line class="edge" x1="629.7854270192278" y1="413.8907762243622" x2="571.5977159790243" y2="474.66460775524126"/>
+  <text class="edge-lbl" x="608.691571499126" y="439.2776919898017">0</text>
+  <line class="edge" x1="656.1102726641283" y1="416.98846600778285" x2="689.8997521235198" y2="474.73775817474285"/>
+  <text class="edge-lbl" x="681.005012393824" y="440.86311209126285">1</text>
+  <line class="edge" x1="689.2066777055913" y1="508.83758277927745" x2="662.9519867532904" y2="549.794900664867"/>
+  <text class="edge-lbl" x="684.0793322294409" y="524.3162417220722">0</text>
+  <line class="edge" x1="710.7933222944087" y1="508.83758277927745" x2="737.0480132467096" y2="549.794900664867"/>
+  <text class="edge-lbl" x="731.9206677705591" y="524.3162417220722">1</text>
+  <circle class="node-good" cx="430" cy="108" r="29"/>
+  <text class="txt-good" x="430" y="109">58</text>
+  <circle class="node-good" cx="300" cy="202" r="25"/>
+  <text class="txt" x="300" y="203">25</text>
+  <circle class="node-good" cx="640" cy="202" r="25"/>
+  <text class="txt" x="640" y="203">33</text>
+  <rect class="leaf-good" x="172" y="277" width="66" height="46" rx="9"/>
+  <text class="leaf-char" x="205" y="292">i</text>
+  <text class="leaf-freq" x="205" y="312">12</text>
+  <rect class="leaf-good" x="347" y="277" width="66" height="46" rx="9"/>
+  <text class="leaf-char" x="380" y="292">␣</text>
+  <text class="leaf-freq" x="380" y="312">13</text>
+  <rect class="leaf-good" x="527" y="277" width="66" height="46" rx="9"/>
+  <text class="leaf-char" x="560" y="292">e</text>
+  <text class="leaf-freq" x="560" y="312">15</text>
+  <circle class="node-good" cx="730" cy="300" r="24"/>
+  <text class="txt" x="730" y="301">18</text>
+  <circle class="node-good" cx="645" cy="398" r="22"/>
+  <text class="txt" x="645" y="399">8</text>
+  <rect class="leaf-good" x="752" y="375" width="66" height="46" rx="9"/>
+  <text class="leaf-char" x="785" y="390">a</text>
+  <text class="leaf-freq" x="785" y="410">10</text>
+  <rect class="leaf" x="522" y="469" width="66" height="46" rx="9"/>
+  <text class="leaf-char" x="555" y="484">t</text>
+  <text class="leaf-freq" x="555" y="504">4</text>
+  <circle class="node-good" cx="700" cy="492" r="20"/>
+  <text class="txt" x="700" y="493">4</text>
+  <rect class="leaf" x="617" y="547" width="66" height="46" rx="9"/>
+  <text class="leaf-char" x="650" y="562">↵</text>
+  <text class="leaf-freq" x="650" y="582">1</text>
+  <rect class="leaf" x="717" y="547" width="66" height="46" rx="9"/>
+  <text class="leaf-char" x="750" y="562">s</text>
+  <text class="leaf-freq" x="750" y="582">3</text>
+  <rect class="leaf" x="885" y="102" width="230" height="38" rx="8"/>
+  <text class="step" x="940" y="122">1 + 3</text>
+  <text class="accent" x="1055" y="122">= 4</text>
+  <line class="edge" x1="1000" y1="142" x2="1000" y2="158"/>
+  <rect class="leaf" x="885" y="160" width="230" height="38" rx="8"/>
+  <text class="step" x="940" y="180">4 + 4</text>
+  <text class="accent" x="1055" y="180">= 8</text>
+  <line class="edge" x1="1000" y1="200" x2="1000" y2="216"/>
+  <rect class="leaf" x="885" y="218" width="230" height="38" rx="8"/>
+  <text class="step" x="940" y="238">8 + 10</text>
+  <text class="accent" x="1055" y="238">= 18</text>
+  <line class="edge" x1="1000" y1="258" x2="1000" y2="274"/>
+  <rect class="leaf" x="885" y="276" width="230" height="38" rx="8"/>
+  <text class="step" x="940" y="296">12 + 13</text>
+  <text class="accent" x="1055" y="296">= 25</text>
+  <line class="edge" x1="1000" y1="316" x2="1000" y2="332"/>
+  <rect class="leaf" x="885" y="334" width="230" height="38" rx="8"/>
+  <text class="step" x="940" y="354">15 + 18</text>
+  <text class="accent" x="1055" y="354">= 33</text>
+  <line class="edge" x1="1000" y1="374" x2="1000" y2="390"/>
+  <rect class="leaf" x="885" y="392" width="230" height="38" rx="8"/>
+  <text class="step" x="940" y="412">25 + 33</text>
+  <text class="accent" x="1055" y="412">= 58</text>
+  <text class="lbl" x="430" y="610">叶结点中的数字是频率；内部结点的数字是子树频率和</text>
+  <text class="lbl" x="1000" y="522">总代价</text>
+  <text class="small" x="1000" y="551">30 + 30 + 24 + 15 + 16 + 26 + 5</text>
+  <text class="accent" x="1000" y="585">= 146</text>
+</svg>
