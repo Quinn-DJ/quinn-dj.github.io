@@ -138,13 +138,13 @@ $$
 
 目前不知道 NP 与 co-NP 是否相等，也不知道 P 是否等于 NP。最常被接受的图景是 $\mathrm P\ne\mathrm{NP}$，但这不是定理。
 
-<div style="overflow-x:auto; padding-bottom:0.5rem;">
+<div style="padding-bottom:0.5rem;">
   <img src="figures/np-classes.svg"
        alt="P、NP 与 NP 完全类的关系：P 和 NPC 都包含于 NP，P 是否等于 NP 仍未知"
-       style="display:block; width:100%; min-width:820px; height:auto;">
+       style="display:block; width:100%; height:auto;">
 </div>
 
-窄屏时左右滑动看图。左图只表达定义能推出的包含关系，P 与 NPC 是否相交取决于 P 与 NP 的关系；右侧把最常见的猜测和 $P=NP$ 时的塌缩放在一起。图中的包含关系不是对未解问题的断言。
+点击图片可放大查看。左图只表达定义能推出的包含关系，P 与 NPC 是否相交取决于 P 与 NP 的关系；右侧把最常见的猜测和 $P=NP$ 时的塌缩放在一起。图中的包含关系不是对未解问题的断言。
 
 ---
 
@@ -190,13 +190,13 @@ $$
 
 这才是把 $A$ 的难度传给 $B$。如果只把 $B$ 的一个实例变成 $A$，只能说明这个特定实例可以借助 $A$ 解决，不能说明所有 NP 问题都能变成 $B$。
 
-<div style="overflow-x:auto; padding-bottom:0.5rem;">
+<div style="padding-bottom:0.5rem;">
   <img src="figures/reduction-hamilton-tsp.svg"
        alt="多项式归约的正确方向，以及 Hamilton 环到 TSP 的边权构造"
-       style="display:block; width:100%; min-width:820px; height:auto;">
+       style="display:block; width:100%; height:auto;">
 </div>
 
-窄屏时左右滑动看图。左图强调箭头从已知 NP 完全问题指向目标问题；右图把一个 Hamilton 环问题补成完全图，原图边权为 1，补边权为 2。只要目标 tour 的总权不超过顶点数，就不可能使用任何补边。
+点击图片可放大查看。左图强调箭头从已知 NP 完全问题指向目标问题；右图把一个 Hamilton 环问题补成完全图，原图边权为 1，补边权为 2。只要目标 tour 的总权不超过顶点数，就不可能使用任何补边。
 
 ### 4.3 NP-hard 与 NP-complete
 
@@ -296,13 +296,13 @@ $$
 
 同一个子句内部的顶点之间不加边。构造图只需检查 $O(k^2)$ 对顶点，归约是多项式的。
 
-<div style="overflow-x:auto; padding-bottom:0.5rem;">
+<div style="padding-bottom:0.5rem;">
   <img src="figures/sat-to-clique.svg"
        alt="3-SAT 到 CLIQUE 的构造：每列对应一个子句，兼容文字之间连边，选中三个互相兼容的文字形成团"
-       style="display:block; width:100%; min-width:820px; height:auto;">
+       style="display:block; width:100%; height:auto;">
 </div>
 
-窄屏时左右滑动看图。灰色边表示不同子句之间可以同时取的两个文字，绿色三角形是满足所有子句的一个大小 3 的团。选择 $x_3,x_3,\neg x_1$ 后，令 $x_1=0,x_3=1$，三个子句都能满足。
+点击图片可放大查看。灰色边表示不同子句之间可以同时取的两个文字，绿色三角形是满足所有子句的一个大小 3 的团。选择 $x_3,x_3,\neg x_1$ 后，令 $x_1=0,x_3=1$，三个子句都能满足。
 
 ### 6.3 两个方向
 

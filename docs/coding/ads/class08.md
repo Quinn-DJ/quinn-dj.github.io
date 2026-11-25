@@ -35,13 +35,13 @@ int main() {
 
 问题出在调用树。计算 `Fib(6)` 要算 `Fib(5)` 和 `Fib(4)`，而 `Fib(5)` 又要把 `Fib(4)` 算一遍；再往下，`Fib(3)` 会出现在好几个分支里。
 
-<div style="overflow-x:auto; padding-bottom:0.5rem;">
+<div style="padding-bottom:0.5rem;">
   <img src="figures/dp-overlap.svg"
        alt="朴素递归里的重复子问题，以及从小到大填表"
-       style="display:block; width:100%; min-width:720px; height:auto;">
+       style="display:block; width:100%; height:auto;">
 </div>
 
-窄屏时左右滑动看图：左边是重复的递归树，右边是从小到大填表。
+点击图片可放大查看。左边是重复的递归树，右边是从小到大填表。
 
 图中的两个 `F3` 不是不同的子问题，输入完全相同，答案也完全相同。把 `F3` 算一次、记下来，后续分支直接取结果，重复工作就没了。
 
@@ -652,13 +652,13 @@ $$
 
 这一步只需要比较两个候选：留在原线，或者从另一条线换过来。枚举所有换线序列要 $O(2^N)$；动态规划保留了每个阶段的两条最优前缀，把选择压成了常数个。
 
-<div style="overflow-x:auto; padding-bottom:0.5rem;">
+<div style="padding-bottom:0.5rem;">
   <img src="figures/assembly-lines.svg"
        alt="两条装配线和一条总时间为 13 的最优路径"
-       style="display:block; width:100%; min-width:720px; height:auto;">
+       style="display:block; width:100%; height:auto;">
 </div>
 
-窄屏时左右滑动看图，才能看到完整的四个工位和终点。
+点击图片可放大查看完整的四个工位和终点。
 
 绿线表示这样一个方案：第 1 站在 1 号线，之后换到 0 号线，后面三站都不再换线。
 

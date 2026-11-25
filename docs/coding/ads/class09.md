@@ -86,13 +86,13 @@ $$
 
 从图里可以先看出一组可行选择：$a_1,a_4,a_8,a_{11}$。它们分别占用 $[1,4)$、$[5,7)$、$[8,11)$、$[12,16)$，相邻活动之间还留着空隙。
 
-<div style="overflow-x:auto; padding-bottom:0.5rem;">
+<div style="padding-bottom:0.5rem;">
   <img src="figures/activity-selection.svg"
        alt="活动选择样本的时间轴，绿色区间表示按最早结束时间得到的四个彼此兼容活动"
-       style="display:block; width:100%; min-width:820px; height:auto;">
+       style="display:block; width:100%; height:auto;">
 </div>
 
-窄屏时左右滑动看图。横轴是时间，每一行放一个活动。灰色区间是未选候选，绿色区间是贪心依次选出的活动。活动按结束时间从上到下排列，所以扫描顺序就是 $a_1,a_2,\dots,a_{11}$。
+点击图片可放大查看。横轴是时间，每一行放一个活动。灰色区间是未选候选，绿色区间是贪心依次选出的活动。活动按结束时间从上到下排列，所以扫描顺序就是 $a_1,a_2,\dots,a_{11}$。
 
 ### 2.2 从区间动态规划看
 
@@ -394,13 +394,13 @@ $$
 | 5 | `e` 15、上一步的 18 | 33 |
 | 6 | 上一步的 25、上一步的 33 | 58 |
 
-<div style="overflow-x:auto; padding-bottom:0.5rem;">
+<div style="padding-bottom:0.5rem;">
   <img src="figures/huffman-tree.svg"
        alt="Huffman 编码示例的二叉树和六次合并顺序，低频的换行与 s 位于树的最深处"
-       style="display:block; width:100%; min-width:820px; height:auto;">
+       style="display:block; width:100%; height:auto;">
 </div>
 
-窄屏时左右滑动看图。左边的叶结点写着字符和频率，内部结点写着子树频率和；右边的六步记录最小堆每次合并的两个权重。左链 `0`、右链 `1`，从根走到叶子就能读出码字。
+点击图片可放大查看。左边的叶结点写着字符和频率，内部结点写着子树频率和；右边的六步记录最小堆每次合并的两个权重。左链 `0`、右链 `1`，从根走到叶子就能读出码字。
 
 按图中的左右约定，得到一张完整码表：
 

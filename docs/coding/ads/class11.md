@@ -89,13 +89,13 @@ $$
 
 不一定能达到，因为碎片可能塞不满。
 
-<div style="overflow-x:auto; padding-bottom:0.5rem;">
+<div style="padding-bottom:0.5rem;">
   <img src="figures/bin-packing-comparison.svg"
        alt="装箱样本的最优、Next Fit 与 First Fit 结果，分别使用 3、5、4 个容量为 1 的箱子"
-       style="display:block; width:100%; min-width:820px; height:auto;">
+       style="display:block; width:100%; height:auto;">
 </div>
 
-窄屏时左右滑动看图。同一大小的物品使用同一种颜色。最优方案 3 箱；Next Fit 因为开新箱后不回头，用了 5 箱；First Fit 会搜索之前所有箱子的剩余空间，用了 4 箱。
+点击图片可放大查看。同一大小的物品使用同一种颜色。最优方案 3 箱；Next Fit 因为开新箱后不回头，用了 5 箱；First Fit 会搜索之前所有箱子的剩余空间，用了 4 箱。
 
 ### 2.2 Next Fit
 
@@ -541,13 +541,13 @@ $$
 
 所以把中心限制在站点上，至多把半径放大到 2 倍。
 
-<div style="overflow-x:auto; padding-bottom:0.5rem;">
+<div style="padding-bottom:0.5rem;">
   <img src="figures/k-center-greedy.svg"
        alt="K-center 的 2-近似证明图：最优半径 r 的圆内任取站点 s，以 s 为中心的 2r 圆覆盖整簇；K+1 个两两距离超过 2r 的点无法被 K 个小圆覆盖"
-       style="display:block; width:100%; min-width:820px; height:auto;">
+       style="display:block; width:100%; height:auto;">
 </div>
 
-窄屏时左右滑动看图。左图用三角不等式说明 2r 足够覆盖一个最优簇；右图用抽屉原理说明若最远点贪心需要更大的半径，就会产生 $K+1$ 个两两距离超过 $2r^*$ 的点，而 $K$ 个最优球无法同时容纳它们。
+点击图片可放大查看。左图用三角不等式说明 2r 足够覆盖一个最优簇；右图用抽屉原理说明若最远点贪心需要更大的半径，就会产生 $K+1$ 个两两距离超过 $2r^*$ 的点，而 $K$ 个最优球无法同时容纳它们。
 
 ### 4.2 知道半径时的 Greedy-2r
 
